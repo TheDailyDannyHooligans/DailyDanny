@@ -41,7 +41,6 @@
         position: absolute;
         left: 0;
         height: 100%;
-        width: 15%;
         margin: 1px;
     }
 
