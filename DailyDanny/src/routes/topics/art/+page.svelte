@@ -1,4 +1,4 @@
-<p> hello this is home page</p>
+<p> hello this is art page</p>
 
 <style>
     * {
