@@ -17,11 +17,12 @@
 
 <style>
     .banner {
-        position: fixed;
-        z-index: 1;
-        display: flex;
-    }
-
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    backdrop-filter: blur(10px); /* Apply the blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
+    }   
     #home-banner {
         top: 0;
         left: 0;
@@ -30,7 +31,7 @@
         width: 100%;
         align-items: center;
         justify-content: center;
-        background-color: #41454B;
+        background-color: rgba(65, 69, 75, 0.7);
     }
 
     #home-title {
@@ -44,7 +45,7 @@
     #logo {
         position: absolute;
         left: 0;
-        height: 100%;
+        height: 90%;
         margin: 1px;
     }
 
@@ -70,11 +71,12 @@
         left: 0;
         width: 100%;
         height: 5%;
-        background-color: #41454B;
+        background-color: rgba(65, 69, 75, 0.7);
         border-style: solid;
         border-left-style: none;
         border-color: white;
         border-width: 1px;
+       
     }
 
     #nav-banner ul {
@@ -82,14 +84,15 @@
         padding: 0px;
         margin: 0px;
         overflow: hidden;
+        margin-bottom: 1px;
     }
 
     #nav-banner a{
         color: white;
         text-decoration: none;
-        padding: 15px;
-        display: block;
-        text-align: center;
+        padding: 14px;
+        display: block; 
+        
     }
 
     #nav-banner a:hover {
