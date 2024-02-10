@@ -13,22 +13,20 @@
     </div>
   {/if}
 
-  {#each articles.slice(1) as article}
-    <div class="article-box">
-      <h2 class = "article-title">{article.title}</h2>
-      {#if article.imageUrl}
-        <img src={article.imageUrl} alt={article.title} class="article-image"/>
-      {/if}
-      <p class="article-summary">{article.summary}</p>
-    </div>
-  {/each}
+{#each articles.slice(1) as article}
+  <div class={article.imageUrl ? 'article-box' : 'half-article-box'}>
+    <h2 class="article-title">{article.title}</h2>
+    {#if article.imageUrl}
+      <img src={article.imageUrl} alt={article.title} class="article-image"/>
+    {/if}
+    <p class="article-summary">{article.summary}</p>
+  </div>
+{/each}
 </div>
-
-
 
 <style>
 :global(body) {
-  background-color: #cbd6e2; 
+  background-color: #caced3; 
   font-family: 'Times New Roman', sans-serif;
 }
 
@@ -60,10 +58,19 @@
   border: 1px solid #000000;
   padding: 20px;
   border-radius: 8px;
+  margin-top: 0px;
   max-width: 300px; 
   max-height: 600px; 
   overflow: auto; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.article-box:hover {
+    transform: scale(1.05); /* Slightly increases the size of the box*/
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+
 
 .article-box-main-story {
   grid-column: span 2; 
@@ -75,5 +82,29 @@
   max-width:675px; 
   max-height: 600px; 
   overflow: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article-box-main-story:hover {
+    transform: scale(1.05); /* Slightly increases the size of the box*/
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+.half-article-box {
+  background-color: #70b3d3; /* Fallback color */
+  background-image: linear-gradient(to right, hsl(157, 37%, 93%), #d7e5ec, #f0e9ef);
+  border: 1px solid #000000;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 0px;
+  max-width: 300px; 
+  max-height: 600px; 
+  overflow: auto; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.half-article-box:hover {
+    transform: scale(1.05); /* Slightly increases the size of the box*/
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
 }
   </style>

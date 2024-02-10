@@ -1,42 +1,80 @@
 [
   {
     "title": "Max Verstappen: Red Bull Racing's Driving Force in Formula 1",
-    "summary": "In the high-octane world of Formula 1, few names have risen with such meteoric speed and impact as Max Verstappen. Driving for Red Bull Racing, Verstappen has not only redefined expectations for young drivers in the sport but has also become a pivotal figure in the team's success, challenging the established hierarchy of Formula 1 with his remarkable skill and fearless racing style.",
-    "imageUrl": "src/lib/images/ArticlePlaceholder/images.jpeg"
+    "summary": "Max Verstappen, with his exceptional skill and fearless style, has quickly become a key driver for Red Bull Racing, shaking up the Formula 1 hierarchy.",
+    "imageUrl": "src/lib/images/ArticlePlaceholder/images.jpeg",
+    "subject": "Sports",
+    "articleText": ""
   },
   {
     "title": "President Biden: Steering America Through Challenge and Change",
-    "summary": "In an era marked by unprecedented challenges and a rapidly evolving global landscape, President Joe Biden stands at the helm of the United States, guiding the nation through a period of intense transformation and uncertainty. Since taking office, Biden's presidency has been characterized by efforts to address both the immediate crises facing America and the long-term issues that will shape its future.",
-    "imageUrl": "src/lib/images/ArticlePlaceholder/Joe_Biden_presidential_portrait.jpg"
+    "summary": "President Joe Biden navigates America through a transformative era, tackling both immediate crises and long-term challenges.",
+    "imageUrl": "src/lib/images/ArticlePlaceholder/Joe_Biden_presidential_portrait.jpg",
+    "subject": "Politics",
+    "articleText": ""
   },
     {
-    "title": "Max Verstappen: Red Bull Racing's Driving Force in Formula 1",
-    "summary": "In the high-octane world of Formula 1, few names have risen with such meteoric speed and impact as Max Verstappen. Driving for Red Bull Racing, Verstappen has not only redefined expectations for young drivers in the sport but has also become a pivotal figure in the team's success, challenging the established hierarchy of Formula 1 with his remarkable skill and fearless racing style.",
-    "imageUrl": "src/lib/images/ArticlePlaceholder/images.jpeg"
-  },
-  {
-    "title": "President Biden: Steering America Through Challenge and Change",
-    "summary": "In an era marked by unprecedented challenges and a rapidly evolving global landscape, President Joe Biden stands at the helm of the United States, guiding the nation through a period of intense transformation and uncertainty. Since taking office, Biden's presidency has been characterized by efforts to address both the immediate crises facing America and the long-term issues that will shape its future.",
-    "imageUrl": "src/lib/images/ArticlePlaceholder/Joe_Biden_presidential_portrait.jpg"
+    "title": "Toucans: The Vibrant Ambassadors of the Tropics",
+    "summary": "Toucans, with their vibrant bills and plumage, are not only tropical rainforest icons but also crucial to their ecosystems.",
+    "imageUrl":"src/lib/images/ArticlePlaceholder/360_F_491777222_2kC4zaRq2wams4y3t0UjKg95OgdILXUC.jpg",
+    "subject": "Nature",
+    "articleText": ""
   },
     {
-    "title": "Max Verstappen: Red Bull Racing's Driving Force in Formula 1",
-    "summary": "In the high-octane world of Formula 1, few names have risen with such meteoric speed and impact as Max Verstappen. Driving for Red Bull Racing, Verstappen has not only redefined expectations for young drivers in the sport but has also become a pivotal figure in the team's success, challenging the established hierarchy of Formula 1 with his remarkable skill and fearless racing style.",
-    "imageUrl": "src/lib/images/ArticlePlaceholder/images.jpeg"
+    "title": "The Power of Music: A Universal Language",
+    "summary": "Music is a powerful and universal form of expression that transcends cultural, linguistic, and geographical boundaries. It has the ability to evoke emotions, convey messages, and create connections between people, making it an essential part of human experience. Whether through the rhythms of a drum, the melodies of a violin, or the lyrics of a song, music has the capacity to inspire, heal, and unite individuals across the globe.",
+    "imageUrl":"",
+    "subject": "Music",
+    "articleText": ""
   },
   {
-    "title": "President Biden: Steering America Through Challenge and Change",
-    "summary": "In an era marked by unprecedented challenges and a rapidly evolving global landscape, President Joe Biden stands at the helm of the United States, guiding the nation through a period of intense transformation and uncertainty. Since taking office, Biden's presidency has been characterized by efforts to address both the immediate crises facing America and the long-term issues that will shape its future.",
-    "imageUrl": "src/lib/images/ArticlePlaceholder/Joe_Biden_presidential_portrait.jpg"
+    "title": "Climate Change: A Defining Challenge of Our Time",
+    "summary": "Climate change, a critical 21st-century challenge, is altering global weather patterns and atmospheric conditions, mainly due to human activities.",
+    "imageUrl":"src/lib/images/ArticlePlaceholder/gettyimages-586087414-2048x2048-smaller-scaled.jpg",
+    "subject": "Politics",
+    "articleText": ""
+  },
+  {
+    "title": "Best cities to visit in Florida",
+    "summary": "Florida offers diverse experiences, from Orlando's magical theme parks to Miami's lively streets, making it a top travel destination.",
+    "imageUrl":"src/lib/images/ArticlePlaceholder/0 HERO_HoustonTX_GettyImages-532390052.jpg",
+    "subject": "Tourism",
+    "articleText": ""
   },
     {
-    "title": "Max Verstappen: Red Bull Racing's Driving Force in Formula 1",
-    "summary": "In the high-octane world of Formula 1, few names have risen with such meteoric speed and impact as Max Verstappen. Driving for Red Bull Racing, Verstappen has not only redefined expectations for young drivers in the sport but has also become a pivotal figure in the team's success, challenging the established hierarchy of Formula 1 with his remarkable skill and fearless racing style.",
-    "imageUrl": "src/lib/images/ArticlePlaceholder/images.jpeg"
+    "title": "David Njoku: Rising Star in the NFL",
+    "summary": "David Njoku, the Cleveland Browns' dynamic tight end, stands out in the NFL with his remarkable athleticism and game-changing plays.",
+    "imageUrl":"src/lib/images/ArticlePlaceholder/71026049007-usatsi-21546141.jpg.webp",
+    "subject": "Sports",
+    "articleText": ""
   },
   {
-    "title": "President Biden: Steering America Through Challenge and Change",
-    "summary": "In an era marked by unprecedented challenges and a rapidly evolving global landscape, President Joe Biden stands at the helm of the United States, guiding the nation through a period of intense transformation and uncertainty. Since taking office, Biden's presidency has been characterized by efforts to address both the immediate crises facing America and the long-term issues that will shape its future.",
-    "imageUrl": "src/lib/images/ArticlePlaceholder/Joe_Biden_presidential_portrait.jpg"
+    "title": "Navigating the New Normal: Understanding the Impact of COVID-19",
+    "summary": "The COVID-19 pandemic, originating in Wuhan, China, has drastically impacted global health, economies, and daily life.",
+    "imageUrl":"",
+    "subject": "Medicine",
+    "articleText": ""
+  },
+  {
+    "title": "Vladimir Putin: A Controversial Figure in Global Politics",
+    "summary": "Vladimir Putin, Russia's President, is a pivotal and controversial figure in global politics, influencing both domestic and international affairs.",
+    "imageUrl":"",
+    "subject": "Politics",
+    "articleText": ""
+  },
+  {
+    "title": "Cleveland Browns win the Super Bowl!",
+    "summary": "The Cleveland Browns' first Super Bowl win marks a historic moment, ending a long drought and thrilling their fans.",
+    "imageUrl":"",
+    "subject": "Sports",
+    "articleText": ""
+  },
+  {
+    "title": "The Art of Storytelling: A Timeless Tradition",
+    "summary": "Storytelling, a timeless art form, has shaped human culture across millennia, serving as a tool for communication, education, and entertainment.",
+    "imageUrl":"",
+    "subject": "Writing",
+    "articleText": ""
   }
+
 ]
