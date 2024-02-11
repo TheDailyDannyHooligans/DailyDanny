@@ -1,10 +1,11 @@
 <script>
-  import articles from './articles.json';
+  import articles from './static/article_json/articles.json';
 </script>
 
 <div class="articles">
   {#if articles.length > 0}
     <div class="article-box-main-story article-box-common">
+      <a href= "/articlePage" class="article-link">
       <span class="super-story-label">Highlighted Story</span>
       <span class="subject-label">{articles[0].subject}</span>
       <h2 class="article-title">{articles[0].title}</h2>
@@ -14,11 +15,14 @@
       {/if}
 
       <p class="article-summary">{articles[0].summary}</p>
+      </a>
     </div>
   {/if}
 
+   <!--Loops through the articles array and displays the articles --->
   {#each articles.slice(1) as article}
     <div class={article.isAd == "True" ? 'ad-box' : (article.imageUrl ? 'article-box article-box-common' : 'half-article-box article-box-common')}>
+      <a href= "/articlePage" class="article-link">
       {#if article.topArticle == "True"}
          <span class="top-story-label">Top Story</span>
       {/if}
@@ -38,10 +42,10 @@
       {#if article.imageUrl}
         <img src={article.imageUrl} alt={article.title} class="article-image"/>
       {/if}
-
       <p class="article-summary">{article.summary}</p>
+      </a>
     </div>
-
+    
   {/each}
 </div>
 
@@ -171,6 +175,16 @@ font: "Courier New", Courier, monospace;
 .article-box-common:hover {
 transform: scale(1.05);
 box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.article-box-main-story:hover {
+transform: scale(1.025);
+box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.article-link {
+  text-decoration: none; /* Removes the underline from links */
+  color: inherit; /* Keeps the text color consistent with the rest of the article box */
 }
 
   </style>

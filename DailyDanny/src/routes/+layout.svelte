@@ -1,5 +1,5 @@
 <script>
-    import logo from '$lib/images/DailyDannyLogo.png';
+    import logo from '/images/DailyDannyLogo.png';
 </script>
 
 <div id='home-banner' class='banner'>
@@ -10,8 +10,13 @@
 <nav id='nav-banner' class='banner'>
     <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/topics/art">Art</a></li>
+        <li><a href="/topics/politics">Politics</a></li>
         <li><a href="/topics/sports">Sports</a></li>
+        <li><a href="/topics/nature">Nature</a></li>
+        <li><a href="/topics/travel">Travel</a></li>
+        <li><a href="/topics/medicine">Medicine</a></li>
+        <li><a href="/topics/music">Music</a></li>
+
     </ul>
 </nav>
 
