@@ -19,7 +19,7 @@
 
     </ul>
 </nav>
-
+<!-- i did it -->
 <style>
     .banner {
     position: fixed;
