@@ -164,7 +164,7 @@ font: "Courier New", Courier, monospace;
 }
 
 .ad-label{
-background-color: rgb(228, 219, 111);
+background-color: rgb(203, 190, 51);
 color: rgb(255, 255, 255);
 padding: 5px;
 border-radius: 8px;
