@@ -5,7 +5,8 @@
     "imageUrl": "src/lib/images/ArticlePlaceholder/images.jpeg",
     "subject": "Sports",
     "topArticle":"Super",
-    "articleText": ""
+    "isAd":"False",
+    "articleText": "In the high-speed, adrenaline-fueled world of Formula One, Max Verstappen has emIn the high-speed, adrenaline-fueled world of Formula One, Max Verstappen has emIn the high-speed, adrenaline-fueled world of Formula One, Max Verstappen has emIn the high-speed, adrenaline-fueled world of Formula One, Max Verstappen has em"
   },
   {
     "title": "President Biden: Steering America Through Challenge and Change",
@@ -13,7 +14,8 @@
     "imageUrl": "src/lib/images/ArticlePlaceholder/Joe_Biden_presidential_portrait.jpg",
     "subject": "Politics",
     "topArticle":"True",
-    "articleText": ""
+    "isAd":"False",
+    "articleText": "In the high-speed, adrenaline-fueled world of Formula One, Max Verstappen has emIn the high-speed, adrenaline-fueled world of Formula One, Max Verstappen has emIn the high-speed, adrenaline-fueled world of Formula One, Max Verstappen has emIn the high-speed, adrenaline-fueled world of Formula One, Max Verstappen has em"
   },
     {
     "title": "Toucans: The Vibrant Ambassadors of the Tropics",
@@ -21,6 +23,7 @@
     "imageUrl":"src/lib/images/ArticlePlaceholder/360_F_491777222_2kC4zaRq2wams4y3t0UjKg95OgdILXUC.jpg",
     "subject": "Nature",
     "topArticle":"True",
+    "isAd":"False",
     "articleText": ""
   },
     {
@@ -29,6 +32,7 @@
     "imageUrl":"",
     "subject": "Music",
     "topArticle":"True",
+    "isAd":"False",
     "articleText": ""
   },
   {
@@ -37,6 +41,7 @@
     "imageUrl":"src/lib/images/ArticlePlaceholder/gettyimages-586087414-2048x2048-smaller-scaled.jpg",
     "subject": "Politics",
     "topArticle":"True",
+    "isAd":"False",
     "articleText": ""
   },
   {
@@ -45,6 +50,7 @@
     "imageUrl":"src/lib/images/ArticlePlaceholder/0 HERO_HoustonTX_GettyImages-532390052.jpg",
     "subject": "Tourism",
     "topArticle":"True",
+    "isAd":"False",
     "articleText": ""
   },
     {
@@ -53,6 +59,16 @@
     "imageUrl":"src/lib/images/ArticlePlaceholder/71026049007-usatsi-21546141.jpg.webp",
     "subject": "Sports",
     "topArticle":"False",
+    "isAd":"False",
+    "articleText": ""
+  },
+  {
+    "title": "",
+    "summary": "",
+    "imageUrl":"src/lib/images/AdPics/53.jpg",
+    "subject": "Ad",
+    "topArticle":"",
+    "isAd":"True",
     "articleText": ""
   },
   {
@@ -61,6 +77,7 @@
     "imageUrl":"",
     "subject": "Medicine",
     "topArticle":"False",
+    "isAd":"False",
     "articleText": ""
   },
   {
@@ -69,6 +86,7 @@
     "imageUrl":"",
     "subject": "Politics",
     "topArticle":"False",
+    "isAd":"False",
     "articleText": ""
   },
   {
@@ -77,6 +95,16 @@
     "imageUrl":"",
     "subject": "Sports",
     "topArticle":"False",
+    "isAd":"False",
+    "articleText": ""
+  },
+    {
+    "title": "",
+    "summary": "",
+    "imageUrl":"src/lib/images/AdPics/61.jpg",
+    "subject": "Ad",
+    "topArticle":"",
+    "isAd":"True",
     "articleText": ""
   },
   {
@@ -85,6 +113,7 @@
     "imageUrl":"",
     "subject": "Writing",
     "topArticle":"False",
+    "isAd":"False",
     "articleText": ""
   }
 

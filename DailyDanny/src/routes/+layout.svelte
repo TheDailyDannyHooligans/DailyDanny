@@ -45,7 +45,7 @@
     #logo {
         position: absolute;
         left: 0;
-        height: 90%;
+        height: 70%;
         margin: 1px;
     }
 

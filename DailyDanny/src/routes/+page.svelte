@@ -8,25 +8,40 @@
       <span class="super-story-label">Highlighted Story</span>
       <span class="subject-label">{articles[0].subject}</span>
       <h2 class="article-title">{articles[0].title}</h2>
+      
       {#if articles[0].imageUrl}
         <img src={articles[0].imageUrl} alt={articles[0].title} class="article-image"/>
       {/if}
+
       <p class="article-summary">{articles[0].summary}</p>
     </div>
   {/if}
 
   {#each articles.slice(1) as article}
-    <div class={article.imageUrl ? 'article-box article-box-common' : 'half-article-box article-box-common'}>
+    <div class={article.isAd == "True" ? 'ad-box' : (article.imageUrl ? 'article-box article-box-common' : 'half-article-box article-box-common')}>
       {#if article.topArticle == "True"}
          <span class="top-story-label">Top Story</span>
       {/if}
+
+      {#if article.subject != "Ad"}
       <span class="subject-label">{article.subject}</span>
+      {/if}
+
+      {#if article.isAd == "True"}
+        <span class="ad-label">Ad</span>
+      {/if}
+
+      {#if article.title}
       <h2 class="article-title">{article.title}</h2>
+      {/if}
+
       {#if article.imageUrl}
         <img src={article.imageUrl} alt={article.title} class="article-image"/>
       {/if}
+
       <p class="article-summary">{article.summary}</p>
     </div>
+
   {/each}
 </div>
 
@@ -39,7 +54,11 @@
 .article-image {
   width: 100%; 
   height: auto;
-  border-radius: 8px; 
+  border-radius: 8px; margin-top: 20px;
+}
+
+.article-text-preview{
+    font-size: 16px;
 }
 
 .article-summary{
@@ -99,6 +118,16 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.ad-box {
+  grid-column: span 1; /* Spans 2 column */
+  grid-row: span 1; /* Spans 1 row */
+  background-color: #e4e3ca; /* Fallback color */
+  border: 1px solid #000000;
+  padding: 20px;
+  border-radius: 8px;
+  overflow: auto; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
 .top-story-label {
 background-color: rgb(219, 119, 119);
@@ -123,6 +152,15 @@ transition: transform 0.3s ease, box-shadow 0.3s ease;
 
 .subject-label {
 background-color: rgb(131, 183, 192);
+color: rgb(255, 255, 255);
+padding: 5px;
+border-radius: 8px;
+font-weight: bold;
+font: "Courier New", Courier, monospace;
+}
+
+.ad-label{
+background-color: rgb(228, 219, 111);
 color: rgb(255, 255, 255);
 padding: 5px;
 border-radius: 8px;
