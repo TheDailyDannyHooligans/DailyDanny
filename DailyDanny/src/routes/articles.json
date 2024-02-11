@@ -1,9 +1,10 @@
 [
   {
     "title": "Max Verstappen: Red Bull Racing's Driving Force in Formula 1",
-    "summary": "Max Verstappen, with his exceptional skill and fearless style, has quickly become a key driver for Red Bull Racing, shaking up the Formula 1 hierarchy.",
+    "summary": "In the high-speed, adrenaline-fueled world of Formula One, Max Verstappen has emerged as a force to be reckoned with. Born on September 30, 1997, in Hasselt, Belgium, Verstappen has carved out a reputation as one of the most talented and exciting drivers on the circuit. His rise in the sport has been meteoric, marked by record-breaking achievements and a fearless racing style. ",
     "imageUrl": "src/lib/images/ArticlePlaceholder/images.jpeg",
     "subject": "Sports",
+    "topArticle":"Super",
     "articleText": ""
   },
   {
@@ -11,6 +12,7 @@
     "summary": "President Joe Biden navigates America through a transformative era, tackling both immediate crises and long-term challenges.",
     "imageUrl": "src/lib/images/ArticlePlaceholder/Joe_Biden_presidential_portrait.jpg",
     "subject": "Politics",
+    "topArticle":"True",
     "articleText": ""
   },
     {
@@ -18,6 +20,7 @@
     "summary": "Toucans, with their vibrant bills and plumage, are not only tropical rainforest icons but also crucial to their ecosystems.",
     "imageUrl":"src/lib/images/ArticlePlaceholder/360_F_491777222_2kC4zaRq2wams4y3t0UjKg95OgdILXUC.jpg",
     "subject": "Nature",
+    "topArticle":"True",
     "articleText": ""
   },
     {
@@ -25,6 +28,7 @@
     "summary": "Music is a powerful and universal form of expression that transcends cultural, linguistic, and geographical boundaries. It has the ability to evoke emotions, convey messages, and create connections between people, making it an essential part of human experience. Whether through the rhythms of a drum, the melodies of a violin, or the lyrics of a song, music has the capacity to inspire, heal, and unite individuals across the globe.",
     "imageUrl":"",
     "subject": "Music",
+    "topArticle":"True",
     "articleText": ""
   },
   {
@@ -32,6 +36,7 @@
     "summary": "Climate change, a critical 21st-century challenge, is altering global weather patterns and atmospheric conditions, mainly due to human activities.",
     "imageUrl":"src/lib/images/ArticlePlaceholder/gettyimages-586087414-2048x2048-smaller-scaled.jpg",
     "subject": "Politics",
+    "topArticle":"True",
     "articleText": ""
   },
   {
@@ -39,6 +44,7 @@
     "summary": "Florida offers diverse experiences, from Orlando's magical theme parks to Miami's lively streets, making it a top travel destination.",
     "imageUrl":"src/lib/images/ArticlePlaceholder/0 HERO_HoustonTX_GettyImages-532390052.jpg",
     "subject": "Tourism",
+    "topArticle":"True",
     "articleText": ""
   },
     {
@@ -46,6 +52,7 @@
     "summary": "David Njoku, the Cleveland Browns' dynamic tight end, stands out in the NFL with his remarkable athleticism and game-changing plays.",
     "imageUrl":"src/lib/images/ArticlePlaceholder/71026049007-usatsi-21546141.jpg.webp",
     "subject": "Sports",
+    "topArticle":"False",
     "articleText": ""
   },
   {
@@ -53,6 +60,7 @@
     "summary": "The COVID-19 pandemic, originating in Wuhan, China, has drastically impacted global health, economies, and daily life.",
     "imageUrl":"",
     "subject": "Medicine",
+    "topArticle":"False",
     "articleText": ""
   },
   {
@@ -60,6 +68,7 @@
     "summary": "Vladimir Putin, Russia's President, is a pivotal and controversial figure in global politics, influencing both domestic and international affairs.",
     "imageUrl":"",
     "subject": "Politics",
+    "topArticle":"False",
     "articleText": ""
   },
   {
@@ -67,6 +76,7 @@
     "summary": "The Cleveland Browns' first Super Bowl win marks a historic moment, ending a long drought and thrilling their fans.",
     "imageUrl":"",
     "subject": "Sports",
+    "topArticle":"False",
     "articleText": ""
   },
   {
@@ -74,6 +84,7 @@
     "summary": "Storytelling, a timeless art form, has shaped human culture across millennia, serving as a tool for communication, education, and entertainment.",
     "imageUrl":"",
     "subject": "Writing",
+    "topArticle":"False",
     "articleText": ""
   }
 

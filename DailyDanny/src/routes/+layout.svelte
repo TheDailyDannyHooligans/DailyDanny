@@ -37,9 +37,9 @@
     #home-title {
         position: relative;
         text-align: center;
-        color: white;
         font-family: 'Lateef';
-        
+        font-size: 6em;
+        color: rgba(255, 255, 255, .1);
     }
 
     #logo {
