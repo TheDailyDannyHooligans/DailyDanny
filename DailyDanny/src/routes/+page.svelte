@@ -6,6 +6,7 @@
   {#if articles.length > 0}
     <div class="article-box-main-story article-box-common">
       <span class="super-story-label">Highlighted Story</span>
+      <span class="subject-label">{articles[0].subject}</span>
       <h2 class="article-title">{articles[0].title}</h2>
       {#if articles[0].imageUrl}
         <img src={articles[0].imageUrl} alt={articles[0].title} class="article-image"/>
@@ -17,8 +18,9 @@
   {#each articles.slice(1) as article}
     <div class={article.imageUrl ? 'article-box article-box-common' : 'half-article-box article-box-common'}>
       {#if article.topArticle == "True"}
-        <span class="top-story-label">Top Story</span>
+         <span class="top-story-label">Top Story</span>
       {/if}
+      <span class="subject-label">{article.subject}</span>
       <h2 class="article-title">{article.title}</h2>
       {#if article.imageUrl}
         <img src={article.imageUrl} alt={article.title} class="article-image"/>
@@ -56,6 +58,7 @@
   margin-top: 250px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(min-content, 100));
   gap: 20px;
 }
 
@@ -98,8 +101,8 @@
 
 
 .top-story-label {
-background-color: rgb(248, 191, 191);
-color: rgb(180, 0, 0);
+background-color: rgb(219, 119, 119);
+color: rgb(255, 255, 255);
 padding: 5px;
 border-radius: 8px;
 font-weight: bold;
@@ -116,6 +119,15 @@ font: "Courier New", Courier, monospace;
 }
 .article-box-common {
 transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.subject-label {
+background-color: rgb(131, 183, 192);
+color: rgb(255, 255, 255);
+padding: 5px;
+border-radius: 8px;
+font-weight: bold;
+font: "Courier New", Courier, monospace;
 }
 
 .article-box-common:hover {
