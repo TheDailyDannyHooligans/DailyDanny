@@ -1,5 +1,5 @@
 <script>
-    import articles from './static/article_json/articles.json';
+    import articles from '/static/article_json/articles.json';
 </script>
 
 <div class="articles">
@@ -86,6 +86,19 @@
   border-radius: 8px;
   overflow: auto;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 1.2s;
+}
+
+/* Allows articles to fade in from bottom on web page load */
+@keyframes fadeIn{
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .half-article-box {
@@ -98,6 +111,7 @@
   border-radius: 8px;
   overflow: auto; 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 1.2s;
 }
 
 .ad-box {
@@ -109,6 +123,7 @@
   border-radius: 8px;
   overflow: auto; 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 1.2s;
 }
 
 .top-story-label {

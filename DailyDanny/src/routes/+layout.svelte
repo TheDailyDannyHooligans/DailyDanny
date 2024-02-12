@@ -1,5 +1,28 @@
 <script>
     import logo from '/images/DailyDannyLogo.png';
+
+    // import { onMount } from 'svelte';
+
+    // onMount(() => {
+    //     if (typeof window !== 'undefined') {
+    //         const nav = document.querySelector(".home-banner");
+    //         let lastScrollY = window.scrollY;
+            
+    //         window.addEventListener("scroll", () => {
+    //             if (lastScrollY < window.scrollY){
+    //                 console.log('going down webpage');
+    //                 nav.classList.add("nav--hidden");
+    //             }
+    //             else {
+    //                 console.log('going up webpage');
+    //                 nav.classList.remove("nav--hidden");
+    //             }
+    //             lastScrollY = window.scrollY;
+    //         });
+
+    //         console.log('Running in the browser');
+    //     }
+    // });
 </script>
 
 <div id='home-banner' class='banner'>
@@ -19,7 +42,7 @@
 
     </ul>
 </nav>
-<!-- i did it -->
+
 <style>
     .banner {
     position: fixed;
@@ -106,6 +129,11 @@
 
     #nav-banner li{
         float: left;
+    }
+
+    .nav--hidden{
+        transform: translateY(-50px);
+        box-shadow: none;
     }
 </style>
 
