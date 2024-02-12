@@ -3,16 +3,39 @@
     let author = '';
     let content = '';
     let selectedFiles = [];
+    let articles = [];
+
+    const printArticlesToFile = () => {
+  // Convert articles array to JSON string
+  const articlesJSON = JSON.stringify(articles, null, 2);
+  
+  // Create a Blob containing the JSON data
+  const blob = new Blob([articlesJSON], { type: 'text/plain' });
+  
+  // Create a temporary URL for the Blob
+  const url = URL.createObjectURL(blob);
+  
+  // Create a link element to download the file
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'articles.txt';
+  a.click();
+  
+  // Release the URL object
+  URL.revokeObjectURL(url);
+};
   
     const handleFileInput = (event) => {
       selectedFiles = Array.from(event.target.files);
     };
   
-    const handleSubmit = () => {
-      const formData = {
-      title,
-      author,
-      content
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('Form submitted!');
+        const formData = {
+        title,
+        author,
+        content
     };
     articles = [...articles, formData]; // Add new article to the array
 
@@ -20,6 +43,8 @@
     title = '';
     author = '';
     content = '';
+
+    printArticlesToFile();
     };
   </script>
   
