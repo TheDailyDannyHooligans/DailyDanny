@@ -98,10 +98,20 @@
     color: rgb(255, 255, 255);
 }
 
-.article-box:hover,
+
+
+.half-article-box:hover,
 .article-box-main-story:hover {
     transform: scale(1.05);
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.article-box-main-story:hover {
+    transform: scale(1.025);
+}
+
+.article-box:hover {
+    transform: scaleY(1.025) scaleX(1.05);
 }
 
 .article-link {

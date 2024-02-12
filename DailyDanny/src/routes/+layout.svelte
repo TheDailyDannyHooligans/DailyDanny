@@ -48,8 +48,8 @@
         position: fixed;
         z-index: 1;
         display: flex;
-        backdrop-filter: blur(10px); /* Apply the blur effect */
-        -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
+        backdrop-filter: blur(3px); /* Apply the blur effect */
+        -webkit-backdrop-filter: blur(3px); /* For Safari compatibility */
     }
 
     #home-banner {
