@@ -1,5 +1,5 @@
 <script>
-  import articles from './static/article_json/articles.json';
+  import articles from '/static/article_json/articles.json';
 </script>
 
 <div class="articles">
