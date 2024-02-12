@@ -112,13 +112,15 @@
         padding: 0px;
         margin: 0px;
         overflow: hidden;
+        align-self: center;
     }
 
     #nav-banner a {
         color: white;
         text-decoration: none;
-        padding: 14px;
+        padding: 1.5vw;
         display: block;
+        
     }
 
     #nav-banner a:hover {
@@ -150,7 +152,11 @@
         }
 
         #logo {
-            display: none;
+            transform: scale(0.5);
+        }
+
+        #nav-banner a{
+            transform: scale(0.8);
         }
     }
 </style>
