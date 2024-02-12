@@ -1,0 +1,141 @@
+:global(body) {
+    background-color: #bacadd;
+    font-family: 'Times New Roman', sans-serif;
+}
+
+/* This sets the "grid" where the articles fall into*/
+.articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    margin-top: 175px;
+}
+
+.article-title {
+    font-size: 30px;
+    font-weight: bold;
+    background-color: rgba(170, 201, 219, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.article-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.article-summary {
+    font-size: 21px;
+}
+
+/* Common styles for all article boxes */
+.article-box,
+.article-box-main-story,
+.half-article-box,
+.ad-box {
+    background-color: #70b3d3;
+    background-image: linear-gradient(to right, hsl(157, 37%, 93%), #d7e5ec, #f0e9ef);
+    border: 1px solid #000000;
+    padding: 20px;
+    border-radius: 8px;
+    overflow: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 1.2s;
+    box-shadow: 0px 0px 12px 2px rgba(85, 84, 84, 0.5);
+}
+
+.article-box {
+    grid-column: span 1;
+    grid-row: span 2;
+}
+
+.article-box-main-story {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.half-article-box,
+.ad-box {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.ad-box {
+    background-color: #e4e3ca;
+}
+
+/* Common styles for all labels*/
+.top-story-label,
+.super-story-label,
+.subject-label,
+.ad-label {
+    padding: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+    font: "Courier New", Courier, monospace;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.top-story-label {
+    background-color: rgb(219, 119, 119);
+    color: rgb(255, 255, 255);
+}
+
+.super-story-label {
+    background-color: rgb(139, 143, 200);
+    color: rgb(255, 255, 255);
+}
+
+.subject-label {
+    background-color: rgb(131, 183, 192);
+    color: rgb(255, 255, 255);
+}
+
+.ad-label {
+    background-color: rgb(203, 190, 51);
+    color: rgb(255, 255, 255);
+}
+
+.article-box:hover,
+.article-box-main-story:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.article-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*These changes take effect when screen is less than 768 picels wide (for mobile)*/
+@media screen and (max-width: 768px) {
+    .articles {
+        grid-template-columns: 1fr;
+    }
+
+    .article-title {
+        font-size: 24px;
+    }
+
+    .article-summary {
+        font-size: 18px;
+    }
+
+    .article-box-main-story {
+        grid-column: span 1;
+    }
+}

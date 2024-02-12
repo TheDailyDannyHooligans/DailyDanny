@@ -45,29 +45,30 @@
 
 <style>
     .banner {
-    position: fixed;
-    z-index: 1;
-    display: flex;
-    backdrop-filter: blur(10px); /* Apply the blur effect */
-    -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
-    }   
+        position: fixed;
+        z-index: 1;
+        display: flex;
+        backdrop-filter: blur(10px); /* Apply the blur effect */
+        -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
+    }
+
     #home-banner {
         top: 0;
         left: 0;
         right: 0;
-        height:10%;
+        height: 100px; 
         width: 100%;
         align-items: center;
         justify-content: center;
-        background-color: rgba(65, 69, 75, 0.7);
+        background: linear-gradient(to top, rgba(65, 69, 75, 0.7), #bacadd);
     }
 
     #home-title {
         position: relative;
         text-align: center;
         font-family: 'Lateef';
-        font-size: 6em;
-        color: rgba(255, 255, 255, .1);
+        font-size: 5em; 
+        color: rgba(255, 255, 255, .3);
     }
 
     #logo {
@@ -95,16 +96,15 @@
     }
 
     #nav-banner {
-        top: 10%;
+        top: 100px; 
         left: 0;
         width: 100%;
-        height: 5%;
+        height: 50px; 
         background-color: rgba(65, 69, 75, 0.7);
         border-style: solid;
         border-left-style: none;
         border-color: white;
         border-width: 1px;
-       
     }
 
     #nav-banner ul {
@@ -112,28 +112,46 @@
         padding: 0px;
         margin: 0px;
         overflow: hidden;
-        margin-bottom: 1px;
     }
 
-    #nav-banner a{
+    #nav-banner a {
         color: white;
         text-decoration: none;
         padding: 14px;
-        display: block; 
-        
+        display: block;
     }
 
     #nav-banner a:hover {
         background-color: rgb(54, 135, 160);
     }
 
-    #nav-banner li{
+    #nav-banner li {
         float: left;
     }
 
-    .nav--hidden{
+    .nav--hidden {
         transform: translateY(-50px);
         box-shadow: none;
+    }
+
+    /* Media Query for screens less than 768px wide */
+    @media only screen and (max-width: 768px) {
+        #home-banner {
+            height: 100px;
+        }
+
+        #home-title {
+            font-size: 2em;
+        }
+
+        #nav-banner {
+            top: 100px;
+            height: 50px;
+        }
+
+        #logo {
+            display: none;
+        }
     }
 </style>
 

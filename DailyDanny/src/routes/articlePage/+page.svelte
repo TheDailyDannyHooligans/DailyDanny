@@ -29,7 +29,7 @@
         height: 100vh;
         width: 100vw;
         margin: 0;
-        margin-top: 200px;
+        margin-top: 175px;
         padding: 0;              
     }
 
