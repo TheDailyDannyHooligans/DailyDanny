@@ -1,5 +1,5 @@
 <script>
-      import articles from '/static/article_json/articles.json';
+        import articles from '/src/article_json/articles.json';
 </script>
 
 <div class="container">
@@ -26,17 +26,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
         width: 100vw;
-        margin: 0;
-        margin-top: 200px;
+        margin-top: 175px;
         padding: 0;              
     }
 
     .article-box {
-        width: 90vw;
-        height: 90vh;
-        margin: auto;
+        width: 95vw;
+        margin: 10px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -69,12 +66,35 @@
     .article-summary {
         font-size: 21px;
         text-align: center;
+        background-color: #c2e0ee;
+        border-radius: 10px;
     }
 
     .article-text {
         font-size: 28px;
         text-align: left;
-        background-color: #c2e0ee;
-        border-radius: 10px;
+        padding: 20px;
+        width: 95%;
     }
+
+@media screen and (max-width: 768px){
+    .container {
+        width: 97vw
+    }
+
+    .article-box {
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .article-summary {
+        font-size: 16px;
+    }
+
+    .article-text {
+        font-size: 16px;
+    }
+}
 </style>
