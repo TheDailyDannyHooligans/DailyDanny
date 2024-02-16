@@ -1,54 +1,74 @@
 <script>
+    console.log('on create page');
+    import articles from '/src/article_json/articles.json';
+    
+    import { onMount } from 'svelte';
+    
     let title = '';
     let author = '';
     let content = '';
     let selectedFiles = [];
-    let articles = [];
+
+    const fetchArticles = async () => {
+        // Fetching articles directly from the imported module
+        try {
+            const response = await fetch(articlesJSONPath);
+            const articlesData = await response.json();
+            articles = articlesData;
+        } catch (error) {
+            console.error('Error fetching articles:', error);
+        }
+    };
+
+    onMount(fetchArticles);
 
     const printArticlesToFile = () => {
-  // Convert articles array to JSON string
-  const articlesJSON = JSON.stringify(articles, null, 2);
+         // Convert articles array to JSON string
+        const articlesJSON = JSON.stringify(articles, null, 2);
   
-  // Create a Blob containing the JSON data
-  const blob = new Blob([articlesJSON], { type: 'text/plain' });
+        // Create a Blob containing the JSON data
+        const blob = new Blob([articlesJSON], { type: 'application/json' });
   
-  // Create a temporary URL for the Blob
-  const url = URL.createObjectURL(blob);
-  
-  // Create a link element to download the file
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'articles.txt';
-  a.click();
-  
-  // Release the URL object
-  URL.revokeObjectURL(url);
-};
-  
-    const handleFileInput = (event) => {
-      selectedFiles = Array.from(event.target.files);
+        // Create a temporary URL for the Blob
+        const url = URL.createObjectURL(blob);
+        
+        // Create a link element to download the file
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'articles.json';
+        a.click();
+        
+        // Release the URL object
+        URL.revokeObjectURL(url);
     };
-  
+
+    const handleFileInput = (event) => {
+        selectedFiles = Array.from(event.target.files);
+    };
+
     const handleSubmit = (event) => {
+        console.log('Handling form submit...');
         event.preventDefault();
         console.log('Form submitted!');
         const formData = {
-        title,
-        author,
-        content
-    };
-    articles = [...articles, formData]; // Add new article to the array
+            title,
+            author,
+            content
+        };
+        articles = [...articles, formData]; // Add new article to the array
+        console.log('Updated articles:', articles);
 
-    // Reset form fields
-    title = '';
-    author = '';
-    content = '';
 
-    printArticlesToFile();
+        // Reset form fields
+        title = '';
+        author = '';
+        content = '';
+
+        printArticlesToFile();
     };
-  </script>
+</script>
   
-  <style>
+<style>
     form {
       position: absolute;
       top: 15%;
