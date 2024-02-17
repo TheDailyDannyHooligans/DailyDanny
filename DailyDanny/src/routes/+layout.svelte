@@ -1,34 +1,9 @@
 <script>
-    // import { onMount } from 'svelte';
-
-    // onMount(() => {
-    //     if (typeof window !== 'undefined') {
-    //         const nav = document.querySelector(".home-banner");
-    //         let lastScrollY = window.scrollY;
-            
-    //         window.addEventListener("scroll", () => {
-    //             if (lastScrollY < window.scrollY){
-    //                 console.log('going down webpage');
-    //                 nav.classList.add("nav--hidden");
-    //             }
-    //             else {
-    //                 console.log('going up webpage');
-    //                 nav.classList.remove("nav--hidden");
-    //             }
-    //             lastScrollY = window.scrollY;
-    //         });
-
-    //         console.log('Running in the browser');
-    //     }
-    // });
-
-    let count = 0;
+	let count = 0;
 
 	function handleClick() {
 		count += 1;
-        console.log("Button clicked")
 	}
-
 </script>
 
 <div id='home-banner' class='banner'>
