@@ -1,6 +1,4 @@
 <script>
-    import logo from '/images/DailyDannyLogo.png';
-
     // import { onMount } from 'svelte';
 
     // onMount(() => {
@@ -23,12 +21,27 @@
     //         console.log('Running in the browser');
     //     }
     // });
+
+    let count = 0;
+
+	function handleClick() {
+		count += 1;
+        console.log("Button clicked")
+	}
+
 </script>
 
 <div id='home-banner' class='banner'>
-    <img id='logo' alt= "Site Logo" src={logo}>
+    <img id='logo' alt= "Site Logo" src='/images/DailyDannyLogo.png'>
     <h1 id='home-title'>THE DAILY DANNY</h1>
     <a href="/" id='profile-btn'>Log in</a>
+
+    <!--Example button to show reactivity is working-->
+    <button on:click={handleClick}>
+	Clicked {count}
+	{count === 1 ? 'time' : 'times'}
+    </button>
+
 </div>
 <nav id='nav-banner' class='banner'>
     <ul>
