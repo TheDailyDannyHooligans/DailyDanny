@@ -10,13 +10,6 @@
     <img id='logo' alt= "Site Logo" src='/images/DailyDannyLogo.png'>
     <h1 id='home-title'>THE DAILY DANNY</h1>
     <a href="/" id='profile-btn'>Log in</a>
-
-    <!--Example of a reactive button working--->
-    <button on:click={handleClick}>
-	Clicked {count}
-	{count === 1 ? 'time' : 'times'}
-</button>
-
 </div>
 <nav id='nav-banner' class='banner'>
     <ul>
