@@ -46,7 +46,7 @@
         selectedFiles = Array.from(event.target.files);
     };
 
-    const handleSubmit = (event) => {
+    function handleSubmit() {
         console.log('Handling form submit...');
         event.preventDefault();
         console.log('Form submitted!');
@@ -119,6 +119,7 @@
   </style>
   
   <h1>Write an Article</h1>
+
   <form on:submit={handleSubmit}>
     <div>
       <label for="title">Title:</label>
@@ -135,7 +136,7 @@
       <textarea id="content" bind:value={content} required></textarea>
     </div>
   
-    <div>
+    <!-- <div>
       <label for="attachments">Attachments (Images or Videos):</label>
       <input
         type="file"
@@ -144,7 +145,7 @@
         accept="image/*,video/*"
         on:change={handleFileInput}
       />
-    </div>
+    </div> -->
   
     <div>
       <button type="submit">Submit</button>
