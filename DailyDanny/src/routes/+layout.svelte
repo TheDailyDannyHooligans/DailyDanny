@@ -1,34 +1,22 @@
 <script>
-    import logo from '/images/DailyDannyLogo.png';
+	let count = 0;
 
-    // import { onMount } from 'svelte';
-
-    // onMount(() => {
-    //     if (typeof window !== 'undefined') {
-    //         const nav = document.querySelector(".home-banner");
-    //         let lastScrollY = window.scrollY;
-            
-    //         window.addEventListener("scroll", () => {
-    //             if (lastScrollY < window.scrollY){
-    //                 console.log('going down webpage');
-    //                 nav.classList.add("nav--hidden");
-    //             }
-    //             else {
-    //                 console.log('going up webpage');
-    //                 nav.classList.remove("nav--hidden");
-    //             }
-    //             lastScrollY = window.scrollY;
-    //         });
-
-    //         console.log('Running in the browser');
-    //     }
-    // });
+	function handleClick() {
+		count += 1;
+	}
 </script>
 
 <div id='home-banner' class='banner'>
-    <img id='logo' alt= "Site Logo" src={logo}>
+    <img id='logo' alt= "Site Logo" src='/images/DailyDannyLogo.png'>
     <h1 id='home-title'>THE DAILY DANNY</h1>
     <a href="/" id='profile-btn'>Log in</a>
+
+    <!--Example of a reactive button working--->
+    <button on:click={handleClick}>
+	Clicked {count}
+	{count === 1 ? 'time' : 'times'}
+</button>
+
 </div>
 <nav id='nav-banner' class='banner'>
     <ul>
