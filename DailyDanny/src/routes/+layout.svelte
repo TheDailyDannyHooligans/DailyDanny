@@ -1,17 +1,43 @@
 <script>
+    import { onMount, onDestroy } from 'svelte';
+
 	let count = 0;
 
 	function handleClick() {
 		count += 1;
 	}
-</script>
 
-<div id='home-banner' class='banner'>
+    let lastScrollY = 0;
+    let bannerTransform = 0;
+
+    onMount(() => {
+        window.addEventListener('scroll', handleScroll);
+    });
+
+    onDestroy(() => {
+        window.removeEventListener('scroll', handleScroll);
+    });
+
+    function handleScroll() {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY > lastScrollY && bannerTransform > -100){
+            bannerTransform -= 10;
+        } else if (currentScrollY < lastScrollY && bannerTransform < 0){
+            bannerTransform += 10;
+        }
+        lastScrollY = currentScrollY;
+    }  
+
+</script>
+ 
+<div id='home-banner' class='banner' style="transform: translateY({bannerTransform}px);">
     <img id='logo' alt= "Site Logo" src='/images/DailyDannyLogo.png'>
     <h1 id='home-title'>THE DAILY DANNY</h1>
     <a href="/" id='profile-btn'>Log in</a>
 </div>
-<nav id='nav-banner' class='banner'>
+
+
+<nav id='nav-banner' class='banner' style="transform: translateY({bannerTransform}px);">
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/topics/politics">Politics</a></li>
@@ -24,6 +50,7 @@
     </ul>
 </nav>
 
+
 <style>
     .banner {
         position: fixed;
@@ -31,6 +58,7 @@
         display: flex;
         backdrop-filter: blur(3px); /* Apply the blur effect */
         -webkit-backdrop-filter: blur(3px); /* For Safari compatibility */
+        transition: transform 0.1s ease-out;
     }
 
     #home-banner {
@@ -112,9 +140,12 @@
         float: left;
     }
 
-    .nav--hidden {
-        transform: translateY(-50px);
-        box-shadow: none;
+    .hide{
+        display: none;
+    }
+
+    .show{
+        display: unset;
     }
 
     /* Media Query for screens less than 768px wide */
@@ -141,5 +172,6 @@
         }
     }
 </style>
+
 
 <slot></slot>
