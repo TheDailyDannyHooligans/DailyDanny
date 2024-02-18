@@ -1,33 +1,34 @@
-<script>
+<script lang>
     import { onMount, onDestroy } from 'svelte';
-
-	let count = 0;
-
-	function handleClick() {
-		count += 1;
-	}
 
     let lastScrollY = 0;
     let bannerTransform = 0;
 
     onMount(() => {
         window.addEventListener('scroll', handleScroll);
-    });
 
-    onDestroy(() => {
-        window.removeEventListener('scroll', handleScroll);
-    });
-
-    function handleScroll() {
+        function handleScroll() {
         const currentScrollY = window.scrollY;
         if (currentScrollY > lastScrollY && bannerTransform > -100){
-            bannerTransform -= 10;
+            bannerTransform -= 10; // scroll down
         } else if (currentScrollY < lastScrollY && bannerTransform < 0){
             bannerTransform += 10;
         }
         lastScrollY = currentScrollY;
-    }  
 
+
+        document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            // Scroll to the top of the page
+            bannerTransform = 0;
+        });
+        });
+
+        onDestroy(() => {
+        window.removeEventListener('scroll', handleScroll);
+        });
+    }  
+    });
 </script>
  
 <div id='home-banner' class='banner' style="transform: translateY({bannerTransform}px);">
@@ -58,7 +59,7 @@
         display: flex;
         backdrop-filter: blur(3px); /* Apply the blur effect */
         -webkit-backdrop-filter: blur(3px); /* For Safari compatibility */
-        transition: transform 0.1s ease-out;
+        transition: transform 0.25s ease-out;
     }
 
     #home-banner {
@@ -138,14 +139,6 @@
 
     #nav-banner li {
         float: left;
-    }
-
-    .hide{
-        display: none;
-    }
-
-    .show{
-        display: unset;
     }
 
     /* Media Query for screens less than 768px wide */
