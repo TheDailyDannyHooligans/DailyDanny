@@ -1,15 +1,37 @@
 <script>
-	let count = 0;
+ import '/src/lib/sharedStyle.css'
+ import LoginPopup from '/src/routes/login/login.svelte'; 
+ import SettingsPopup from '/src/routes/settings/settings.svelte'; 
 
-	function handleClick() {
-		count += 1;
-	}
+  let loginPopupVisible = false;
+  let settingsPopupVisible = false;  
+
+  function toggleLoginPopup() {
+    loginPopupVisible = !loginPopupVisible;
+  }
+
+function toggleSettingsPopup() {
+    settingsPopupVisible = !settingsPopupVisible;
+}
+
+
+function closeLoginPopup() {
+    loginPopupVisible = false;
+}
+
+function closeSettingsPopup() {
+    settingsPopupVisible = false;
+}
+
 </script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 <div id='home-banner' class='banner'>
     <img id='logo' alt= "Site Logo" src='/images/DailyDannyLogo.png'>
     <h1 id='home-title'>THE DAILY DANNY</h1>
-    <a href="/" id='profile-btn'>Log in</a>
+    <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
+    <a id='settings' on:click={toggleSettingsPopup}><i class="fas fa-cog"></i></a>
 </div>
 <nav id='nav-banner' class='banner'>
     <ul>
@@ -20,9 +42,15 @@
         <li><a href="/topics/travel">Travel</a></li>
         <li><a href="/topics/medicine">Medicine</a></li>
         <li><a href="/topics/music">Music</a></li>
-
     </ul>
 </nav>
+{#if loginPopupVisible}
+    <LoginPopup on:close={closeLoginPopup}/>
+{/if}
+{#if settingsPopupVisible}
+    <SettingsPopup on:close={closeSettingsPopup}/>
+{/if}
+
 
 <style>
     .banner {
@@ -32,21 +60,11 @@
         backdrop-filter: blur(3px); /* Apply the blur effect */
         -webkit-backdrop-filter: blur(3px); /* For Safari compatibility */
     }
-
-    #home-banner {
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100px; 
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(to top, rgba(65, 69, 75, 0.7), #bacadd);
-    }
-
+    /*Home banner moved to shared css*/
     #home-title {
-        position: relative;
+        position: absolute;
         text-align: center;
+        align-self: center;
         font-family: 'Lateef';
         font-size: 5em; 
         color: rgba(255, 255, 255, .3);
@@ -60,8 +78,7 @@
     }
 
     #profile-btn {
-        position: absolute;
-        right: 5%;
+        margin-left: 75%;
         display: inline-block;
         border: 0.1em solid white;
         border-radius: 0.12em;
@@ -72,7 +89,23 @@
         transition: all 0.2s;
     }
 
+    #settings {
+        margin-left: 1%;
+        display: inline-block;
+        border: 0.1em solid white;
+        border-radius: 0.12em;
+        padding: 0.35em 0.5em;
+        color: white;
+        box-sizing: border-box;
+        text-decoration: none;
+        transition: all 0.2s;
+  }
+
     #profile-btn:hover {
+        background-color: rgb(54, 135, 160);
+    }
+
+    #settings:hover {
         background-color: rgb(54, 135, 160);
     }
 
@@ -117,6 +150,8 @@
         box-shadow: none;
     }
 
+   
+
     /* Media Query for screens less than 768px wide */
     @media only screen and (max-width: 768px) {
         #home-banner {
@@ -124,7 +159,7 @@
         }
 
         #home-title {
-            font-size: 2em;
+            font-size: 1.5em;
         }
 
         #nav-banner {
@@ -140,6 +175,9 @@
             transform: scale(0.8);
         }
     }
+
 </style>
 
-<slot></slot>
+<slot>  
+
+</slot>
