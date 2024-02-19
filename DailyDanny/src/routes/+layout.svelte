@@ -123,17 +123,19 @@ function closeSettingsPopup() {
 
     #nav-banner ul {
         list-style-type: none;
+        height: 50px;
         padding: 0px;
         margin: 0px;
         overflow: hidden;
-        align-self: center;
+        display: flex;
+        align-items: center;
     }
 
     #nav-banner a {
         color: white;
+        
         text-decoration: none;
-        padding: 1.5vw;
-        display: block;
+        padding: 1.5vw; 
         
     }
 
