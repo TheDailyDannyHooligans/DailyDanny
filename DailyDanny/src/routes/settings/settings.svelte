@@ -6,6 +6,7 @@
 
     function toggleSwitch() {
         switchOn = !switchOn;
+        console.log("Dark-mode: ", switchOn)
         if (typeof window !== "undefined") {
             const body = document.body;
             if (switchOn) {
