@@ -1,6 +1,6 @@
 <script>
     import articles from '/src/article_json/articles.json';
-    
+    import Editor from '@tinymce/tinymce-svelte';
     import { onMount } from 'svelte';
     
     let title = '';
@@ -40,7 +40,7 @@
       } catch (error) {
           console.error('Error printing articles to file:', error);
       }
-};
+    };
 
 
 
@@ -74,6 +74,10 @@
 </script>
   
 <style>
+  .form-container {
+    margin-top: 200px;
+  }
+
   form {
     position: absolute;
     top: 15%;
@@ -123,6 +127,7 @@
   }
   </style>
   
+  <div class="form-container">
   <h1>Write an Article</h1>
 
   <form on:submit={handleSubmit}>
@@ -138,10 +143,10 @@
   
     <div>
       <label for="articleText">Article Content:</label>
-      <textarea id="articleText" bind:value={articleText} required></textarea>
+      <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" bind:value={articleText}/>
     </div>
   
-    <!-- <div>
+    <div>
       <label for="attachments">Attachments (Images or Videos):</label>
       <input
         type="file"
@@ -150,11 +155,12 @@
         accept="image/*,video/*"
         on:change={handleFileInput}
       />
-    </div> -->
+    </div>
   
     <div>
       <button type="submit">Submit</button>
     </div>
   </form>
+  </div>
   
  
