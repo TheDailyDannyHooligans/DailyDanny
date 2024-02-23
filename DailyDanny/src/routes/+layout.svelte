@@ -28,8 +28,8 @@ function closeSettingsPopup() {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 <div id='home-banner' class='banner'>
-    <img id='logo' alt= "Site Logo" src='/images/DailyDannyLogo.png'>
-    <h1 id='home-title'>THE DAILY DANNY</h1>
+    <a id='logo' href='/'><img alt= "Site Logo" src='/images/DailyDannyLogo.png'></a>
+    <h1 id='home-title'><a href="/">THE DAILY DANNY</a></h1>
     <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
     <a id='settings' on:click={toggleSettingsPopup}><i class="fas fa-cog"></i></a>
 </div>
@@ -67,11 +67,16 @@ function closeSettingsPopup() {
         align-self: center;
         font-family: 'Lateef';
         font-size: 5em; 
+    }
+
+    #home-title a {
+        text-decoration: none;
         color: rgba(255, 255, 255, .3);
     }
 
-    #logo {
+    #logo img{
         position: absolute;
+        top: 15px;
         left: 0;
         height: 70%;
         margin: 1px;
@@ -89,6 +94,10 @@ function closeSettingsPopup() {
         transition: all 0.2s;
     }
 
+    #profile-btn:hover {
+        cursor: pointer;
+    }
+
     #settings {
         margin-left: 1%;
         display: inline-block;
@@ -99,6 +108,10 @@ function closeSettingsPopup() {
         box-sizing: border-box;
         text-decoration: none;
         transition: all 0.2s;
+  }
+
+  #settings:hover {
+    cursor: pointer;
   }
 
     #profile-btn:hover {
@@ -152,7 +165,6 @@ function closeSettingsPopup() {
         box-shadow: none;
     }
 
-   
 
     /* Media Query for screens less than 768px wide */
     @media only screen and (max-width: 768px) {
