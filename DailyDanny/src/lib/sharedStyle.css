@@ -187,3 +187,15 @@ body.dark-mode {
   .dark-mode #home-banner {
       background: linear-gradient(to top, rgba(65, 69, 75, 0.7), #000000);
   }
+
+  .dark-mode .article-frame {
+      background-image: linear-gradient(to right, #3a3d3f, #3a3d3f, #3a3d3f);
+      background-color: #3a3d3f;
+      color: white;
+  }
+
+  .dark-mode .article-summary {
+    background-color: #3a3d3f;
+      color: white;
+  }
+
