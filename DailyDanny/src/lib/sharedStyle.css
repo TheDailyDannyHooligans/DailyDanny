@@ -44,6 +44,7 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: fadeIn 1.2s;
     box-shadow: 0px 0px 12px 2px rgba(85, 84, 84, 0.5);
+    align-items: center;
 }
 
 .article-box {
