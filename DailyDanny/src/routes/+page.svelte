@@ -7,7 +7,7 @@
     localStorage.setItem('lastClickedArticle', index);
   }
 </script>
-
+<body class = "body">
 <div class="articles">
   {#if articles.length > 0}
     <div class="article-box-main-story article-box-common">
@@ -54,11 +54,8 @@
     
   {/each}
 </div>
-
+</body>
 <!--  Styling is in sharedStyle.css file in /lib folder-->
 <style>
-  :global(body) {
-    background-color: #bacadd;
-    font-family: 'Times New Roman', sans-serif;
-}
+
 </style>
