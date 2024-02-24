@@ -1,22 +1,27 @@
 <script>
-    // import { onMount } from 'svelte';
+ import '/src/lib/sharedStyle.css'
+ import LoginPopup from '/src/routes/login/login.svelte'; 
+ import SettingsPopup from '/src/routes/settings/settings.svelte'; 
 
-    // onMount(() => {
-    //     if (typeof window !== 'undefined') {
-    //         const nav = document.querySelector(".home-banner");
-    //         let lastScrollY = window.scrollY;
-            
-    //         window.addEventListener("scroll", () => {
-    //             if (lastScrollY < window.scrollY){
-    //                 console.log('going down webpage');
-    //                 nav.classList.add("nav--hidden");
-    //             }
-    //             else {
-    //                 console.log('going up webpage');
-    //                 nav.classList.remove("nav--hidden");
-    //             }
-    //             lastScrollY = window.scrollY;
-    //         });
+  let loginPopupVisible = false;
+  let settingsPopupVisible = false;  
+
+  function toggleLoginPopup() {
+    loginPopupVisible = !loginPopupVisible;
+  }
+
+function toggleSettingsPopup() {
+    settingsPopupVisible = !settingsPopupVisible;
+}
+
+
+function closeLoginPopup() {
+    loginPopupVisible = false;
+}
+
+function closeSettingsPopup() {
+    settingsPopupVisible = false;
+}
 
     //         console.log('Running in the browser');
     //     }
@@ -30,6 +35,8 @@
 	}
 
 </script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 <div id='home-banner' class='banner'>
     <img id='logo' alt= "Site Logo" src='/images/DailyDannyLogo.png'>
@@ -52,9 +59,15 @@
         <li><a href="/topics/travel">Travel</a></li>
         <li><a href="/topics/medicine">Medicine</a></li>
         <li><a href="/topics/music">Music</a></li>
-
     </ul>
 </nav>
+{#if loginPopupVisible}
+    <LoginPopup on:close={closeLoginPopup}/>
+{/if}
+{#if settingsPopupVisible}
+    <SettingsPopup on:close={closeSettingsPopup}/>
+{/if}
+
 
 <style>
     .banner {
@@ -64,36 +77,30 @@
         backdrop-filter: blur(3px); /* Apply the blur effect */
         -webkit-backdrop-filter: blur(3px); /* For Safari compatibility */
     }
-
-    #home-banner {
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100px; 
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(to top, rgba(65, 69, 75, 0.7), #bacadd);
-    }
-
+    /*Home banner moved to shared css*/
     #home-title {
-        position: relative;
+        position: absolute;
         text-align: center;
+        align-self: center;
         font-family: 'Lateef';
         font-size: 5em; 
+    }
+
+    #home-title a {
+        text-decoration: none;
         color: rgba(255, 255, 255, .3);
     }
 
-    #logo {
+    #logo img{
         position: absolute;
+        top: 15px;
         left: 0;
         height: 70%;
         margin: 1px;
     }
 
     #profile-btn {
-        position: absolute;
-        right: 5%;
+        margin-left: 75%;
         display: inline-block;
         border: 0.1em solid white;
         border-radius: 0.12em;
@@ -105,6 +112,30 @@
     }
 
     #profile-btn:hover {
+        cursor: pointer;
+    }
+
+    #settings {
+        margin-left: 1%;
+        display: inline-block;
+        border: 0.1em solid white;
+        border-radius: 0.12em;
+        padding: 0.35em 0.5em;
+        color: white;
+        box-sizing: border-box;
+        text-decoration: none;
+        transition: all 0.2s;
+  }
+
+  #settings:hover {
+    cursor: pointer;
+  }
+
+    #profile-btn:hover {
+        background-color: rgb(54, 135, 160);
+    }
+
+    #settings:hover {
         background-color: rgb(54, 135, 160);
     }
 
@@ -122,17 +153,19 @@
 
     #nav-banner ul {
         list-style-type: none;
+        height: 50px;
         padding: 0px;
         margin: 0px;
         overflow: hidden;
-        align-self: center;
+        display: flex;
+        align-items: center;
     }
 
     #nav-banner a {
         color: white;
+        
         text-decoration: none;
-        padding: 1.5vw;
-        display: block;
+        padding: 1.5vw; 
         
     }
 
@@ -149,6 +182,7 @@
         box-shadow: none;
     }
 
+
     /* Media Query for screens less than 768px wide */
     @media only screen and (max-width: 768px) {
         #home-banner {
@@ -156,7 +190,7 @@
         }
 
         #home-title {
-            font-size: 2em;
+            font-size: 1.5em;
         }
 
         #nav-banner {
@@ -172,6 +206,9 @@
             transform: scale(0.8);
         }
     }
+
 </style>
 
-<slot></slot>
+<slot>  
+
+</slot>
