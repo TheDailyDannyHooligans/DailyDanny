@@ -59,6 +59,7 @@ function closeSettingsPopup() {
         <li><a href="/topics/travel">Travel</a></li>
         <li><a href="/topics/medicine">Medicine</a></li>
         <li><a href="/topics/music">Music</a></li>
+        <li><a href="/reporter">Create Article</a></li>
     </ul>
 </nav>
 {#if loginPopupVisible}
