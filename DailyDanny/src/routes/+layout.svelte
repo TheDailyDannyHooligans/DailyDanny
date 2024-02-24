@@ -1,39 +1,83 @@
-<script>
- import '/src/lib/sharedStyle.css'
- import LoginPopup from '/src/routes/login/login.svelte'; 
- import SettingsPopup from '/src/routes/settings/settings.svelte'; 
+<script lang>
+    import { onMount, onDestroy } from 'svelte';
+    import '/src/lib/sharedStyle.css'
+    import LoginPopup from '/src/routes/login/login.svelte'; 
+    import SettingsPopup from '/src/routes/settings/settings.svelte'; 
 
-  let loginPopupVisible = false;
-  let settingsPopupVisible = false;  
+    let lastScrollY = 0;
+    let bannerTransform = 0;
 
-  function toggleLoginPopup() {
-    loginPopupVisible = !loginPopupVisible;
-  }
+    let loginPopupVisible = false;
+    let settingsPopupVisible = false;  
 
-function toggleSettingsPopup() {
-    settingsPopupVisible = !settingsPopupVisible;
-}
+    function toggleLoginPopup() {
+            loginPopupVisible = !loginPopupVisible;
+        }
 
+        function toggleSettingsPopup() {
+            settingsPopupVisible = !settingsPopupVisible;
+        }
 
-function closeLoginPopup() {
-    loginPopupVisible = false;
-}
+        function closeLoginPopup() {
+            loginPopupVisible = false;
+        }
 
-function closeSettingsPopup() {
-    settingsPopupVisible = false;
-}
+        function closeSettingsPopup() {
+            settingsPopupVisible = false;
+        }
+    
+
+    onMount(() => {
+        window.addEventListener('scroll', handleScroll);
+
+        function handleScroll() {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY > lastScrollY && bannerTransform > -100){
+            bannerTransform -= 10; // scroll down
+        } else if (currentScrollY < lastScrollY && bannerTransform < 0){
+            bannerTransform += 10;
+        }
+        lastScrollY = currentScrollY;  
+
+        document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            // Scroll to the top of the page
+            bannerTransform = 0;
+        });
+        });
+
+        onDestroy(() => {
+        window.removeEventListener('scroll', handleScroll);
+        });
+    }  
+    });
+
+    let count = 0;
+
+	function handleClick() {
+		count += 1;
+        console.log("Button clicked")
+	}
 
 </script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
-<div id='home-banner' class='banner'>
+ 
+<div id='home-banner' class='banner' style="transform: translateY({bannerTransform}px);">
     <img id='logo' alt= "Site Logo" src='/images/DailyDannyLogo.png'>
     <h1 id='home-title'>THE DAILY DANNY</h1>
-    <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
-    <a id='settings' on:click={toggleSettingsPopup}><i class="fas fa-cog"></i></a>
+    <a href="/" id='profile-btn'>Log in</a>
+
+    <!--Example button to show reactivity is working-->
+    <button on:click={handleClick}>
+	Clicked {count}
+	{count === 1 ? 'time' : 'times'}
+    </button>
+
 </div>
-<nav id='nav-banner' class='banner'>
+
+
+<nav id='nav-banner' class='banner' style="transform: translateY({bannerTransform}px);">
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/topics/politics">Politics</a></li>
@@ -52,6 +96,7 @@ function closeSettingsPopup() {
 {/if}
 
 
+
 <style>
     .banner {
         position: fixed;
@@ -59,6 +104,7 @@ function closeSettingsPopup() {
         display: flex;
         backdrop-filter: blur(3px); /* Apply the blur effect */
         -webkit-backdrop-filter: blur(3px); /* For Safari compatibility */
+        transition: transform 0.25s ease-out;
     }
     /*Home banner moved to shared css*/
     #home-title {
@@ -67,11 +113,16 @@ function closeSettingsPopup() {
         align-self: center;
         font-family: 'Lateef';
         font-size: 5em; 
+    }
+
+    #home-title a {
+        text-decoration: none;
         color: rgba(255, 255, 255, .3);
     }
 
-    #logo {
+    #logo img{
         position: absolute;
+        top: 15px;
         left: 0;
         height: 70%;
         margin: 1px;
@@ -89,6 +140,10 @@ function closeSettingsPopup() {
         transition: all 0.2s;
     }
 
+    #profile-btn:hover {
+        cursor: pointer;
+    }
+
     #settings {
         margin-left: 1%;
         display: inline-block;
@@ -99,6 +154,10 @@ function closeSettingsPopup() {
         box-sizing: border-box;
         text-decoration: none;
         transition: all 0.2s;
+  }
+
+  #settings:hover {
+    cursor: pointer;
   }
 
     #profile-btn:hover {
@@ -123,17 +182,19 @@ function closeSettingsPopup() {
 
     #nav-banner ul {
         list-style-type: none;
+        height: 50px;
         padding: 0px;
         margin: 0px;
         overflow: hidden;
-        align-self: center;
+        display: flex;
+        align-items: center;
     }
 
     #nav-banner a {
         color: white;
+        
         text-decoration: none;
-        padding: 1.5vw;
-        display: block;
+        padding: 1.5vw; 
         
     }
 
@@ -145,12 +206,6 @@ function closeSettingsPopup() {
         float: left;
     }
 
-    .nav--hidden {
-        transform: translateY(-50px);
-        box-shadow: none;
-    }
-
-   
 
     /* Media Query for screens less than 768px wide */
     @media only screen and (max-width: 768px) {
@@ -178,6 +233,5 @@ function closeSettingsPopup() {
 
 </style>
 
-<slot>  
 
-</slot>
+<slot></slot>
