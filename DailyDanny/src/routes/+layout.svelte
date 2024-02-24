@@ -86,7 +86,6 @@
         <li><a href="/topics/travel">Travel</a></li>
         <li><a href="/topics/medicine">Medicine</a></li>
         <li><a href="/topics/music">Music</a></li>
-        <li><a href="/reporter">Create Article</a></li>
     </ul>
 </nav>
 {#if loginPopupVisible}
@@ -113,7 +112,6 @@
         text-align: center;
         align-self: center;
         font-family: 'Lateef';
-        
         font-size: 5em; 
     }
 
@@ -126,7 +124,7 @@
         position: absolute;
         top: 15px;
         left: 0;
-        height: 100%;
+        height: 70%;
         margin: 1px;
     }
 
@@ -174,8 +172,6 @@
         top: 100px; 
         left: 0;
         width: 100%;
-        height: 5%;
-        background-color: #41454B;
         height: 50px; 
         background-color: rgba(65, 69, 75, 0.7);
         border-style: solid;
