@@ -26,6 +26,7 @@
             settingsPopupVisible = false;
         }
     
+        
     onMount(() => {
         window.addEventListener('scroll', handleScroll);
 
