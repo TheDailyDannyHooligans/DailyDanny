@@ -57,7 +57,8 @@
 <div id='home-banner' class='banner' style="transform: translateY({bannerTransform}px);">
     <img id='logo' alt= "Site Logo" src='/images/DailyDannyLogo.png'>
     <h1 id='home-title'>THE DAILY DANNY</h1>
-    <a href="/" id='profile-btn'>Log in</a>
+    <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
+    <a id='settings' on:click={toggleSettingsPopup}><i class="fas fa-cog"></i></a>
 </div>
 
 
