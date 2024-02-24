@@ -1,13 +1,35 @@
 <script>
     import articles from '/src/article_json/articles.json';
-    import '/src/lib/sharedStyle.css'
+    import { onMount } from 'svelte';
+
+    function handleArticleClick(articleIndex) {
+        localStorage.setItem('lastClickedArticle', articleIndex);
+    }
+
+    let lastClickedArticleIndex;
+    let article;
+
+    function getStoredArticleId() {
+        const storedIndex = localStorage.getItem('lastClickedArticle');
+        lastClickedArticleIndex = storedIndex ? parseInt(storedIndex, 10) : null;
+
+        if (lastClickedArticleIndex !== null && lastClickedArticleIndex >= 0 && lastClickedArticleIndex < articles.length) {
+            article = articles[lastClickedArticleIndex];
+        } else {
+            article = null;
+        }
+    }
+
+    onMount(() => {
+        getStoredArticleId();
+    });
 </script>
 
 <div class="articles">
-    {#each articles.slice(0) as article}
+    {#each articles as article, index}
       {#if article.subject === 'Sports'}
         <div class={article.isAd == "True" ? 'ad-box' : (article.imageUrl ? 'article-box article-box-common' : 'half-article-box article-box-common')}>
-          <a href="/articlePage" class="article-link">
+          <a href="/articlePage" class="article-link" on:click={() => handleArticleClick(index)}>
             {#if article.topArticle == "True"}
               <span class="top-story-label">Top Story</span>
             {/if}
@@ -27,12 +49,3 @@
       {/if}
     {/each}
 </div>
-
-<!--  Styling is in sharedStyle.css file in /lib folder-->
-
-<style>
-  :global(body) {
-    background-color: #bacadd;
-    font-family: 'Times New Roman', sans-serif;
-}
-</style>

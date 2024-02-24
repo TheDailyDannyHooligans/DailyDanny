@@ -1,19 +1,43 @@
 <script>
-        import articles from '/src/article_json/articles.json';
+    import articles from '/src/article_json/articles.json';
+    import { onMount } from 'svelte';
+
+    let lastClickedArticleIndex;
+    let article;
+
+    function getStoredArticleId() {
+        // gets the last clicked article index from local storage
+        const storedIndex = localStorage.getItem('lastClickedArticle');
+        lastClickedArticleIndex = storedIndex ? parseInt(storedIndex, 10) : null;
+
+        if (lastClickedArticleIndex !== null && lastClickedArticleIndex >= 0 && lastClickedArticleIndex < articles.length) {
+            article = articles[lastClickedArticleIndex];
+        } else {
+            article = null;
+        }
+    }
+
+    onMount(() => {
+        getStoredArticleId();
+    });
 </script>
 
 <div class="container">
-    <div class="article-box">
-        <h2 class="title">{articles[0].title}</h2>
+    {#if article}
+        <div class="article-frame">
+            <h2 class="title">{article.title}</h2>
 
-        {#if articles[0].imageUrl}
-            <img src={articles[0].imageUrl} alt={articles[0].title} class="article-image"/>
-        {/if}
-        
-        <p class="article-summary">{articles[0].summary}</p>
+            {#if article.imageUrl}
+                <img src={article.imageUrl} alt={article.title} class="article-image"/>
+            {/if}
+            
+            <p class="article-summary">{article.summary}</p>
 
-        <p class="article-text">{articles[0].articleText}</p>
-    </div>
+            <p class="article-text">{article.articleText}</p>
+        </div>
+    {:else}
+        <p>Article not found or not selected.</p>
+    {/if}
 </div>
 
 <style>
@@ -31,7 +55,7 @@
         padding: 0;              
     }
 
-    .article-box {
+    .article-frame {
         width: 95vw;
         margin: 10px;
         display: flex;
@@ -97,4 +121,6 @@
         font-size: 16px;
     }
 }
+
+
 </style>

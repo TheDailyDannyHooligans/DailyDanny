@@ -1,4 +1,4 @@
-:global(body) {
+.body {
     background-color: #bacadd;
     font-family: 'Times New Roman', sans-serif;
 }
@@ -44,6 +44,7 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: fadeIn 1.2s;
     box-shadow: 0px 0px 12px 2px rgba(85, 84, 84, 0.5);
+    align-items: center;
 }
 
 .article-box {
@@ -149,3 +150,53 @@
         grid-column: span 1;
     }
 }
+
+/*Dark mode color changes. Probly a better way to do this but working for now :)*/
+
+.dark-mode .articles{
+    background-color: #000000;
+}
+.dark-mode .article-title {
+    background-color: rgba(19, 19, 19, 0.5);
+    color: #ffffff;
+}
+
+.dark-mode .article-box,
+.dark-mode .article-box-main-story,
+.dark-mode .half-article-box,
+.dark-mode .ad-box {
+    background-image: linear-gradient(to right, hsl(120, 1%, 22%),hsl(120, 1%, 22%),hsl(120, 1%, 22%));
+    color: #ffffff;
+
+}
+
+body.dark-mode {
+    background-color: #000000;
+}
+
+#home-banner {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to top, rgba(65, 69, 75, 0.7), #bacadd);
+}
+
+  .dark-mode #home-banner {
+      background: linear-gradient(to top, rgba(65, 69, 75, 0.7), #000000);
+  }
+
+  .dark-mode .article-frame {
+      background-image: linear-gradient(to right, #3a3d3f, #3a3d3f, #3a3d3f);
+      background-color: #3a3d3f;
+      color: white;
+  }
+
+  .dark-mode .article-summary {
+    background-color: #3a3d3f;
+      color: white;
+  }
+
