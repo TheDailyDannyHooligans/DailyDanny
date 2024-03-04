@@ -72,6 +72,42 @@
       console.log('Article submitted!');
     };
 </script>
+
+<div class="form-container">
+  <h1>Write an Article</h1>
+
+  <form on:submit={handleSubmit}>
+    <div>
+      <label for="title">Title:</label>
+      <input type="text" id="title" bind:value={title} required />
+    </div>
+  
+    <div>
+      <label for="author">Author:</label>
+      <input type="text" id="author" bind:value={author} required />
+    </div>
+  
+    <div>
+      <label for="articleText">Article Content:</label>
+      <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" bind:value={articleText}/>
+    </div>
+  
+    <div>
+      <label for="attachments">Attachments (Images or Videos):</label>
+      <input
+        type="file"
+        id="attachments"
+        multiple
+        accept="image/*,video/*"
+        on:change={handleFileInput}
+      />
+    </div>
+  
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+  </div>
   
 <style>
   .form-container {
@@ -127,40 +163,3 @@
   }
   </style>
   
-  <div class="form-container">
-  <h1>Write an Article</h1>
-
-  <form on:submit={handleSubmit}>
-    <div>
-      <label for="title">Title:</label>
-      <input type="text" id="title" bind:value={title} required />
-    </div>
-  
-    <div>
-      <label for="author">Author:</label>
-      <input type="text" id="author" bind:value={author} required />
-    </div>
-  
-    <div>
-      <label for="articleText">Article Content:</label>
-      <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" bind:value={articleText}/>
-    </div>
-  
-    <div>
-      <label for="attachments">Attachments (Images or Videos):</label>
-      <input
-        type="file"
-        id="attachments"
-        multiple
-        accept="image/*,video/*"
-        on:change={handleFileInput}
-      />
-    </div>
-  
-    <div>
-      <button type="submit">Submit</button>
-    </div>
-  </form>
-  </div>
-  
- 

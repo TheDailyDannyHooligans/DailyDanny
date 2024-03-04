@@ -1,22 +1,31 @@
 
 <script>
     import { createEventDispatcher } from 'svelte';
-    import SignupPopup from '/src/routes/signup/signup.svelte'; 
+    import LoginPopup from '/src/routes/login/login.svelte'; 
     import axios from 'axios';
 
     const dispatch = createEventDispatcher();
 
-    // Login API call
+    // Signup API call
     const API_URL = 'http://localhost:3000/';
 
-    let user;
+    let firstname = '';
+    let lastname = '';
     let email = '';
     let password = '';
 
-    async function handleLogin(event) {
+    async function handleSignup(event) {
         event.preventDefault();
 
-        if (email === '') {
+        if (firstname === '') {
+            console.error('First name is required');
+            document.getElementById('error').innerText = 'First name is required';
+            return;
+        } else if (lastname === '') {
+            console.error('Last name is required');
+            document.getElementById('error').innerText = 'Last name is required';
+            return;
+        } else if (email === '') {
             console.error('Email is required');
             document.getElementById('error').innerText = 'Email is required';
             return;
@@ -26,60 +35,68 @@
             return;
         }
 
-        try {
-            const response = await axios.get(API_URL+"api/users", { params: { email: email, password: password } })
+		try {
+			const data = JSON.stringify({
+				firstname: firstname,
+				lastname: lastname,
+				email: email,
+				password: password,
+				admin: false,
+				editor: false,
+				user: true
+			});
 
-            if (response.status === 200) {
-                user = await response.data;
-				console.log(user)
-                console.log("Closing login popup");
-                dispatch('close');
-            }
-        } catch (error) {
-            if (error.response.status === 500) {
-                if (email === '') {
-                    console.error('Email is required');
-                    document.getElementById('error').innerText = 'Email is required';
-                } else if (password === '') {
-                    console.error('Password is required');
-                    document.getElementById('error').innerText = 'Password is required';
-                } else {
-                    console.error('The text boxes cannot be left blank');
-                    document.getElementById('error').innerText = 'The text boxes cannot be left blank';
-                }
-            } else if (error.response.status === 404) {
-                console.error('Account with this email does not exist');
-                document.getElementById('error').innerText = 'Account with this email does not exist';
-            } else if (error.response.status === 400) {
-                console.error('Incorrect password');
-                document.getElementById('error').innerText = 'Incorrect password';
-            } else {
-                console.error('Failed to fetch user:', error);
-            }
-        }
+			const response = await axios.post(API_URL+"api/users", data)
+			console.log(response);
+			console.log(response['config']);
+			
+			if (response.statusText === "OK") {
+				firstname = '';
+                lastname = '';
+                email = '';
+                password = '';
+
+                handleCloseSignup();
+			} else {
+				console.error(response.statusText);
+			}
+		} catch(error) {
+			console.log(error);
+		}
     }
-    
+
+
     // Opening and closing of popups
-    function handleCloseLogin() {
-        console.log("Closing login popup");
+    function handleCloseSignup() {
+        console.log("Closing sign up popup");
         dispatch('close');
     }
 
-    let signupPopupVisible = false;  
+    let loginPopupVisible = false;  
 
-    function toggleSignupPopup() {
-        signupPopupVisible = !signupPopupVisible;
+    function toggleLoginPopup() {
+        loginPopupVisible = !loginPopupVisible;
+        console.log("Closing signup popup");
+        dispatch('close');
     }
 
-    function closeSignupPopup() {
-        signupPopupVisible = !signupPopupVisible;
+    function closeLoginPopup() {
+        loginPopupVisible = !loginPopupVisible;
     }
 </script>
 <div class = "popup-overlay">
     <div class="popup">
         <div class="popup-content">
-            <h2>Login</h2>
-            <form on:submit={handleLogin}>
+            <h2>Sign Up</h2>
+            <form on:submit={handleSignup}>
+                <label for="firstname">First Name:</label>
+                <br/>
+                <input type="text" id="firstname" bind:value={firstname} />
+                <br/>
+                <label for="lastname">Last Name:</label>
+                <br/>
+                <input type="text" id="lastname" bind:value={lastname} />
+                <br/>
                 <label for="email">Email:</label>
                 <br/>
                 <input type="text" id="email" bind:value={email} />
@@ -88,17 +105,17 @@
                 <br/>
                 <input type="password" id="password" bind:value={password} />
                 <br/>
-                <button type="submit" class = "login-button">Login</button>
+                <button type="submit" class = "signup-button">Sign Up</button>
             </form>
             <p id="error"></p>
-            <button on:click={handleCloseLogin} class = "close-button">Close</button>
-            <p>Don't have an account? <a on:click={toggleSignupPopup} id='new-popup'>Sign up here.</a></p>
+            <button on:click={handleCloseSignup} class = "close-button">Close</button>
+            <p>Already have an account? <a on:click={toggleLoginPopup} id="new-popup">Login here.</a></p>
         </div>
     </div>
 </div>
 
-{#if signupPopupVisible}
-    <SignupPopup on:close={closeSignupPopup}/>
+{#if loginPopupVisible}
+    <LoginPopup on:close={closeLoginPopup}/>
 {/if}
 
 <style>
@@ -140,7 +157,7 @@
     }
 
     .close-button,
-    .login-button{
+    .signup-button{
         margin-top: 20px;
         padding: 10px 20px;
         border: none;
@@ -152,7 +169,7 @@
     }
 
     .close-button:hover,
-    .login-button:hover {
+    .signup-button:hover {
         background-color: rgb(54, 135, 160);
     }
 
@@ -163,7 +180,7 @@
     #new-popup:hover {
         color: rgb(65, 0, 245);  
     }
-    
+
     #error {
         color: red;
     }
