@@ -26,6 +26,7 @@
             settingsPopupVisible = false;
         }
     
+        
     onMount(() => {
         window.addEventListener('scroll', handleScroll);
 
@@ -53,11 +54,13 @@
 </script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
- 
-<div id='home-banner' class='banner' style="transform: translateY({bannerTransform}px);">
-    <img id='logo' alt= "Site Logo" src='/images/DailyDannyLogo.png'>
-    <h1 id='home-title'>THE DAILY DANNY</h1>
-    <a href="/" id='profile-btn'>Log in</a>
+
+<div id='home-banner' class='banner'>
+    <a id='logo' href='/'><img alt= "Site Logo" src='/images/DailyDannyLogo.png'></a>
+    <h1 id='home-title'><a href="/">THE DAILY DANNY</a></h1>
+    <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
+    <a id='settings' on:click={toggleSettingsPopup}><i class="fas fa-cog"></i></a>
+
 </div>
 
 
@@ -92,14 +95,15 @@
         transition: transform 0.25s ease-out;
     }
     /*Home banner moved to shared css*/
+
     #home-title {
         position: absolute;
         text-align: center;
         align-self: center;
         font-family: 'Lateef';
-        font-size: 5em; 
+        font-size: 5em;
     }
-
+    
     #home-title a {
         text-decoration: none;
         color: rgba(255, 255, 255, .3);
@@ -141,8 +145,8 @@
         transition: all 0.2s;
   }
 
-  #settings:hover {
-    cursor: pointer;
+    #settings:hover {
+        cursor: pointer;
   }
 
     #profile-btn:hover {
@@ -177,7 +181,6 @@
 
     #nav-banner a {
         color: white;
-        
         text-decoration: none;
         padding: 1.5vw; 
         

@@ -165,8 +165,7 @@
 .dark-mode .article-box,
 .dark-mode .article-box-main-story,
 .dark-mode .half-article-box,
-.dark-mode .ad-box,
-.dark-mode .article-frame {
+.dark-mode .ad-box {
     background-image: linear-gradient(to right, hsl(120, 1%, 22%),hsl(120, 1%, 22%),hsl(120, 1%, 22%));
     color: #ffffff;
 
