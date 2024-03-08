@@ -100,16 +100,13 @@
   }
 
   input[type="text"],
+  
   textarea {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     box-sizing: border-box;
-  }
-
-  textarea {
-    height: 150px;
   }
 
   button[type="submit"] {
