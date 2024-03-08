@@ -2,6 +2,7 @@
     import articles from '/src/article_json/articles.json';
     import Editor from '@tinymce/tinymce-svelte';
     import { onMount } from 'svelte';
+    import '/src/lib/sharedStyle.css'
     
     let title = '';
     let author = '';
@@ -75,59 +76,73 @@
   
 <style>
   .form-container {
-    margin-top: 200px;
+    margin: 150px auto 20px;
+    width: 75%;
+    max-width: 800px;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    position: relative;
   }
 
-  form {
-    position: absolute;
-    top: 15%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+  .form-title {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .form-class {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
     background-color: #f8f9fa;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
   }
 
-  div {
+  .form-class > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 15px;
   }
 
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+  .form-class > div > label {
+    align-self: flex-start;
+    width: calc(100% - 40px);
+    margin: 0 20px; 
+    text-align: left; 
   }
 
-  input[type="text"],
-  
-  textarea {
-    width: 100%;
+  .form-class input,
+  .form-class button {
+    width: calc(100% - 40px);
+    margin: 10px 20px;
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
     box-sizing: border-box;
   }
 
-  button[type="submit"] {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  .editor-container {
+    width: calc(100% - 40px); 
+    margin: 10px 20px; 
+    padding: 0; 
   }
 
-  button[type="submit"]:hover {
-    background-color: #0056b3;
+  .blank {
+    padding: 100px;
   }
-  </style>
-  
-  <div class="form-container">
-  <h1>Write an Article</h1>
+</style>
 
-  <form on:submit={handleSubmit}>
+<div class="form-container">
+  <h2 class = "form-title">Write an Article</h2>
+
+  <form class="form-class" on:submit={handleSubmit}>
     <div>
       <label for="title">Title:</label>
       <input type="text" id="title" bind:value={title} required />
@@ -140,7 +155,10 @@
   
     <div>
       <label for="articleText">Article Content:</label>
-      <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" bind:value={articleText}/>
+      <div class="editor-container">
+        <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" bind:value={articleText}/> 
+      </div>
+      
     </div>
   
     <div>
@@ -158,6 +176,6 @@
       <button type="submit">Submit</button>
     </div>
   </form>
-  </div>
-  
- 
+</div>
+
+<div class="blank"></div>
