@@ -1,4 +1,8 @@
-let Userdb = require('../model/model');
+const fs = require('fs');
+const path = require('path');
+
+let Userdb = require('../model/loginmodel');
+let Imagedb = require('../model/imagemodel');
 
 // Create and save new user
 exports.create = (req, res) => {
@@ -66,14 +70,30 @@ exports.find = (req, res) => {
 
 // Update a new identified user by user id
 exports.update = (req, res) => {
-    if (!req.body) {
-        return res
-            .status(400)
-            .send({ message: "Data to update cannot be empty" });
-    }
+    console.log("UPDATE:");
+    console.log(req);
 
-    const id = req.params.id;
-    Userdb.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    const id = req.query.id;
+    const newPassword = req.query.password;
+    let user;
+
+    Userdb.findById(id)
+        .then(data =>{
+            if(!data){
+                res.status(404).send({ message : "Not found user with id "+ id});
+            }else{
+                user = data;
+            }
+        })
+        .catch(err =>{
+            res.status(500).send({ message: "Error retrieving user with id " + id})
+        });
+
+    user.password = newPassword;
+
+    console.log(user);
+
+    Userdb.findByIdAndUpdate(id, user, { useFindAndModify: false })
         .then(data => {
             if (!data) {
                 res.status(404).send({ message: `Cannot update user ${id}. Maybe user not found!`});
@@ -84,4 +104,49 @@ exports.update = (req, res) => {
         .catch(err => {
             res.status(500).send({ message: "Error update user information"});
         });
+}
+
+// Add image to db
+exports.addImage = (req, res, next) => {
+    console.log('UPLOAD IMAGE');
+    const obj = {
+		name: req.body.name,
+		img: {
+			data: fs.readFileSync(path.join(__dirname.substring(0, __dirname.length - 11) + '/uploads/' + req.file.filename)),
+			contentType: 'image/png'
+		}
+	}
+	Imagedb.create(obj)
+	.then ((err, item) => {
+		if (err) {
+            console.log('ERROR');
+			console.log(err);
+		}
+		else {
+			// item.save();
+			res.send(item);
+            console.log('image sent');
+		}
+	}).catch(err => { 
+        res.status(500).send({ 
+            message: err.message || "Some error ocurred while creating a create operation" 
+        });
+    });
+}
+
+// Get all images from db
+exports.getImages = (req, res) => {
+    Imagedb.find({})
+	.then((data, err)=>{
+		if(err){
+            console.log('ERROR');
+			console.log(err);
+		}
+		res.send(data);
+	});
+}
+
+// Get image from db by image id
+exports.getImage = (req, res) => {
+    
 }

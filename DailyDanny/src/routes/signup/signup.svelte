@@ -3,6 +3,7 @@
     import { createEventDispatcher } from 'svelte';
     import LoginPopup from '/src/routes/login/login.svelte'; 
     import axios from 'axios';
+    import { account, isAdmin, isEditor, isUser } from '/src/routes/account.js';
 
     const dispatch = createEventDispatcher();
 

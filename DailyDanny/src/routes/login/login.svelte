@@ -3,6 +3,7 @@
     import { createEventDispatcher } from 'svelte';
     import SignupPopup from '/src/routes/signup/signup.svelte'; 
     import axios from 'axios';
+    import { account, isAdmin, isEditor, isUser } from '/src/routes/account.js';
 
     const dispatch = createEventDispatcher();
 
@@ -32,6 +33,12 @@
             if (response.status === 200) {
                 user = await response.data;
 				console.log(user)
+
+                account.update((id) => user._id)
+                isAdmin.update((val) => user.admin)
+                isEditor.update((val) => user.editor)
+                isUser.update((val) => user.user)
+
                 console.log("Closing login popup");
                 dispatch('close');
             }
