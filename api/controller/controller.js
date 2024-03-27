@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-let Userdb = require('../model/loginmodel');
-let Imagedb = require('../model/imagemodel');
+let Userdb = require('../models/loginmodel');
+let Imagedb = require('../models/imagemodel');
 
 // Create and save new user
 exports.create = (req, res) => {
@@ -69,16 +69,17 @@ exports.find = (req, res) => {
 }
 
 // Update a new identified user by user id
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     console.log("UPDATE:");
     console.log(req);
 
-    const id = req.query.id;
+    const id = req.params.id;
     const newPassword = req.query.password;
     let user;
 
-    Userdb.findById(id)
+    await Userdb.findById(id)
         .then(data =>{
+            console.log('DATA');
             if(!data){
                 res.status(404).send({ message : "Not found user with id "+ id});
             }else{
@@ -89,11 +90,15 @@ exports.update = (req, res) => {
             res.status(500).send({ message: "Error retrieving user with id " + id})
         });
 
-    user.password = newPassword;
-
+    console.log('BEFORE:');
     console.log(user);
 
-    Userdb.findByIdAndUpdate(id, user, { useFindAndModify: false })
+    user.password = newPassword;
+
+    console.log('AFTER:');
+    console.log(user);
+
+    await Userdb.findByIdAndUpdate(id, user, { useFindAndModify: false })
         .then(data => {
             if (!data) {
                 res.status(404).send({ message: `Cannot update user ${id}. Maybe user not found!`});
@@ -109,6 +114,7 @@ exports.update = (req, res) => {
 // Add image to db
 exports.addImage = (req, res, next) => {
     console.log('UPLOAD IMAGE');
+
     const obj = {
 		name: req.body.name,
 		img: {
@@ -116,17 +122,11 @@ exports.addImage = (req, res, next) => {
 			contentType: 'image/png'
 		}
 	}
+
 	Imagedb.create(obj)
-	.then ((err, item) => {
-		if (err) {
-            console.log('ERROR');
-			console.log(err);
-		}
-		else {
-			// item.save();
-			res.send(item);
-            console.log('image sent');
-		}
+	.then ((item) => {
+        item.save();
+        console.log('image sent');
 	}).catch(err => { 
         res.status(500).send({ 
             message: err.message || "Some error ocurred while creating a create operation" 
