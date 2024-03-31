@@ -1,124 +1,45 @@
 <script>
-  /*
-    import articles from '/src/article_json/articles.json';
-    import Editor from '@tinymce/tinymce-svelte';
-    import { onMount } from 'svelte';
-    import '/src/lib/sharedStyle.css'
-    
-    let title = '';
-    let author = '';
-    let articleText = '';
-    let selectedFiles = [];
+  // import Editor from '@tinymce/tinymce-svelte';
 
-    const printArticlesToFile = async (formData) => {
-      try {
-          // Fetch the existing content of the articles.json file
-          const response = await fetch('/src/article_json/articles.json');
-          const existingData = await response.json();
+  //   export let form;
+  //   let title = '';
+  //   let author = '';
+  //   let articleText = '';
+  //   let sucess = false;
 
-          // Append the new article to the existing data array
-          existingData.push(formData);
+  //   $: {
+  //     if (form && form.sucess) {
+  //       sucess = true;
+  //       setTimeout(() => {
+  //         sucess = false;
+  //       }, 3000);
+  //     }
+  //   }
 
-          // Convert the updated data array to JSON string
-          const updatedDataJSON = JSON.stringify(existingData, null, 2);
+  //   $: articleData = form?.article;
 
-          // Create a Blob containing the updated JSON data
-          const blob = new Blob([updatedDataJSON], { type: 'application/json' });
-
-          // Create a temporary URL for the Blob
-          const url = URL.createObjectURL(blob);
-
-          // Create a link element to trigger the download
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'articles.json'; // Set the download attribute to specify the filename
-
-          // Append the link to the document body and trigger the download
-          document.body.appendChild(a);
-          a.click();
-
-          // Release the URL object
-          URL.revokeObjectURL(url);
-      } catch (error) {
-          console.error('Error printing articles to file:', error);
-      }
+  async function handleSubmit() {
+    const formData = {
+      title,
+      author,
+      articleText,
     };
 
-
-
-    const handleFileInput = (event) => {
-      selectedFiles = Array.from(event.target.files);
-    };
-
-    function handleSubmit () {
-      console.log('Handling form submit...');
-      console.log(title);
-      console.log(author);
-      console.log(articleText);
-
-      let formData = {
-          title,
-          author,
-          articleText
-      };
-
-      printArticlesToFile(formData);
-      console.log('Updated File:');
-
-
-      // Reset form fields
-      title = '';
-      author = '';
-      articleText = '';
-      
-      console.log('Article submitted!');
-    };
-    */
-
-    // import { handler } from '../api';
-
-    // let title = '';
-    // let author = '';
-    // let articleText = '';
-    // let message = '';
-
-    // const handleSubmit = async () => {
-    //   const response = await handler({ title, author, articleText });
-    //   if (response.success) {
-    //     message = 'Article created successfully.';
-    //   } else {
-    //     message = 'Failed to create article.';
-    //   }
-    // };
-
-    export let form;
-    let title = '';
-    let author = '';
-    let articleText = '';
-    let sucess = false;
-
-    $: {
-      if (form && form.sucess) {
-        sucess = true;
-        setTimeout(() => {
-          sucess = false;
-        }, 3000);
-      }
-    }
-
-    $: articleData = form?.article;
+  const response = await fetch('/api/submitArticle', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  });
+}
 
 </script>
-
-{#if sucess}
-  console.log('sucess');
-{/if}
 
 
 <div class="form-container">
   <h2 class = "form-title">Write an Article</h2>
-  <!-- <form class="form-class" on:submit|preventDefault={handleSubmit}> -->
-    <form class="form-class" method="POST">
+  <form class="form-class" on:submit|preventDefault={handleSubmit}>
     <div>
       <label for="title">Title:</label>
       <input name="title" type="title" bind:value={title} required />
@@ -152,6 +73,7 @@
     <div>
       <button type="submit">Submit</button>
     </div>
+
   </form>
 </div>
 
