@@ -4,7 +4,7 @@ import { kv } from '@vercel/kv';
 export const actions = {
     default: async ({request}) => {
         const formData = await requestAnimationFrame.formData();
-        const email = formData.get('email');
+        const title = formData.get('title');
 
         const article = {
             title: title,
