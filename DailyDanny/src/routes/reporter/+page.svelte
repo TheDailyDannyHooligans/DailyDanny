@@ -1,38 +1,38 @@
 <script>
   // import Editor from '@tinymce/tinymce-svelte';
 
-  //   export let form;
-  //   let title = '';
-  //   let author = '';
-  //   let articleText = '';
-  //   let sucess = false;
+    export let form;
+    let title = '';
+    let author = '';
+    let articleText = '';
+    let sucess = false;
 
-  //   $: {
-  //     if (form && form.sucess) {
-  //       sucess = true;
-  //       setTimeout(() => {
-  //         sucess = false;
-  //       }, 3000);
-  //     }
-  //   }
+    $: {
+      if (form && form.sucess) {
+        sucess = true;
+        setTimeout(() => {
+          sucess = false;
+        }, 3000);
+      }
+    }
 
-  //   $: articleData = form?.article;
+    $: articleData = form?.article;
 
-  async function handleSubmit() {
-    const formData = {
-      title,
-      author,
-      articleText,
-    };
+//   async function handleSubmit() {
+//     const formData = {
+//       title,
+//       author,
+//       articleText,
+//     };
 
-  const response = await fetch('/api/submitArticle', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formData),
-  });
-}
+//   const response = await fetch('/api/submitArticle', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(formData),
+//   });
+// }
 
 </script>
 

@@ -11,7 +11,7 @@ export const actions = {
             author: formData.get('author'),
             articleText: formData.get('articleText')
         };
-        await kv.set(email, user);
+        await kv.set(title, article);
         return {sucess: true};
 
     }
