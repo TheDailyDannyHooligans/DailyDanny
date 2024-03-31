@@ -1,4 +1,5 @@
 <script>
+  /*
     import articles from '/src/article_json/articles.json';
     import Editor from '@tinymce/tinymce-svelte';
     import { onMount } from 'svelte';
@@ -72,7 +73,89 @@
       
       console.log('Article submitted!');
     };
+    */
+
+    // import { handler } from '../api';
+
+    // let title = '';
+    // let author = '';
+    // let articleText = '';
+    // let message = '';
+
+    // const handleSubmit = async () => {
+    //   const response = await handler({ title, author, articleText });
+    //   if (response.success) {
+    //     message = 'Article created successfully.';
+    //   } else {
+    //     message = 'Failed to create article.';
+    //   }
+    // };
+
+    export let form;
+    let title = '';
+    let author = '';
+    let articleText = '';
+    let sucess = false;
+
+    $: {
+      if (form && form.sucess) {
+        sucess = true;
+        setTimeout(() => {
+          sucess = false;
+        }, 3000);
+      }
+    }
+
+    $: articleData = form?.article;
+
 </script>
+
+{#if sucess}
+  console.log('sucess');
+{/if}
+
+
+<div class="form-container">
+  <h2 class = "form-title">Write an Article</h2>
+  <!-- <form class="form-class" on:submit|preventDefault={handleSubmit}> -->
+    <form class="form-class" method="POST">
+    <div>
+      <label for="title">Title:</label>
+      <input name="title" type="title" bind:value={title} required />
+    </div>
+  
+    <div>
+      <label for="author">Author:</label>
+      <input name="author" type="author" bind:value={author} required />
+    </div>
+  
+    <div>
+      <label for="articleText">Article Content:</label>
+      <div class="editor-container">
+        <!-- <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" bind:value={articleText}/>  -->
+        <textarea name="articleText" type="articleText" bind:value={articleText} />
+      </div>
+      
+    </div>
+  
+    <!-- <div>
+      <label for="attachments">Attachments (Images or Videos):</label>
+      <input
+        type="file"
+        id="attachments"
+        multiple
+        accept="image/*,video/*"
+        on:change={handleFileInput}
+      />
+    </div> -->
+  
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+
+<div class="blank"></div>
   
 <style>
   .form-container {
@@ -138,44 +221,3 @@
     padding: 100px;
   }
 </style>
-
-<div class="form-container">
-  <h2 class = "form-title">Write an Article</h2>
-
-  <form class="form-class" on:submit={handleSubmit}>
-    <div>
-      <label for="title">Title:</label>
-      <input type="text" id="title" bind:value={title} required />
-    </div>
-  
-    <div>
-      <label for="author">Author:</label>
-      <input type="text" id="author" bind:value={author} required />
-    </div>
-  
-    <div>
-      <label for="articleText">Article Content:</label>
-      <div class="editor-container">
-        <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" bind:value={articleText}/> 
-      </div>
-      
-    </div>
-  
-    <div>
-      <label for="attachments">Attachments (Images or Videos):</label>
-      <input
-        type="file"
-        id="attachments"
-        multiple
-        accept="image/*,video/*"
-        on:change={handleFileInput}
-      />
-    </div>
-  
-    <div>
-      <button type="submit">Submit</button>
-    </div>
-  </form>
-</div>
-
-<div class="blank"></div>

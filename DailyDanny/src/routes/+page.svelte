@@ -1,4 +1,5 @@
 <script>
+
   import articles from '/src/article_json/articles.json';
   import '/src/lib/sharedStyle.css'
 
@@ -7,6 +8,8 @@
     localStorage.setItem('lastClickedArticle', index);
   }
 </script>
+
+
 <body class = "body">
 <div class="articles">
   {#if articles.length > 0}
