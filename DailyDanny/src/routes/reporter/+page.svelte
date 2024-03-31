@@ -39,7 +39,8 @@
 
 <div class="form-container">
   <h2 class = "form-title">Write an Article</h2>
-  <form class="form-class" on:submit|preventDefault={handleSubmit}>
+  <!-- <form class="form-class" on:submit|preventDefault={handleSubmit}> -->
+    <form class="form-class" method="PUSH">
     <div>
       <label for="title">Title:</label>
       <input name="title" type="title" bind:value={title} required />
