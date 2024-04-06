@@ -3,6 +3,7 @@ const path = require('path');
 
 let Userdb = require('../models/loginmodel');
 let Imagedb = require('../models/imagemodel');
+let Articledb = require('../models/articlemodel');
 
 // Create and save new user
 exports.create = (req, res) => {
@@ -39,7 +40,6 @@ exports.create = (req, res) => {
 
 // Retrieve and return all users/retrieve and return a single user
 exports.find = (req, res) => {
-
     if (req.query.email) {
         const email = req.query.email;
 
@@ -116,7 +116,6 @@ exports.addImage = (req, res, next) => {
     console.log('UPLOAD IMAGE');
 
     const obj = {
-		name: req.body.name,
 		img: {
 			data: fs.readFileSync(path.join(__dirname.substring(0, __dirname.length - 11) + '/uploads/' + req.file.filename)),
 			contentType: 'image/png'
@@ -124,9 +123,10 @@ exports.addImage = (req, res, next) => {
 	}
 
 	Imagedb.create(obj)
-	.then ((item) => {
-        item.save();
+	.then (async (item) => {
+        await item.save();
         console.log('image sent');
+        res.send(item);
 	}).catch(err => { 
         res.status(500).send({ 
             message: err.message || "Some error ocurred while creating a create operation" 
@@ -149,4 +149,36 @@ exports.getImages = (req, res) => {
 // Get image from db by image id
 exports.getImage = (req, res) => {
     
+}
+
+exports.addArticle = (req, res) => {
+    console.log('UPLOAD ARTICLE');
+    console.log(req);
+/*
+    UPLOAD IMAGE
+
+    const obj = {
+		name: req.body.name,
+		img: {
+			data: fs.readFileSync(path.join(__dirname.substring(0, __dirname.length - 11) + '/uploads/' + req.file.filename)),
+			contentType: 'image/png'
+		}
+	}
+
+	Imagedb.create(obj)
+	.then ((item) => {
+        item.save();
+        console.log('image sent');
+	}).catch(err => { 
+        res.status(500).send({ 
+            message: err.message || "Some error ocurred while creating a create operation" 
+        });
+    });
+
+    SAVE IMAGE ID
+
+    APPEND ID TO ARTICLE LIST IF LIST EXISTS 
+
+    SAVE ARTICLE
+    */
 }
