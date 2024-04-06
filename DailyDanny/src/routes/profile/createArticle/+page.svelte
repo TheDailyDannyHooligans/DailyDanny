@@ -2,7 +2,24 @@
     import articles from '/src/article_json/articles.json';
     import Editor from '@tinymce/tinymce-svelte';
     import { onMount } from 'svelte';
-    
+    import axios from 'axios';
+
+    const API_URL = 'http://localhost:3000/';
+
+    /*
+    const multer = require('multer');
+
+    const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, 'uploads')
+      },
+      filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+      }
+    });
+
+    const upload = multer({ storage: storage });
+    */
     let title = '';
     let author = '';
     let articleText = '';
@@ -48,21 +65,38 @@
       selectedFiles = Array.from(event.target.files);
     };
 
-    function handleSubmit () {
+    let imageIds = {};
+
+    async function addVal(key, val) {
+      imageIds[key] = val;
+    }
+    async function handleSubmit () {
       console.log('Handling form submit...');
-      console.log(title);
-      console.log(author);
-      console.log(articleText);
+      
+      let formData;
+      let key = 0;
 
-      let formData = {
-          title,
-          author,
-          articleText
-      };
+      selectedFiles.forEach(async (file) => {
+        formData = new FormData();
+        formData.append('image', selectedFiles[0]);
 
-      printArticlesToFile(formData);
-      console.log('Updated File:');
+        
+        const response = await axios.post(API_URL+"api/images", formData);
+        await addVal(key, response.data._id);
+        key++;
+      })
 
+      const data = JSON.stringify({
+        title: title,
+        author: author,
+        content: articleText,
+        imageids: imageIds
+      });
+
+      console.log(data);
+
+      const response = await axios.post(API_URL+"api/articles", data);
+      console.log(response);
 
       // Reset form fields
       title = '';
@@ -70,6 +104,8 @@
       articleText = '';
       
       console.log('Article submitted!');
+
+      //window.location.href = "/src/routes/reporter";
     };
 </script>
 
@@ -89,7 +125,7 @@
     
       <div>
         <label for="articleText">Article Content:</label>
-        <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" bind:value={articleText}/>
+        <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" type="text" id="articleText" bind:value={articleText} required />
       </div>
     
       <div>
@@ -107,29 +143,6 @@
         <button type="submit">Submit</button>
       </div>
     </form>
-</div>
-
-<div class="form-container">
-  <form action="http://localhost:3000/api/images" method="POST" enctype="multipart/form-data">
-      <div>
-          <label for="name">Image Title</label>
-          <input
-              type="text"
-              id="name"
-              placeholder="Name"
-              value=""
-              name="name"
-              required
-          />
-      </div>
-      <div>
-          <label for="image">Upload Image</label>
-          <input type="file" id="image" name="image" value="" required />
-      </div>
-      <div>
-          <button type="submit">Submit</button>
-      </div>
-  </form>
 </div>
   
 <style>
