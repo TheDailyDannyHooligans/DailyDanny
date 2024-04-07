@@ -19,6 +19,7 @@
 		"@fortawesome/fontawesome-free": "^6.5.1",
 		"@fortawesome/free-solid-svg-icons": "^6.5.1",
 		"@tinymce/tinymce-svelte": "^2.0.1",
-		"@vercel/kv": "^1.0.1"
+		"axios": "^1.6.7",
+		"svelte-spa-router": "^4.0.1"
 	}
 }

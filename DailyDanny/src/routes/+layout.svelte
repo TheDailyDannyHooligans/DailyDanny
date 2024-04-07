@@ -3,6 +3,28 @@
     import '/src/lib/sharedStyle.css'
     import LoginPopup from '/src/routes/login/login.svelte'; 
     import SettingsPopup from '/src/routes/settings/settings.svelte'; 
+    import { account, isAdmin, isEditor, isUser } from '/src/routes/account.js';
+
+    let account_id;
+    let isAdmin_value;
+    let isEditor_value;
+    let isUser_value;
+
+	account.subscribe((id) => {
+		account_id = id;
+	});
+
+    isAdmin.subscribe((value) => {
+		isAdmin_value = value;
+	});
+
+    isEditor.subscribe((value) => {
+		isEditor_value = value;
+	});
+
+    isUser.subscribe((value) => {
+		isUser_value = value;
+	});
 
     let lastScrollY = 0;
     let bannerTransform = 0;
@@ -58,7 +80,20 @@
 <div id='home-banner' class='banner' style="transform: translateY({bannerTransform}px);">
     <a id='logo' href='/'><img alt= "Site Logo" src='/images/DailyDannyLogo.png'></a>
     <h1 id='home-title'><a href="/">THE DAILY DANNY</a></h1>
+
+    {#if account_id == null}
     <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
+    {/if}
+    {#if isAdmin_value}
+    <a id='profile-btn' href='/admin'>Profile</a>
+    {/if}
+    {#if isEditor_value}
+    <a id='profile-btn' href='/reporter'>Profile</a>
+    {/if}
+    {#if isUser_value}
+    <a id='profile-btn' href='/user'>Profile</a>
+    {/if}
+
     <a id='settings' on:click={toggleSettingsPopup}><i class="fas fa-cog"></i></a>
 
 </div>
@@ -73,7 +108,7 @@
         <li><a href="/topics/travel">Travel</a></li>
         <li><a href="/topics/medicine">Medicine</a></li>
         <li><a href="/topics/music">Music</a></li>
-        <li><a href="/reporter">Create Article</a></li>
+        <li><a href="/profile/createArticle">Create Article</a></li>
     </ul>
 </nav>
 {#if loginPopupVisible}
