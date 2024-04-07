@@ -234,6 +234,42 @@ exports.getArticles = (req, res) => {
     }
 }
 
-exports.updateArticle = (req, res) => {
+exports.updateArticle = async (req, res) => {
+    const id = req.params.id;
+    const updateViews = req.query.views;
+    let article;
 
+    await Articledb.findById(id)
+        .then(data =>{
+            if(!data){
+                res.status(404).send({ message : "Not found article with id "+ id});
+            }else{
+                article = data;
+            }
+        })
+        .catch(err =>{
+            res.status(500).send({ message: "Error retrieving article with id " + id})
+        });
+
+    console.log('BEFORE:');
+    console.log(article);
+
+    if (updateViews) {
+        article.views++;
+
+        console.log('AFTER:');
+        console.log(article);
+
+        await Articledb.findByIdAndUpdate(id, article, { useFindAndModify: false })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: `Cannot update article ${id}. Maybe article not found!`});
+                } else {
+                    res.send(data);
+                }   
+            })
+            .catch(err => {
+                res.status(500).send({ message: "Error update article information"});
+        });
+    }
 }
