@@ -9,9 +9,14 @@
         console.log('loaded');
 
 		try {
+      // get article by topic
 			const response1 = await axios.get(API_URL+"api/articles", { params: { topic: topic } });
 			let articleId = response1['data'][0]._id;
 
+      // Update article view count!
+      const update = await axios.put(API_URL+"api/articles/"+articleId+"?views="+true);
+      
+      // get article by id
       const response2 = await axios.get(API_URL+"api/articles", { params: { id: articleId } });
       let article = response2['data'][0];
 
