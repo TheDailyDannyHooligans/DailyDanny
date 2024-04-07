@@ -7,60 +7,10 @@
 
     const API_URL = 'http://localhost:3000/';
 
-    /*
-    const multer = require('multer');
-
-    const storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, 'uploads')
-      },
-      filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now())
-      }
-    });
-
-    const upload = multer({ storage: storage });
-    */
     let title = '';
     let author = '';
     let articleText = '';
     let selectedFiles = [];
-
-    const printArticlesToFile = async (formData) => {
-      try {
-          // Fetch the existing content of the articles.json file
-          const response = await fetch('/src/article_json/articles.json');
-          const existingData = await response.json();
-
-          // Append the new article to the existing data array
-          existingData.push(formData);
-
-          // Convert the updated data array to JSON string
-          const updatedDataJSON = JSON.stringify(existingData, null, 2);
-
-          // Create a Blob containing the updated JSON data
-          const blob = new Blob([updatedDataJSON], { type: 'application/json' });
-
-          // Create a temporary URL for the Blob
-          const url = URL.createObjectURL(blob);
-
-          // Create a link element to trigger the download
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'articles.json'; // Set the download attribute to specify the filename
-
-          // Append the link to the document body and trigger the download
-          document.body.appendChild(a);
-          a.click();
-
-          // Release the URL object
-          URL.revokeObjectURL(url);
-      } catch (error) {
-          console.error('Error printing articles to file:', error);
-      }
-    };
-
-
 
     const handleFileInput = (event) => {
       selectedFiles = Array.from(event.target.files);
@@ -83,10 +33,15 @@
       })
 
       console.log(imageIds)
+
       const article = {
         title: title,
         author: author,
-        content: articleText
+        content: articleText,
+        super: false,
+        topic: document.getElementById('topics').value,
+        views: 0,
+        approved: false
       }
 
       console.log(article);
@@ -97,8 +52,8 @@
       console.log(data);
       console.log(images);
 
-      //const response = await axios.post(API_URL+"api/articles", { params: {article: article , imageids: imageIds}});
-      //console.log(response);
+      const response = await axios.post(API_URL+"api/articles", data);
+      console.log(response);
 
       // Reset form fields
       title = '';
@@ -106,8 +61,6 @@
       articleText = '';
       
       console.log('Article submitted!');
-
-      //window.location.href = "/src/routes/reporter";
     };
 
     let imagesPopupVisible = false;  
@@ -153,6 +106,17 @@
       <div>
         <label for="addAttachments">Add Attachments (Images or Videos):</label>
         <button on:click={toggleImagesPopup}>Choose images</button>
+      </div>
+      <div>
+        <label for="topic">Article Topic:</label>
+        <select name="topic" id="topics">
+          <option value="medicine">Medicine</option>
+          <option value="music">Music</option>
+          <option value="nature">Nature</option>
+          <option value="politics">Politics</option>
+          <option value="sports">Sports</option>
+          <option value="travel">Travel</option>
+        </select>
       </div>
     
       <div>
