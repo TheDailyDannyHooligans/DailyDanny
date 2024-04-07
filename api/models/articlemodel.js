@@ -13,7 +13,22 @@ let articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    imageids: [String],
+    super: {
+        type: Boolean,
+        required: true
+    },
+    topic: {
+        type: String,
+        required: true
+    },
+    views: {
+        type: Number,
+        required: true
+    },
+    approved: {
+        type: Boolean,
+        required: true
+    }
 })
 
 const Articledb = mongoose.model('articledb', articleSchema);

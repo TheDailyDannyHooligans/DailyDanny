@@ -26,5 +26,7 @@ route.get('/api/images', controller.getImages);
 route.get('/api/images/:id', controller.getImage);
 
 route.post('/api/articles', controller.addArticle);
+route.get('/api/articles', controller.getArticles);
+route.put('/api/articles/:id', controller.updateArticle);
 
 module.exports = route;
