@@ -3,6 +3,7 @@
     import Editor from '@tinymce/tinymce-svelte';
     import { onMount } from 'svelte';
     import axios from 'axios';
+    import ImagesPopup from '/src/routes/profile/createArticle/images/images.svelte'; 
 
     const API_URL = 'http://localhost:3000/';
 
@@ -65,16 +66,12 @@
       selectedFiles = Array.from(event.target.files);
     };
 
-    let imageIds = {};
-
-    async function addVal(key, val) {
-      imageIds[key] = val;
-    }
     async function handleSubmit () {
       console.log('Handling form submit...');
       
       let formData;
       let key = 0;
+      let imageIds = {};
 
       selectedFiles.forEach(async (file) => {
         formData = new FormData();
@@ -82,21 +79,26 @@
 
         
         const response = await axios.post(API_URL+"api/images", formData);
-        await addVal(key, response.data._id);
-        key++;
+        imageIds[key++] = response.data._id;
       })
 
-      const data = JSON.stringify({
+      console.log(imageIds)
+      const article = {
         title: title,
         author: author,
-        content: articleText,
-        imageids: imageIds
-      });
+        content: articleText
+      }
+
+      console.log(article);
+
+      const data = JSON.stringify(article);
+      const images = JSON.stringify(imageIds);
 
       console.log(data);
+      console.log(images);
 
-      const response = await axios.post(API_URL+"api/articles", data);
-      console.log(response);
+      //const response = await axios.post(API_URL+"api/articles", { params: {article: article , imageids: imageIds}});
+      //console.log(response);
 
       // Reset form fields
       title = '';
@@ -107,6 +109,16 @@
 
       //window.location.href = "/src/routes/reporter";
     };
+
+    let imagesPopupVisible = false;  
+
+    function toggleImagesPopup() {
+      imagesPopupVisible = !imagesPopupVisible;
+    }
+
+    function closeImagesPopup() {
+      imagesPopupVisible = false;
+    }
 </script>
 
 <div class="form-container">
@@ -138,13 +150,21 @@
           on:change={handleFileInput}
         />
       </div>
+      <div>
+        <label for="addAttachments">Add Attachments (Images or Videos):</label>
+        <button on:click={toggleImagesPopup}>Choose images</button>
+      </div>
     
       <div>
         <button type="submit">Submit</button>
       </div>
     </form>
 </div>
-  
+
+{#if imagesPopupVisible}
+    <ImagesPopup on:close={closeImagesPopup}/>
+{/if}
+
 <style>
   .form-container {
     margin-top: 200px;
