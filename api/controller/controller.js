@@ -114,12 +114,14 @@ exports.update = async (req, res) => {
 // Add image to db
 exports.addImage = (req, res, next) => {
     console.log('UPLOAD IMAGE');
+    console.log(req);
 
     const obj = {
 		img: {
 			data: fs.readFileSync(path.join(__dirname.substring(0, __dirname.length - 11) + '/uploads/' + req.file.filename)),
 			contentType: 'image/png'
-		}
+		},
+        advertisement: req.body.advertisement
 	}
 
 	Imagedb.create(obj)
@@ -136,14 +138,26 @@ exports.addImage = (req, res, next) => {
 
 // Get all images from db
 exports.getImages = (req, res) => {
-    Imagedb.find({})
-	.then((data, err)=>{
-		if(err){
-            console.log('ERROR');
-			console.log(err);
-		}
-		res.send(data);
-	});
+    if (req.query.advertisement === false) {
+        Imagedb.find({ 'advertisement' : true })
+        .then((data, err)=>{
+            if(err){
+                console.log('ERROR');
+                console.log(err);
+            }
+            res.send(data);
+        });
+    } else {
+        Imagedb.find({ 'advertisement' : false })
+        .then((data, err)=>{
+            if(err){
+                console.log('ERROR');
+                console.log(err);
+            }
+            res.send(data);
+        });
+    }
+    
 }
 
 // Get image from db by image id
@@ -168,7 +182,35 @@ exports.addArticle = (req, res) => {
 }
 
 exports.getArticles = (req, res) => {
-    if (req.query.top) {
+    if (req.query.status) {
+        const status = req.query.status;
+
+        Articledb.find({ 'status': status })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "Articles not found" });
+                } else {
+                    res.send(data);
+                } 
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error retrieving articles with status " + req.query.status});
+            });
+    } else if (req.query.authorid) {
+        const authorid = req.query.authorid;
+
+        Articledb.find({ 'authorid': authorid })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "Articles not found" });
+                } else {
+                    res.send(data);
+                } 
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error retrieving articles with author id " + req.query.authorid});
+            });
+    } else if (req.query.top) {
         Articledb.find().sort({ views: -1 })
             .then(data => {
                 if (!data) {
@@ -272,4 +314,8 @@ exports.updateArticle = async (req, res) => {
                 res.status(500).send({ message: "Error update article information"});
         });
     }
+}
+
+exports.sendArticle = async (req, res) => {
+
 }

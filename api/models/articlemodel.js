@@ -25,8 +25,16 @@ let articleSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    approved: {
-        type: Boolean,
+    status: {
+        type: String,
+        required: true
+    },
+    reason: {
+        type: String,
+        required: true
+    },
+    authorid: {
+        type: String,
         required: true
     }
 })
