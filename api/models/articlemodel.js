@@ -13,7 +13,30 @@ let articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    imageids: [String],
+    super: {
+        type: Boolean,
+        required: true
+    },
+    topic: {
+        type: String,
+        required: true
+    },
+    views: {
+        type: Number,
+        required: true
+    },
+    status: {
+        type: String,
+        required: true
+    },
+    reason: {
+        type: String,
+        required: true
+    },
+    authorid: {
+        type: String,
+        required: true
+    }
 })
 
 const Articledb = mongoose.model('articledb', articleSchema);

@@ -114,12 +114,14 @@ exports.update = async (req, res) => {
 // Add image to db
 exports.addImage = (req, res, next) => {
     console.log('UPLOAD IMAGE');
+    console.log(req);
 
     const obj = {
 		img: {
 			data: fs.readFileSync(path.join(__dirname.substring(0, __dirname.length - 11) + '/uploads/' + req.file.filename)),
 			contentType: 'image/png'
-		}
+		},
+        advertisement: req.body.advertisement
 	}
 
 	Imagedb.create(obj)
@@ -136,14 +138,26 @@ exports.addImage = (req, res, next) => {
 
 // Get all images from db
 exports.getImages = (req, res) => {
-    Imagedb.find({})
-	.then((data, err)=>{
-		if(err){
-            console.log('ERROR');
-			console.log(err);
-		}
-		res.send(data);
-	});
+    if (req.query.advertisement === false) {
+        Imagedb.find({ 'advertisement' : true })
+        .then((data, err)=>{
+            if(err){
+                console.log('ERROR');
+                console.log(err);
+            }
+            res.send(data);
+        });
+    } else {
+        Imagedb.find({ 'advertisement' : false })
+        .then((data, err)=>{
+            if(err){
+                console.log('ERROR');
+                console.log(err);
+            }
+            res.send(data);
+        });
+    }
+    
 }
 
 // Get image from db by image id
@@ -153,32 +167,155 @@ exports.getImage = (req, res) => {
 
 exports.addArticle = (req, res) => {
     console.log('UPLOAD ARTICLE');
-    console.log(req);
-/*
-    UPLOAD IMAGE
 
-    const obj = {
-		name: req.body.name,
-		img: {
-			data: fs.readFileSync(path.join(__dirname.substring(0, __dirname.length - 11) + '/uploads/' + req.file.filename)),
-			contentType: 'image/png'
-		}
-	}
+    const reqBody = JSON.parse(Object.keys(req.body)[0]);
 
-	Imagedb.create(obj)
+	Articledb.create(reqBody)
 	.then ((item) => {
         item.save();
-        console.log('image sent');
+        console.log('article sent');
 	}).catch(err => { 
         res.status(500).send({ 
             message: err.message || "Some error ocurred while creating a create operation" 
         });
     });
+}
 
-    SAVE IMAGE ID
+exports.getArticles = (req, res) => {
+    if (req.query.status) {
+        const status = req.query.status;
 
-    APPEND ID TO ARTICLE LIST IF LIST EXISTS 
+        Articledb.find({ 'status': status })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "Articles not found" });
+                } else {
+                    res.send(data);
+                } 
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error retrieving articles with status " + req.query.status});
+            });
+    } else if (req.query.authorid) {
+        const authorid = req.query.authorid;
 
-    SAVE ARTICLE
-    */
+        Articledb.find({ 'authorid': authorid })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "Articles not found" });
+                } else {
+                    res.send(data);
+                } 
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error retrieving articles with author id " + req.query.authorid});
+            });
+    } else if (req.query.top) {
+        Articledb.find().sort({ views: -1 })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "Articles not found" });
+                } else {
+                    res.send(data);
+                } 
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error retrieving articles" });
+            });
+    } else if (req.query.super) {
+        const isSuper = req.query.super;
+
+        Articledb.find({ 'super': isSuper })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "Article not found" });
+                } else {
+                    res.send(data);
+                } 
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error retrieving article with id " + req.query.id});
+            });
+    } else if (req.query.id) {
+        const id = req.query.id;
+
+        Articledb.find({ '_id': id })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "Article not found" });
+                } else {
+                    res.send(data);
+                } 
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error retrieving article with id " + req.query.id});
+            });
+    } else if (req.query.topic) {
+        const topic = req.query.topic;
+
+        Articledb.find({ 'topic': topic })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "Topic not found" });
+                } else {
+                    res.send(data);
+                }
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error retrieving articles with topic " + req.query.topic});
+            });
+    } else {
+        // returns all articles
+        Articledb.find()
+            .then(articles => {
+                res.send(articles);
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error occurred while retrieving articles"});
+            });
+    }
+}
+
+exports.updateArticle = async (req, res) => {
+    const id = req.params.id;
+    const updateViews = req.query.views;
+    let article;
+
+    await Articledb.findById(id)
+        .then(data =>{
+            if(!data){
+                res.status(404).send({ message : "Not found article with id "+ id});
+            }else{
+                article = data;
+            }
+        })
+        .catch(err =>{
+            res.status(500).send({ message: "Error retrieving article with id " + id})
+        });
+
+    console.log('BEFORE:');
+    console.log(article);
+
+    if (updateViews) {
+        article.views++;
+
+        console.log('AFTER:');
+        console.log(article);
+
+        await Articledb.findByIdAndUpdate(id, article, { useFindAndModify: false })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: `Cannot update article ${id}. Maybe article not found!`});
+                } else {
+                    res.send(data);
+                }   
+            })
+            .catch(err => {
+                res.status(500).send({ message: "Error update article information"});
+        });
+    }
+}
+
+exports.sendArticle = async (req, res) => {
+
 }
