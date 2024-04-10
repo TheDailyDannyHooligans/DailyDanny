@@ -4,15 +4,16 @@
     import { onMount } from 'svelte';
     import axios from 'axios';
     import ImagesPopup from '/src/routes/profile/createArticle/images/images.svelte'; 
-    import { account } from '/src/routes/account.js';
+    import { currentArticle } from '/src/routes/account.js';
 
     const API_URL = 'http://localhost:3000/';
 
-    let accountId;
-    let submitType;
+    let articleId;
+    let article;
+    let submitType = '';
 
-    account.subscribe((id) => {
-      accountId = id;
+    currentArticle.subscribe((id) => {
+      articleId = id;
     });
 
     let title = '';
@@ -30,6 +31,27 @@
 
     function setSend() {
       submitType = 'send';
+    }
+
+    async function handleLoad() {
+      console.log('loaded');
+
+      try {
+        const response = await axios.get(API_URL+"api/articles", { params: { id: articleId } });
+        article = response['data'][0];
+
+        console.log(article);
+        
+        if (response.statusText === "OK") {
+          title = article.title;
+          author = article.author;
+          articleText = article.content;
+        } else {
+          console.error(response.statusText);
+        }
+      } catch(error) {
+        console.log(error);
+      }
     }
 
     async function handleSubmit () {
@@ -50,29 +72,29 @@
 
       console.log(imageIds)
 
-      const article = {
+      const articleObj = {
         title: title,
         author: author,
         content: articleText,
         super: false,
         topic: document.getElementById('topics').value,
         views: 0,
-        status: 'Pending review',
-        reason: 'Recently submitted',
-        authorid: accountId
+        status: article.status,
+        reason: 'none'
       }
 
-      if (submitType == 'save') article['status'] = 'Draft'
+      if (submitType == 'save') articleObj['status'] = 'Draft';
+      else if (submitType == 'send') articleObj['status'] = 'Pending review';
 
-      console.log(article);
+      console.log(articleObj);
 
-      const data = JSON.stringify(article);
+      const data = JSON.stringify(articleObj);
       const images = JSON.stringify(imageIds);
 
       console.log(data);
       console.log(images);
 
-      const response = await axios.post(API_URL+"api/articles", data);
+      let response = await axios.put(API_URL+"api/articles/"+articleId+"?views="+false, data);
       console.log(response);
 
       // Reset form fields
@@ -94,7 +116,7 @@
     }
 </script>
 
-<div class="form-container">
+<div class="form-container" use:handleLoad>
     <h1>Write an Article</h1>
 
     <form on:submit={handleSubmit}>

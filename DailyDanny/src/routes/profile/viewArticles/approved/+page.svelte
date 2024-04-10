@@ -15,7 +15,7 @@
     console.log('loaded');
 
     try {
-      const response = await axios.get(API_URL+"api/articles", { params: { status: 'Pending review' } });
+      const response = await axios.get(API_URL+"api/articles", { params: { status: 'Approved' } });
       let articles = response['data'];
 
       console.log(response);
@@ -31,11 +31,11 @@
           let title = document.createElement('h3');
           let title_link = document.createElement('a');
           let status = document.createElement('p');
-
-          title_link.addEventListener('click', () => currentArticle.update((id) => article._id));
+          
+          currentArticle.update((id) => article._id);
             
           title_link.innerHTML = article.title;
-          title_link.href = '../editArticle/admin'
+          title_link.href = '/individual'
           status.innerHTML = article.status;
 
           title.appendChild(title_link);

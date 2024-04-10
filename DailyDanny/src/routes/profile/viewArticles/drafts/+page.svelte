@@ -15,7 +15,7 @@
     console.log('loaded');
 
     try {
-      const response = await axios.get(API_URL+"api/articles", { params: { status: 'Pending review' } });
+      const response = await axios.get(API_URL+"api/articles", { params: { status: 'Draft' } });
       let articles = response['data'];
 
       console.log(response);
@@ -35,7 +35,7 @@
           title_link.addEventListener('click', () => currentArticle.update((id) => article._id));
             
           title_link.innerHTML = article.title;
-          title_link.href = '../editArticle/admin'
+          title_link.href = '../editArticle/reporter'
           status.innerHTML = article.status;
 
           title.appendChild(title_link);
@@ -60,7 +60,6 @@
 <body class = "body">
   <div class="articles" id="article" use:handleLoad>
     <div id="articles"></div>
-    <!-- ADD A LINK TO VIEW THE ARTICLE -->
   </div>
 </body>
 
