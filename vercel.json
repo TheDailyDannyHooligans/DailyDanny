@@ -1,0 +1,11 @@
+{
+    "buildCommand": "cd api && npm install && cd .. && cd DailyDanny && npm install && cd .. && npm install && npm start",
+    "outputDirectory": "DailyDanny/dist",
+    "framework": "vite",
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "/api/server.js"
+        }
+    ]
+}
