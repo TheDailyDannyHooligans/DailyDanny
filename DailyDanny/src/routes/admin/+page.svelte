@@ -8,7 +8,7 @@
     let changePasswordPopupVisible = false;
     let logoutPopupVisible = false;
 
-    function toggleChangePasswordPopup() {
+    function toggleCreateUserPopup() {
         createUserPopupVisible = !createUserPopupVisible;
     }
 
@@ -35,9 +35,10 @@
 
 <div class="profile">
   <a id="create-user" on:click={toggleCreateUserPopup}>Create admin/editor account</a><br/>
-  <a href="/profile/viewArticles">Accept/reject articles</a><br/>
+  <a href="/profile/viewArticles/all">View all articles</a><br/>
+  <a href="/profile/viewArticles/pending">View pending articles</a><br/>
   <a id="change-password" on:click={toggleChangePasswordPopup}>Change your password</a><br/>
-  <a id="logout" on:click={toggleLogoutPopup}>Logout</a> <!-- THIS IS A POPOUT FOR CONFIRMATION -->
+  <a id="logout" on:click={toggleLogoutPopup}>Logout</a>
 </div>
 
 {#if createUserPopupVisible}

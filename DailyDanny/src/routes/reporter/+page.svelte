@@ -26,6 +26,9 @@
 <div class="profile">
   <a href="/profile/testArticle">Test article</a><br/>
   <a href="/profile/createArticle">Create article</a><br/>
+  <a href="/profile/viewArticles/all">View articles</a><br/>
+  <a href="/profile/viewArticles/drafts">View drafts</a><br/>
+  <a href="/profile/viewArticles/rejected">View rejected articles</a><br/>
   <a id="change-password" on:click={toggleChangePasswordPopup}>Change your password</a><br/>
   <a id="logout" on:click={toggleLogoutPopup}>Logout</a> <!-- THIS IS A POPOUT FOR CONFIRMATION -->
 </div>
