@@ -185,17 +185,33 @@ exports.getArticles = (req, res) => {
     if (req.query.status) {
         const status = req.query.status;
 
-        Articledb.find({ 'status': status })
-            .then(data => {
-                if (!data) {
-                    res.status(404).send({ message: "Articles not found" });
-                } else {
-                    res.send(data);
-                } 
-            })
-            .catch(err => {
-                res.status(500).send({ message: err.message || "Error retrieving articles with status " + req.query.status});
-            });
+        if (status == 'Rejected') {
+            const authorid = req.query.authorid;
+
+            Articledb.find({ 'authorid': authorid, 'status': status })
+                     .then(data => {
+                         if (!data) {
+                             res.status(404).send({ message: "Articles not found" });
+                         } else {
+                             res.send(data);
+                         } 
+                     })
+                     .catch(err => {
+                         res.status(500).send({ message: err.message || "Error retrieving articles with status " + req.query.status});
+                     });
+        } else {
+            Articledb.find({ 'status': status })
+                     .then(data => {
+                         if (!data) {
+                             res.status(404).send({ message: "Articles not found" });
+                         } else {
+                             res.send(data);
+                         } 
+                     })
+                     .catch(err => {
+                         res.status(500).send({ message: err.message || "Error retrieving articles with status " + req.query.status});
+                     });
+        }
     } else if (req.query.authorid) {
         const authorid = req.query.authorid;
 
@@ -277,6 +293,10 @@ exports.getArticles = (req, res) => {
 }
 
 exports.updateArticle = async (req, res) => {
+    const reqBody = JSON.parse(Object.keys(req.body)[0]);
+    console.log(reqBody);
+    console.log(req);
+
     const id = req.params.id;
     const updateViews = req.query.views;
     let article;
@@ -296,24 +316,30 @@ exports.updateArticle = async (req, res) => {
     console.log('BEFORE:');
     console.log(article);
 
-    if (updateViews) {
-        article.views++;
+    if (updateViews) article.views++;
+    article.title = reqBody.title;
+    article.author = reqBody.title;
+    article.content = reqBody.content;
+    article.super = reqBody.super;
+    article.topic = reqBody.topic;
+    article.status = reqBody.status;
+    article.reason = reqBody.reason;
 
-        console.log('AFTER:');
-        console.log(article);
+    console.log('AFTER:');
+    console.log(article);
 
-        await Articledb.findByIdAndUpdate(id, article, { useFindAndModify: false })
-            .then(data => {
-                if (!data) {
-                    res.status(404).send({ message: `Cannot update article ${id}. Maybe article not found!`});
-                } else {
-                    res.send(data);
-                }   
-            })
-            .catch(err => {
-                res.status(500).send({ message: "Error update article information"});
-        });
-    }
+    await Articledb.findByIdAndUpdate(id, article, { useFindAndModify: false })
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: `Cannot update article ${id}. Maybe article not found!`});
+            } else {
+                res.send(data);
+            }   
+        })
+        .catch(err => {
+            res.status(500).send({ message: "Error update article information"});
+    });
+
 }
 
 exports.sendArticle = async (req, res) => {
