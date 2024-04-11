@@ -8,7 +8,7 @@
         console.log('loaded');
 
     try {
-            const response = await axios.get(API_URL + "api/articles");
+            const response = await axios.get(API_URL + "api/articles", { params: { status: 'Approved' } });
             let articles = response.data;
 
             if (response.statusText === "OK") {

@@ -84,16 +84,16 @@
     <h1 id='home-title'><a href="/">THE DAILY DANNY</a></h1>
 
     {#if account_id == null}
-    <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
-    {/if}
+        <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
+    {/if}    
     {#if isAdmin_value}
-    <a id='profile-btn' href='/admin'>Profile</a>
+        <a id='profile-btn' href='/admin'>Profile</a>
     {/if}
     {#if isEditor_value}
-    <a id='profile-btn' href='/reporter'>Profile</a>
+        <a id='profile-btn' href='/reporter'>Profile</a>
     {/if}
     {#if isUser_value}
-    <a id='profile-btn' href='/user'>Profile</a>
+        <a id='profile-btn' href='/user'>Profile</a>
     {/if}
 
     <a id='settings' on:click={toggleSettingsPopup}><i class="fas fa-cog"></i></a>
@@ -110,7 +110,7 @@
         <li><a href="/topics/travel">Travel</a></li>
         <li><a href="/topics/medicine">Medicine</a></li>
         <li><a href="/topics/music">Music</a></li>
-        <li><a href="/profile/createArticle">Create Article</a></li>
+        <!-- <li><a href="/profile/createArticle">Create Article</a></li> -->
     </ul>
 </nav>
 {#if loginPopupVisible}
