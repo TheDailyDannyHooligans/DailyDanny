@@ -58,7 +58,7 @@
             bannerTransform -= 10; // scroll down
         } else if (currentScrollY < lastScrollY && bannerTransform < 0){
             bannerTransform += 10;
-        } else if(currentScrollY == 0){
+        } else if(currentScrollY < 100 && currentScrollY >= 0){
             bannerTransform = 0;
         }
         lastScrollY = currentScrollY;  
