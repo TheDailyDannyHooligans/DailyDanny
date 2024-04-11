@@ -29,7 +29,7 @@
 
         try {
             const response = await axios.get(API_URL+"api/users", { params: { email: email, password: password } })
-
+            console.log('API Response:', response);
             if (response.status === 200) {
                 user = await response.data;
 				console.log(user)

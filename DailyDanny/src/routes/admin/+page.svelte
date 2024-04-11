@@ -34,11 +34,11 @@
 </script>
 
 <div class="profile">
-  <a id="create-user" on:click={toggleCreateUserPopup}>Create admin/editor account</a><br/>
-  <a href="/profile/viewArticles/all">View all articles</a><br/>
-  <a href="/profile/viewArticles/pending">View pending articles</a><br/>
-  <a id="change-password" on:click={toggleChangePasswordPopup}>Change your password</a><br/>
-  <a id="logout" on:click={toggleLogoutPopup}>Logout</a>
+  <a class ="page-buttons" on:click={toggleCreateUserPopup}>Create admin/editor account</a><br/>
+  <a class ="page-buttons"href="/profile/viewArticles/all">View all articles</a><br/>
+  <a class ="page-buttons"href="/profile/viewArticles/pending">View pending articles</a><br/>
+  <a class="change-password" on:click={toggleChangePasswordPopup}>Change your password</a><br/>
+  <a class="logout" on:click={toggleLogoutPopup}>Logout</a>
 </div>
 
 {#if createUserPopupVisible}
@@ -54,5 +54,31 @@
 <style>
   .profile {
       margin-top: 175px;
+  }
+  .logout,
+  .change-password,
+  .page-buttons{
+    margin: 1%;
+    display: inline-block;
+    border: 0.1em solid rgb(77, 77, 77);
+    border-radius: 0.5em;
+    padding: 0.35em 0.5em;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    transition: all 0.2s;
+    background: rgb(179, 179, 179)
+  }
+
+  .page-buttons:hover {
+    cursor: pointer;
+    background-color: rgb(54, 135, 160);
+    color: white;
+  }
+
+  .logout:hover,
+  .change-password:hover {
+    cursor: pointer;
+    background-color: salmon;
+    color: white;
   }
 </style>
