@@ -58,6 +58,8 @@
             bannerTransform -= 10; // scroll down
         } else if (currentScrollY < lastScrollY && bannerTransform < 0){
             bannerTransform += 10;
+        } else if(currentScrollY == 0){
+            bannerTransform = 0;
         }
         lastScrollY = currentScrollY;  
 
@@ -67,17 +69,17 @@
             bannerTransform = 0;
         });
         });
-
-        onDestroy(() => {
+    }
+    onDestroy(() => {
         window.removeEventListener('scroll', handleScroll);
-        });
-    }  
+    });
+    
     });
 </script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
-<div id='home-banner' class='banner'>
+<div id='home-banner' class='banner' style="transform: translateY({bannerTransform}px);">
     <a id='logo' href='/'><img alt= "Site Logo" src='/images/DailyDannyLogo.png'></a>
     <h1 id='home-title'><a href="/">THE DAILY DANNY</a></h1>
 
