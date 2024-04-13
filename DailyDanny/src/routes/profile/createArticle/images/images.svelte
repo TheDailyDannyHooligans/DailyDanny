@@ -8,8 +8,7 @@
     // Signup API call
     const API_URL = 'http://localhost:3000/';
     let images;
-    let image;
-
+    let mainImageTags = [];
 
     async function handleLoad() {
         console.log('loaded');
@@ -22,7 +21,9 @@
             console.log(images);
 			
 			if (response.statusText === "OK") {
-                images.forEach((image) => {
+                let id = 1;
+
+                const promises = images.map((image) => {
                     let content = document.createElement('img');
 
                     // Convert the binary data into an array
@@ -35,10 +36,24 @@
                     }
                     base64Image = btoa(base64Image);
                     
+                    content.id = `${id}`;
                     content.src = "data:"+image.img.contentType+";base64,"+base64Image;
+                    content.onclick = () => {
+                        mainImageTags.push(content);
+                        content.style.border = 'solid white';
+                        handleClosePopup()
+                    };
+                    
+                    id++;
+                    
+                    return content;
+                });
 
-                    document.getElementById('images').appendChild(content);
-                })
+                const imageTags = await Promise.all(promises);
+
+                imageTags.forEach((tag) => {
+                    document.getElementById('images').appendChild(tag);
+                });
 			} else {
 				console.error(response.statusText);
 			}
@@ -50,6 +65,10 @@
 
     // Opening and closing of popups
     function handleClosePopup() {
+        mainImageTags.forEach((tag) => {
+            document.getElementById('chosen-images').appendChild(tag);
+        });
+
         console.log("Closing images popup");
         dispatch('close');
     }
