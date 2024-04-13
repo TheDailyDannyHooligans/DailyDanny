@@ -3,6 +3,12 @@
     "concurrently": "^8.2.2"
   },
   "scripts": {
+    "install-all": "npm install && cd api && npm install && cd .. && cd DailyDanny && npm install",
+    "install-server": "cd api && npm install",
+    "start-server": "cd api && node server.js",
+    "install-client": "cd DailyDanny && npm install",
+    "build-client": "cd DailyDanny && npm run build",
+    "start-client": "cd DailyDanny && npm run dev",
     "start:frontend": "cd DailyDanny && npm run dev",
     "start:backend": "cd api && node server.js",
     "start": "concurrently \"npm:start:frontend\" \"npm:start:backend\""
