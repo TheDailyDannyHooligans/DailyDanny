@@ -1,37 +1,113 @@
 
 <script>
     import { createEventDispatcher } from 'svelte';
+    import SignupPopup from '/src/routes/signup/signup.svelte'; 
+    import axios from 'axios';
+    import { account, isAdmin, isEditor, isUser } from '/src/routes/account.js';
+
     const dispatch = createEventDispatcher();
 
-    let username = '';
+    // Login API call
+    const API_URL = 'http://localhost:3000/';
+
+    let user;
+    let email = '';
     let password = '';
 
-    function handleLogin() {
-        console.log("Logging in with username:", username, "and password:", password);
-        username = '';
-        password = '';
-    }
+    async function handleLogin(event) {
+        event.preventDefault();
 
+        if (email === '') {
+            console.error('Email is required');
+            document.getElementById('error').innerText = 'Email is required';
+            return;
+        } else if (password === '') {
+            console.error('Password is required');
+            document.getElementById('error').innerText = 'Password is required';
+            return;
+        }
+
+        try {
+            const response = await axios.get(API_URL+"api/users", { params: { email: email, password: password } })
+            console.log('API Response:', response);
+            if (response.status === 200) {
+                user = await response.data;
+				console.log(user)
+
+                account.update((id) => user._id)
+                isAdmin.update((val) => user.admin)
+                isEditor.update((val) => user.editor)
+                isUser.update((val) => user.user)
+
+                console.log("Closing login popup");
+                dispatch('close');
+            }
+        } catch (error) {
+            if (error.response.status === 500) {
+                if (email === '') {
+                    console.error('Email is required');
+                    document.getElementById('error').innerText = 'Email is required';
+                } else if (password === '') {
+                    console.error('Password is required');
+                    document.getElementById('error').innerText = 'Password is required';
+                } else {
+                    console.error('The text boxes cannot be left blank');
+                    document.getElementById('error').innerText = 'The text boxes cannot be left blank';
+                }
+            } else if (error.response.status === 404) {
+                console.error('Account with this email does not exist');
+                document.getElementById('error').innerText = 'Account with this email does not exist';
+            } else if (error.response.status === 400) {
+                console.error('Incorrect password');
+                document.getElementById('error').innerText = 'Incorrect password';
+            } else {
+                console.error('Failed to fetch user:', error);
+            }
+        }
+    }
+    
+    // Opening and closing of popups
     function handleCloseLogin() {
         console.log("Closing login popup");
         dispatch('close');
+    }
+
+    let signupPopupVisible = false;  
+
+    function toggleSignupPopup() {
+        signupPopupVisible = !signupPopupVisible;
+    }
+
+    function closeSignupPopup() {
+        signupPopupVisible = !signupPopupVisible;
     }
 </script>
 <div class = "popup-overlay">
     <div class="popup">
         <div class="popup-content">
             <h2>Login</h2>
-            <form on:submit|preventDefault={handleLogin}>
-                <label for="username">Username:</label>
-                <input type="text" id="username" bind:value={username} />
+            <form on:submit={handleLogin}>
+                <label for="email">Email:</label>
+                <br/>
+                <input type="text" id="email" bind:value={email} />
+                <br/>
                 <label for="password">Password:</label>
+                <br/>
                 <input type="password" id="password" bind:value={password} />
+                <br/>
                 <button type="submit" class = "login-button">Login</button>
             </form>
+            <p id="error"></p>
             <button on:click={handleCloseLogin} class = "close-button">Close</button>
+            <p>Don't have an account? <a on:click={toggleSignupPopup} id='new-popup'>Sign up here.</a></p>
         </div>
     </div>
 </div>
+
+{#if signupPopupVisible}
+    <SignupPopup on:close={closeSignupPopup}/>
+{/if}
+
 <style>
     .popup {
         position: fixed;
@@ -85,5 +161,17 @@
     .close-button:hover,
     .login-button:hover {
         background-color: rgb(54, 135, 160);
+    }
+
+    #new-popup {
+        color: rgb(18, 1, 255);
+    }
+
+    #new-popup:hover {
+        color: rgb(65, 0, 245);  
+    }
+    
+    #error {
+        color: red;
     }
 </style>
