@@ -38,6 +38,11 @@
                     
                     content.id = `${id}`;
                     content.src = "data:"+image.img.contentType+";base64,"+base64Image;
+                    content.style.maxWidth = '100%';
+                    content.style.maxHeight = '100%';
+                    content.style.marginBottom = '10px';
+                    content.style.objectFit = 'contain';
+                    content.style.display = 'block';
                     content.onclick = () => {
                         mainImageTags.push(content);
                         content.style.border = 'solid white';
@@ -114,13 +119,20 @@
     }
 
     .popup-content {
-        padding: 20px;
+        width: 100%;
+        height: 80%;
+        padding: 150px;
         border-radius: 25px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 150px;
         background-color: #5d6063;
+        overflow-y: auto;
+        overflow-x: hidden; /* No horizontal scroll */
+    }
+
+    #images {
+        align-items: center;
     }
 
     .close-button,
