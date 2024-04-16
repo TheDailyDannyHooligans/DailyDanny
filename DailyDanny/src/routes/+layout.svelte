@@ -74,6 +74,10 @@
         window.removeEventListener('scroll', handleScroll);
         });
     }  
+    
+    console.log(isAdmin_value);
+    console.log(isEditor_value);    
+    console.log(isUser_value);
     });
 </script>
 
@@ -81,25 +85,26 @@
 
 <div id='home-banner' class='banner' style="transform: translateY({bannerTransform}px);">
     <a id='logo' href='/'><img alt= "Site Logo" src='/images/DailyDannyLogo.png'></a>
+    
     <h1 id='home-title'><a href="/">THE DAILY DANNY</a></h1>
 
     {#if account_id == null}
-    <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
-    {/if}
+        <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
+    {/if}    
     {#if isAdmin_value}
-    <a id='profile-btn' href='/admin'>Profile</a>
+        <a id='profile-btn' href='/admin'>Profile</a>
     {/if}
     {#if isEditor_value}
-    <a id='profile-btn' href='/reporter'>Profile</a>
+        <a id='profile-btn' href='/reporter'>Profile</a>
+        <a id='settings' on:click={toggleSettingsPopup}><i class="fas fa-cog"></i></a>
     {/if}
     {#if isUser_value}
-    <a id='profile-btn' href='/user'>Profile</a>
+        <a id='profile-btn' href='/user'>Profile</a>
     {/if}
+    
 
-    <a id='settings' on:click={toggleSettingsPopup}><i class="fas fa-cog"></i></a>
-
+    
 </div>
-
 
 <nav id='nav-banner' class='banner' style="transform: translateY({bannerTransform}px);">
     <ul>
@@ -236,6 +241,7 @@
     @media only screen and (max-width: 768px) {
         #home-banner {
             height: 100px;
+            flex-direction: row;
         }
 
         #home-title {

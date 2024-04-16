@@ -84,7 +84,7 @@
       justify-content: center;
       align-items: start;
       margin: 10px;
-      margin-top: 15%;
+      margin-top: 150px;
       padding: 20px;
       overflow: auto;
       border: 2px solid #000;
