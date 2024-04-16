@@ -111,6 +111,7 @@
   function closeImagesPopup() {
     imagesPopupVisible = false;
   }
+
 </script>
 
 <div class="form-container">
@@ -129,7 +130,7 @@
   
     <div>
       <label for="articleText">Article Content:</label>
-      <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" type="text" id="articleText" bind:value={articleText} required />
+      <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" type="text" id="mytextarea" bind:value={articleText} required />
     </div>
 
     <div id='chosen-images'></div>

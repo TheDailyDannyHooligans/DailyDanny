@@ -2,10 +2,10 @@
   import articles from '/src/article_json/articles.json';
   import '/src/lib/sharedStyle.css'
 
-  function handleArticleClick(index) {
-    //store the index of the last clicked article in local storage. essentially a global variable.
-    localStorage.setItem('lastClickedArticle', index);
-  }
+  // function handleArticleClick(index) {
+  //   //store the index of the last clicked article in local storage. essentially a global variable.
+  //   localStorage.setItem('lastClickedArticle', index);
+  // }
 </script>
 <body class = "body">
 <div class="articles">

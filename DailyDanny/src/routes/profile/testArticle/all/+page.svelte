@@ -4,18 +4,26 @@
 
     const API_URL = 'http://localhost:3000/';
 
+    let articles;
+    
+
     async function handleLoad() {
         console.log('loaded');
 
     try {
             const response = await axios.get(API_URL + "api/articles", { params: { status: 'Approved' } });
-            let articles = response.data;
+            articles = response.data;
 
             if (response.statusText === "OK") {
                 const frame = document.querySelector('.article-frame');
                 frame.innerHTML = '';  // Clear existing content
 
+                // Loop through all approved articles, saving the id as you go with i
+                let i = 0;
                 articles.forEach(article => {
+                    let articleID = response['data'][i]._id;
+                    console.log(articleID);
+
                     let articleBox = document.createElement('div');
                     articleBox.className = 'article-box';
 
@@ -41,6 +49,8 @@
                     articleBox.appendChild(viewCount);
 
                     frame.appendChild(articleBox);
+
+                    i++;
                 });
             } else {
                 console.error(response.statusText);
@@ -59,16 +69,30 @@
         return words.join(' '); // Join the words back if less than or equal to limit
     }
     }
+
+  function handleArticleClick(index) {
+    // store article id as a global variable
+    console.log("clicked");
+    localStorage.setItem('lastClickedArticle', index);
+    
+  }
   
 </script>
+
+<!-- On click, go to handleArticleCLick function -->
+
 <div class = "article-frame">
-    <div class="article-box" id="article" use:handleLoad>
-      <div id="title"></div>
-      <div id="author"></div>
-      <div id="content"></div>
-      <div id="views"></div>
-    </div>
+  {#each articles as article}
+  <div class="article-box" id="article" use:handleLoad>
+    <a href="/profile/testArticle/all/articlePage" class="article-link" on:click={() => handleArticleClick(article.articleID)}> 
+    <div id="title"></div>
+    <div id="author"></div>
+    <div id="content"></div>
+    <div id="views"></div>
   </div>
+  {/each}
+</div>
+
 <!--  Styling is in sharedStyle.css file in /lib folder-->
 <style>
     :global(body) {
