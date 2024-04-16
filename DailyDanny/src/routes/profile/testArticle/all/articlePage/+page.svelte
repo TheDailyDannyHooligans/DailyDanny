@@ -14,19 +14,28 @@
 
     // gets the last clicked article id from local storage
     lastClickedArticleID = localStorage.getItem('lastClickedArticle');
+    console.log(lastClickedArticleID);
 
     try {
     // Find article with stored id
+    // { params: { id: lastClickedArticleID } }
       const response = await axios.get(API_URL+"api/articles", { params: { id: lastClickedArticleID } });
+      article = response.data[0];
+      console.log(response);
+      console.log(article);
 
     // Create object for article if found
       if (response.statusText === "OK") {
-                let title = document.createElement('h2');
-                let author = document.createElement('h3');
-                let viewCount = document.createElement('p');
-
+                let title = document.createElement('h2');                
+                title.className = 'title';
                 title.innerHTML = article.title;
+
+                let author = document.createElement('h3');
+                author.className = 'author';
                 author.innerHTML = article.author;
+
+                let viewCount = document.createElement('p');
+                viewCount.className = 'views';
                 viewCount.innerHTML = 'Number of views: ' + article.views;
 
                 document.getElementById('title').appendChild(title);

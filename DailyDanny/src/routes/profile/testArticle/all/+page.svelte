@@ -14,18 +14,17 @@
             const response = await axios.get(API_URL + "api/articles", { params: { status: 'Approved' } });
             articles = response.data;
 
+            console.log(articles);
+
             if (response.statusText === "OK") {
                 const frame = document.querySelector('.article-frame');
                 frame.innerHTML = '';  // Clear existing content
 
                 // Loop through all approved articles, saving the id as you go with i
-                let i = 0;
                 articles.forEach(article => {
-                    let articleID = response['data'][i]._id;
-                    console.log(articleID);
-
                     let articleBox = document.createElement('div');
                     articleBox.className = 'article-box';
+                    articleBox.onclick = () => handleArticleClick(article._id);
 
                     let title = document.createElement('h2');
                     title.className = 'title';
@@ -49,8 +48,6 @@
                     articleBox.appendChild(viewCount);
 
                     frame.appendChild(articleBox);
-
-                    i++;
                 });
             } else {
                 console.error(response.statusText);
@@ -67,22 +64,21 @@
             return words.slice(0, wordLimit).join(' ') + '...';
         }
         return words.join(' '); // Join the words back if less than or equal to limit
-    }
+      }
     }
 
-  function handleArticleClick(index) {
+  function handleArticleClick(articleID) {
     // store article id as a global variable
-    console.log("clicked");
-    localStorage.setItem('lastClickedArticle', index);
-    
+    console.log("Article clicked", articleID);
+    localStorage.setItem('lastClickedArticle', articleID);
+    window.location.href = '/profile/testArticle/all/articlePage';
   }
   
 </script>
 
 <!-- On click, go to handleArticleCLick function -->
-
 <div class = "article-frame">
-  {#each articles as article}
+  <!-- {#each articles as article} -->
   <div class="article-box" id="article" use:handleLoad>
     <a href="/profile/testArticle/all/articlePage" class="article-link" on:click={() => handleArticleClick(article.articleID)}> 
     <div id="title"></div>
@@ -90,7 +86,7 @@
     <div id="content"></div>
     <div id="views"></div>
   </div>
-  {/each}
+  <!-- {/each} -->
 </div>
 
 <!--  Styling is in sharedStyle.css file in /lib folder-->
