@@ -83,7 +83,7 @@
     <a id='logo' href='/'><img alt= "Site Logo" src='/images/DailyDannyLogo.png'></a>
     <h1 id='home-title'><a href="/">THE DAILY DANNY</a></h1>
 
-{#if account_id == null}
+    {#if account_id == null}
         <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
     {:else if isAdmin_value}
         <a id='profile-btn' href='/admin'>Profile</a>
@@ -107,7 +107,6 @@
         <li><a href="/topics/travel">Travel</a></li>
         <li><a href="/topics/medicine">Medicine</a></li>
         <li><a href="/topics/music">Music</a></li>
-        <!-- <li><a href="/profile/createArticle">Create Article</a></li> -->
     </ul>
 </nav>
 {#if loginPopupVisible}
