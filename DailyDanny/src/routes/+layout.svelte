@@ -83,16 +83,13 @@
     <a id='logo' href='/'><img alt= "Site Logo" src='/images/DailyDannyLogo.png'></a>
     <h1 id='home-title'><a href="/">THE DAILY DANNY</a></h1>
 
-    {#if account_id == null}
+{#if account_id == null}
         <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
-    {/if}    
-    {#if isAdmin_value}
+    {:else if isAdmin_value}
         <a id='profile-btn' href='/admin'>Profile</a>
-    {/if}
-    {#if isEditor_value}
+    {:else if isEditor_value}
         <a id='profile-btn' href='/reporter'>Profile</a>
-    {/if}
-    {#if isUser_value}
+    {:else if isUser_value}
         <a id='profile-btn' href='/user'>Profile</a>
     {/if}
 
