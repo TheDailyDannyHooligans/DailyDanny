@@ -26,6 +26,16 @@
                     articleBox.className = 'article-box';
                     articleBox.onclick = () => handleArticleClick(article._id);
 
+                    let topic = document.createElement('span');
+                    topic.className = 'subject-label';
+                    topic.innerHTML = article.topic;
+
+                    if(article.superStory){
+                        let superStory = document.createElement('span');
+                        superStory.className = 'super-story';
+                        superStory.innerHTML = 'Super Story';
+                        articleBox.appendChild(superStory);
+                    }
                     let title = document.createElement('h2');
                     title.className = 'title';
                     title.innerHTML = article.title;
@@ -42,6 +52,9 @@
                     viewCount.className = 'views';
                     viewCount.innerHTML = 'Number of views: ' + article.views;
 
+                    articleBox.appendChild(topic);
+                    
+                    //articleBox.appendChild(superStory);
                     articleBox.appendChild(title);
                     articleBox.appendChild(author);
                     articleBox.appendChild(content);
@@ -81,6 +94,8 @@
   <!-- {#each articles as article} -->
   <div class="article-box" id="article" use:handleLoad>
     <a href="/profile/testArticle/all/articlePage" class="article-link" on:click={() => handleArticleClick(article.articleID)}> 
+    <span id="topic"></span>
+    <span id="superStory"></span>
     <div id="title"></div>
     <div id="author"></div>
     <div id="content"></div>

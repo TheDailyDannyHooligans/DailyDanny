@@ -30,6 +30,10 @@
                 title.className = 'title';
                 title.innerHTML = article.title;
 
+                let topic = document.createElement('span');
+                topic.className = 'topic';
+                topic.innerHTML = article.topic;
+
                 let author = document.createElement('h3');
                 author.className = 'author';
                 author.innerHTML = article.author;
@@ -38,7 +42,10 @@
                 viewCount.className = 'views';
                 viewCount.innerHTML = 'Number of views: ' + article.views;
 
+
+
                 document.getElementById('title').appendChild(title);
+                document.getElementById('topic').appendChild = article.topic;
                 document.getElementById('author').appendChild(author);
                 document.getElementById('content').insertAdjacentHTML('beforeend', article.content);
                 document.getElementById('views').appendChild(viewCount);
@@ -50,6 +57,7 @@
 
 <body class = "body">
   <div class="articles" id="article" use:handleLoad>
+    <span class="subject-label" id = "topic"></span>
     <div id="title"></div>
     <div id="author"></div>
     <div id="content"></div>
