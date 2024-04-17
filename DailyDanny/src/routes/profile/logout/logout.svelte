@@ -16,7 +16,7 @@
         event.preventDefault();
 
         account.update((id) => null);
-
+        
         console.log('Account logged out');
         handleClosePopup();
     }
