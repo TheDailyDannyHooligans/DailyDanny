@@ -42,14 +42,43 @@
 
         function closeLoginPopup() {
             loginPopupVisible = false;
+            updateProfileButton();
         }
 
         function closeSettingsPopup() {
             settingsPopupVisible = false;
         }
-    
+    function updateProfileButton() {
+            const profileButton = document.getElementById('profile-btn');
+            // console.log(isAdmin_value)
+            // console.log(isEditor_value)
+            // console.log(isUser_value)
+            if(isEditor_value == "true"){
+                console.log("Editor")
+            }
+            if (!account_id) {
+                profileButton.textContent = 'Log in';
+                profileButton.onclick = function() { toggleLoginPopup(); };
+                profileButton.href = '#';
+            } else if (isAdmin_value == "true") {
+                profileButton.textContent = 'Admin Profile';
+                profileButton.href = '/admin';
+                profileButton.onclick = null;
+            } else if (isEditor_value == "true") {
+                profileButton.textContent = 'Editor Profile';
+                profileButton.href = '/reporter';
+                profileButton.onclick = null;
+            } else if (isUser_value == "true") {
+                profileButton.textContent = 'User Profile';
+                profileButton.href = '/user';
+                profileButton.onclick = null;
+            }else{
+                console.log("Error")
+            }
+        }
         
     onMount(() => {
+        updateProfileButton();
         window.addEventListener('scroll', handleScroll);
 
         function handleScroll() {
@@ -73,7 +102,9 @@
         onDestroy(() => {
         window.removeEventListener('scroll', handleScroll);
         });
+        
     }  
+    
     });
 </script>
 
@@ -83,33 +114,9 @@
     <a id='logo' href='/'><img alt= "Site Logo" src='/images/DailyDannyLogo.png'></a>
     <h1 id='home-title'><a href="/">THE DAILY DANNY</a></h1>
     
-    
-    {#if account_id == null}
-        <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
-    {:else if isAdmin_value}
-        <a id='profile-btn' href='/admin'>Profile</a>
-    {:else if isEditor_value}
-        <a id='profile-btn' href='/reporter'>Profile</a>
-    {:else if isUser_value}
-        <a id='profile-btn' href='/user'>Profile</a>
-    {/if}
-    
-    <!--
-    {#if account_id == null}
-        <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
-    {/if}    
-    {#if isAdmin_value}
-        <a id='profile-btn' href='/admin'>Profile</a>
-    {/if}
-    {#if isEditor_value}
-        <a id='profile-btn' href='/reporter'>Profile</a>
-    {/if}
-    {#if isUser_value}
-        <a id='profile-btn' href='/user'>Profile</a>
-    {/if}
-    -->
+    <a on:click={updateProfileButton} id='profile-btn'></a>
     <a id='settings' on:click={toggleSettingsPopup}><i class="fas fa-cog"></i></a>
-
+       
 </div>
 
 
