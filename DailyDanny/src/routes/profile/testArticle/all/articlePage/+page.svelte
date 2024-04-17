@@ -43,7 +43,6 @@
                 viewCount.innerHTML = 'Number of views: ' + article.views;
 
 
-
                 document.getElementById('title').appendChild(title);
                 document.getElementById('topic').appendChild = article.topic;
                 document.getElementById('author').appendChild(author);
@@ -67,5 +66,36 @@
 
 <!--  Styling is in sharedStyle.css file in /lib folder-->
 <style>
+    :global(body) {
+        background-color: #bacadd; 
+        font-family: 'Times New Roman', sans-serif;
+    }
 
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        margin-top: 175px;
+        padding: 0;              
+    }
+
+    
+@media screen and (max-width: 768px){
+    .container {
+        width: 97vw
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .article-summary {
+        font-size: 16px;
+    }
+
+    .article-text {
+        font-size: 16px;
+    }
+}
 </style>

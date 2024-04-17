@@ -100,23 +100,23 @@
         font-family: 'Times New Roman', sans-serif;
     }
   
-  .article-frame {
-      width: 95vw;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-      grid-gap: 10px;
-      justify-content: center;
-      align-items: start;
-      margin: 10px;
-      margin-top: 15%;
-      padding: 20px;
-      overflow: auto;
-      border: 2px solid #000;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      background-color: #70b3d3;
-      background-image: linear-gradient(to right, hsl(157, 37%, 93%), #d7e5ec, #f0e9ef);
-  }
+    .article-frame {
+        width: 95vw;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+        grid-gap: 10px;
+        justify-content: center;
+        align-items: start;
+        margin: 10px;
+        margin-top: 175px;
+        padding: 20px;
+        overflow: auto;
+        border: 2px solid #000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        background-color: #70b3d3;
+        background-image: linear-gradient(to right, hsl(157, 37%, 93%), #d7e5ec, #f0e9ef);
+    }
   
     .title {
         font-size: 30px;

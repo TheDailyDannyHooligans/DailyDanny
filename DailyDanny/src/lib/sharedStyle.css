@@ -18,6 +18,7 @@
     background-color: rgba(170, 201, 219, 0.5);
     padding: 10px;
     border-radius: 10px;
+    box-shadow: 0px 0px 12px 2px rgba(85, 84, 84, 0.5);
 }
 
 .article-image {
@@ -72,12 +73,14 @@
 .top-story-label,
 .super-story-label,
 .subject-label,
-.ad-label {
+.ad-label,
+.article-views{
     padding: 5px;
     border-radius: 8px;
     font-weight: bold;
     font: "Courier New", Courier, monospace;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 5px;
 }
 
 .top-story-label {
@@ -97,6 +100,11 @@
 
 .ad-label {
     background-color: rgb(203, 190, 51);
+    color: rgb(255, 255, 255);
+}
+
+.article-views {
+    background-color: #e2a887;
     color: rgb(255, 255, 255);
 }
 
@@ -154,28 +162,31 @@
 
 /*Style for article page*/
 .article-frame {
-    width: 95vw;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    border: 2px solid #000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: auto;
-    background-color: #70b3d3;
-    background-image: linear-gradient(to right, hsl(157, 37%, 93%), #d7e5ec, #f0e9ef);
-    border-radius: 8px;
-    padding: 20px;
-    padding-top: 40px;
+        width: 95vw;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-gap: 10px;
+        justify-content: center;
+        align-items: start;
+        margin: 10px;
+        margin-top: 175px;
+        padding: 20px;
+        overflow: auto;
+        border: 2px solid #000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        background-color: #70b3d3;
+        background-image: linear-gradient(to right, hsl(157, 37%, 93%), #d7e5ec, #f0e9ef);
 }
 
 .title {
     font-size: 30px;
     font-weight: bold;
+    text-align: center;
     background-color: rgba(114, 163, 191, 0.5);
     padding: 10px;
     border-radius: 10px;
+
 }
 
 .article-image {

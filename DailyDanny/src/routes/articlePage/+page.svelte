@@ -26,6 +26,9 @@
 
     // Create object for article if found
       if (response.statusText === "OK") {
+                let container = document.createElement('div');
+                container.className = 'container';
+
                 let title = document.createElement('h2');                
                 title.className = 'title';
                 title.innerHTML = article.title;
@@ -35,9 +38,10 @@
                 author.innerHTML = article.author;
 
                 let viewCount = document.createElement('p');
-                viewCount.className = 'views';
-                viewCount.innerHTML = 'Number of views: ' + article.views;
+                viewCount.className = 'article-views';
+                viewCount.innerHTML = 'Views: ' + article.views;
 
+                document.getElementById(article)
                 document.getElementById('title').appendChild(title);
                 document.getElementById('author').appendChild(author);
                 document.getElementById('content').insertAdjacentHTML('beforeend', article.content);
@@ -49,7 +53,8 @@
 </script>
 
 <body class = "body">
-  <div class="articles" id="article" use:handleLoad>
+
+  <div class="container" id="article" use:handleLoad>
     <div id="title"></div>
     <div id="author"></div>
     <div id="content"></div>
@@ -59,5 +64,24 @@
 
 <!--  Styling is in sharedStyle.css file in /lib folder-->
 <style>
+    :global(body) {
+        background-color: #bacadd; 
+        font-family: 'Times New Roman', sans-serif;
+    }
 
+    .container {
+        display: flex-column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        margin-top: 175px;
+        padding: 20px;              
+    }
+
+    
+@media screen and (max-width: 768px){
+    .container {
+        width: 97vw
+    }
+  }
 </style>
