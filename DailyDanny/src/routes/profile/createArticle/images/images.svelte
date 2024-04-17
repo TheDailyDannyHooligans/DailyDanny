@@ -7,7 +7,7 @@
     // Signup API call
     const API_URL = 'http://localhost:3000/';
     let images;
-    let mainImageTags = [];
+    let mainImageTags;
 
     async function handleLoad() {
         console.log('loaded');
@@ -18,9 +18,13 @@
 			console.log(response['config']);
             images = response['data']
             console.log(images);
+
+            mainImageTags = new Array(images.length);
+
+            for (let i = 0; i < images.length; i++) mainImageTags[i] = null;
 			
 			if (response.statusText === "OK") {
-                let id = 1;
+                let id = 0;
 
                 const promises = images.map((image) => {
                     let content = document.createElement('img');
@@ -43,9 +47,13 @@
                     content.style.objectFit = 'contain';
                     content.style.display = 'block';
                     content.onclick = () => {
-                        mainImageTags.push(content);
-                        content.style.border = 'solid white';
-                        handleClosePopup()
+                        if (content.style.border == 'solid white') {
+                            mainImageTags[content.id] = null;
+                            content.style.border = '';
+                        } else {
+                            mainImageTags[content.id] = content;
+                            content.style.border = 'solid white';
+                        }
                     };
                     
                     id++;
@@ -56,7 +64,7 @@
                 const imageTags = await Promise.all(promises);
 
                 imageTags.forEach((tag) => {
-                    document.getElementById('images').appendChild(tag);
+                    if (tag !== null) document.getElementById('images').appendChild(tag);
                 });
 			} else {
 				console.error(response.statusText);
@@ -68,11 +76,16 @@
 
 
     // Opening and closing of popups
-    function handleClosePopup() {
+    function handleSubmit() {
+        console.log(mainImageTags);
         mainImageTags.forEach((tag) => {
-            document.getElementById('chosen-images').appendChild(tag);
+            if (tag !== null) document.getElementById('chosen-images').appendChild(tag);
         });
 
+        handleClosePopup();
+    }
+
+    function handleClosePopup() {
         console.log("Closing images popup");
         dispatch('close');
     }
@@ -84,6 +97,7 @@
             <h2>Choose Images</h2>
             <div id='images'></div>
             <p id="error"></p>
+            <button on:click={handleSubmit} class = "close-button">Choose Images</button>
             <button on:click={handleClosePopup} class = "close-button">Close</button>
         </div>
     </div>
