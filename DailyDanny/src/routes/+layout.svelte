@@ -83,6 +83,7 @@
     <a id='logo' href='/'><img alt= "Site Logo" src='/images/DailyDannyLogo.png'></a>
     <h1 id='home-title'><a href="/">THE DAILY DANNY</a></h1>
     
+    
     {#if account_id == null}
         <a id='profile-btn' on:click={toggleLoginPopup}>Log in</a>
     {:else if isAdmin_value}

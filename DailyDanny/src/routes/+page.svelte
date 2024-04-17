@@ -42,7 +42,7 @@
 
                     if(article.super){
                         let superStory = document.createElement('span');
-                        superStory.className = 'super-story';
+                        superStory.className = 'super-story-label';
                         superStory.innerHTML = 'Super Story';
                         articleBox.appendChild(superStory);
                     }
@@ -66,8 +66,8 @@
 
 
                     articleBox.appendChild(topic);
-                    //articleBox.appendChild(superStory);
                     articleBox.appendChild(viewCount);
+                    //articleBox.appendChild(superStory);
                     articleBox.appendChild(title);
                     articleBox.appendChild(author);
                     articleBox.appendChild(content);

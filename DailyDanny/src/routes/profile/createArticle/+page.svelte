@@ -91,8 +91,8 @@
     const data = JSON.stringify(article);
     console.log(data);
 
-    //const response = await axios.post(API_URL+"api/articles", data);
-    //console.log(response);
+    const response = await axios.post(API_URL+"api/articles", data);
+    console.log(response);
 
     // Reset form fields
     title = '';
