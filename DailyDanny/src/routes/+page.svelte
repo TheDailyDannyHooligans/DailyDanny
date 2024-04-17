@@ -1,3 +1,4 @@
+<meta charset="UTF-8">
 <script>
     import axios from 'axios';
     import '/src/lib/sharedStyle.css'
@@ -39,18 +40,32 @@
                     let topic = document.createElement('span');
                     topic.className = 'subject-label';
                     topic.innerHTML = article.topic;
+                    if(article.topic == "music"){
+                        topic.innerHTML = '&#127925;';
+                    }else if(article.topic == "sports"){
+                        topic.innerHTML = '&#9917;';
+                    }else if(article.topic == "politics"){
+                        topic.innerHTML = '&#127963;';
+                    }else if(article.topic == "medicine"){
+                        topic.innerHTML = '&#128137;';
+                    }else if(article.topic == "nature"){
+                        topic.innerHTML = '&#127794;';
+                    }else if(article.topic == "travel"){
+                        topic.innerHTML = '&#9992;';
+                    }
+                    
 
                     if(article.super){
                         let superStory = document.createElement('span');
                         superStory.className = 'super-story-label';
-                        superStory.innerHTML = 'Super Story';
+                        superStory.innerHTML = '&#11088; Super';
                         articleBox.appendChild(superStory);
                     }
 
 
                     let viewCount = document.createElement('span');
                     viewCount.className = 'article-views';
-                    viewCount.innerHTML = 'views: ' + article.views;
+                    viewCount.innerHTML =  '&#128293; views: ' + article.views;
 
                     let title = document.createElement('h2');
                     title.className = 'article-title';
