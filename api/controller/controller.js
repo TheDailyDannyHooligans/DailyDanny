@@ -318,7 +318,7 @@ exports.updateArticle = async (req, res) => {
 
     if (updateViews) article.views++;
     article.title = reqBody.title;
-    article.author = reqBody.title;
+    article.author = reqBody.author;
     article.content = reqBody.content;
     article.super = reqBody.super;
     article.topic = reqBody.topic;
