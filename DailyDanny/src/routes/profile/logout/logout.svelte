@@ -19,6 +19,9 @@
         
         console.log('Account logged out');
         handleClosePopup();
+
+        // redirects to home page
+        location.href = '/';
     }
     
     function handleClosePopup() {
