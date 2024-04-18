@@ -88,7 +88,7 @@
 
       console.log(articleObj);
 
-      const data = JSON.stringify(articleObj);
+      const data = 'article=' + JSON.stringify(articleObj);
       const images = JSON.stringify(imageIds);
 
       console.log(data);

@@ -90,7 +90,7 @@
 
       console.log(articleObj);
 
-      const data = JSON.stringify(articleObj);
+      const data = 'article=' + JSON.stringify(articleObj);
       const ads = JSON.stringify(adIds);
 
       console.log(data);
@@ -176,7 +176,7 @@
       <div>
         <label for="reason">If rejected, give your reasoning as to why:</label>
         <br/>
-        <input type="text" id="reason" bind:value={reason} required />
+        <input type="text" id="reason" bind:value={reason} />
       </div>
     
       <div>
