@@ -1,7 +1,10 @@
 import { writable } from 'svelte/store';
+import { persisted } from 'svelte-persisted-store'
 
 export const currentArticle = writable(null);
-export const account = writable(null);
-export const isAdmin = writable(false);
-export const isEditor = writable(false);
-export const isUser = writable(false);
+export const account = persisted('account', null);
+export const isAdmin = persisted('isAdmin', false);
+export const isEditor = persisted('isEditor', false);
+export const isUser = persisted('isUser', false);
+
+

@@ -20,6 +20,7 @@
 		"@fortawesome/free-solid-svg-icons": "^6.5.1",
 		"@tinymce/tinymce-svelte": "^2.0.1",
 		"axios": "^1.6.7",
+		"svelte-persisted-store": "^0.9.1",
 		"svelte-spa-router": "^4.0.1"
 	}
 }
