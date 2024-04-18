@@ -10,6 +10,8 @@
 
   let accountId;
   let submitType;
+  let currImgDiv = 1;
+  let currTextDiv = 1;
 
   account.subscribe((id) => {
     accountId = id;
@@ -17,9 +19,10 @@
 
   let title = '';
   let author = '';
-  let articleText = '';
   let selectedFiles = [];
   let imageTags = [];
+  let imgTags = new Array(1);
+  let textTags = new Array(1);
 
   async function handleFileInput(event) {
     selectedFiles = Array.from(event.target.files);
@@ -31,34 +34,12 @@
       formData.append('advertisement', false);
       
       const response = await axios.post(API_URL+"api/images", formData);
-      return response.data;
+      return response.data._id;
     });
 
     images = await Promise.all(promises);
 
-    promises = images.map((image) => {
-      let content = document.createElement('img');
-
-      // Convert the binary data into an array
-      const uint8Array = new Uint8Array(image.img.data.data);
-
-      // Convert the Uint8Array to a base64-encoded string
-      let base64Image = '';
-      for (let i = 0; i < uint8Array.length; i++) {
-          base64Image += String.fromCharCode(uint8Array[i]);
-      }
-      base64Image = btoa(base64Image);
-      
-      content.src = "data:"+image.img.contentType+";base64,"+base64Image;
-
-      return content;
-    });
-
-    imageTags = await Promise.all(promises);
-
-    imageTags.forEach((tag) => {
-      document.getElementById('chosen-images').appendChild(tag);
-    })
+    imgTags[0] = images[0];
   }
 
   function setSave() {
@@ -73,7 +54,30 @@
 
   async function handleSubmit() {
     console.log('Handling form submit...');
+
+    let content = document.getElementsByClassName('item');
+
+    let articleText = '';
+    let textIndex = 0;
+    let imgIndex = 0;
+
+    console.log(textTags);
+    console.log(imgTags);
+
+    for(let i = 0; i < content.length; i++) {
+      if (content[i].classList.contains('text')) {
+        articleText += (textTags[textIndex]);
+        textIndex++;
+      } else if (content[i].classList.contains('image')) {
+        let tag = document.createElement('div');
+        tag.id = imgTags[imgIndex];
+        articleText += (tag.outerHTML);
+        imgIndex++;
+      }
+    }
     
+    console.log(articleText);
+
     const article = {
       title: title,
       author: author,
@@ -90,7 +94,7 @@
 
     console.log(article);
 
-    const data = JSON.stringify(article);
+    const data = 'article=' + JSON.stringify(article);
     console.log(data);
 
     const response = await axios.post(API_URL+"api/articles", data);
@@ -116,15 +120,22 @@
 
   function addTextBlock() {
     const textContainer = document.createElement('div');
+    textContainer.id = currTextDiv;
+    textContainer.classList.add('item');
+    textContainer.classList.add('text');
+    textTags.push('');
     const textTag = new Editor({
       target: textContainer,
       props: {
-        config: {
-          apiKey:'s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56',
-          type:'text'
-        }
+        apiKey: 's6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56',
+        type: 'text',
+        bindvalue: textTags[currTextDiv],
+        required: true
       }
     });
+    //textContainer.appendChild(textTag);
+
+    currTextDiv++;
 
     document.getElementById('content').appendChild(textContainer);
   }
@@ -132,10 +143,13 @@
   function addImageBlock() {
     const tag = document.createElement('div');
     const local = document.createElement('div');
-    const dbimg = document.createElement('div');
 
     const local_label = document.createElement('label');
     const local_input = document.createElement('input');
+
+    tag.id = currImgDiv;
+    tag.classList.add('item');
+    tag.classList.add('image');
 
     local_label.for = 'attachments';
     local_label.innerHTML = 'Attachments (Images or Videos):';
@@ -143,29 +157,37 @@
     local_input.type = 'file';
     local_input.id = 'attachments';
     local_input.multipleaccept = 'image/*,video/*';
-    local_input.onchange = handleFileInput();
 
     local.appendChild(local_label);
     local.appendChild(local_input);
 
-    const db_label = document.createElement('label');
-    const db_input = document.createElement('button');
+    local_input.onchange = async (event) => {
+      local_label.remove();
+      selectedFiles = Array.from(event.target.files);
 
-    db_label.for = 'addAttachments';
-    db_label.innerHTML = 'Add Attachments (Images or Videos):';
+      let images = [];
+      let promises = selectedFiles.map(async (file) => {
+        let formData = new FormData();
+        formData.append('image', file);
+        formData.append('advertisement', false);
+        
+        const response = await axios.post(API_URL+"api/images", formData);
+        return response.data._id;
+      });
 
-    db_input.innerHTML = 'Choose images';
-    db_input.onclick = () => {
-      imagesPopupVisible = !imagesPopupVisible;
-    };
+      images = await Promise.all(promises);
+      console.log(images);
 
-    dbimg.appendChild(db_label);
-    dbimg.appendChild(db_input);
+      imgTags.push(images[0]);
+      currImgDiv++;
+    }
 
     tag.appendChild(local);
-    tag.appendChild(dbimg);
+
 
     document.getElementById('content').appendChild(tag);
+
+    currImgDiv++;
   }
 
 </script>
@@ -183,9 +205,22 @@
     <input type="text" id="author" bind:value={author} required />
   </div>
   <div id='content'>
-    <div>
+    <div class="item image">
+      <label for="attachments">Add Thumbnail:</label>
+      <div>
+        <label for="attachments">Attachments (Images or Videos):</label>
+        <input
+          type="file"
+          id="attachments"
+          multiple
+          accept="image/*,video/*"
+          on:change={handleFileInput}
+        />
+      </div>
+    </div>
+    <div class="item text">
       <label for="articleText">Article Content:</label>
-      <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" type="text" id="mytextarea" bind:value={articleText} required />
+      <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" type="text" id="mytextarea" bind:value={textTags[0]} required />
     </div>
   </div>
 
@@ -199,24 +234,6 @@
   </div>
 
   <div id='chosen-images'></div>
-  
-  <div>
-    <label for="attachments">Add Thumbnail:</label>
-    <div>
-      <label for="attachments">Attachments (Images or Videos):</label>
-      <input
-        type="file"
-        id="attachments"
-        multiple
-        accept="image/*,video/*"
-        on:change={handleFileInput}
-      />
-    </div>
-    <div>
-      <label for="addAttachments">Add Attachments (Images or Videos):</label>
-      <button id="addAttachments" on:click={toggleImagesPopup}>Choose images</button>
-    </div>
-  </div>
   
   <div>
     <label for="topic">Article Topic:</label>
