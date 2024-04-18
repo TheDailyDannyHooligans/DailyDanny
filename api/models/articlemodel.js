@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 let articleSchema = new mongoose.Schema({
+    thumbnailid: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true
