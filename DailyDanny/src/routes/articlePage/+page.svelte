@@ -46,6 +46,36 @@
                 document.getElementById('author').appendChild(author);
                 document.getElementById('content').insertAdjacentHTML('beforeend', article.content);
                 document.getElementById('views').appendChild(viewCount);
+
+                let images = document.getElementsByClassName('get-image');
+                console.log(images);
+                for (let i = 0; i < images.length; i++)
+                {
+                  console.log(images[i]);
+                  const response = await axios.get(API_URL+"api/images/"+images[i].id);
+                  let image = response['data']
+                  console.log(image);
+                  
+                  if (response.statusText === "OK") {
+                      let content = document.createElement('img');
+
+                      // Convert the binary data into an array
+                      const uint8Array = new Uint8Array(image.img.data.data);
+
+                      // Convert the Uint8Array to a base64-encoded string
+                      let base64Image = '';
+                      for (let i = 0; i < uint8Array.length; i++) {
+                          base64Image += String.fromCharCode(uint8Array[i]);
+                      }
+                      base64Image = btoa(base64Image);
+                      
+                      content.src = "data:"+image.img.contentType+";base64,"+base64Image;
+
+                      images[i].appendChild(content);
+                  } else {
+                    console.error(response.statusText);
+                  }
+                }
       }
     } catch(error) {
         console.log(error);
