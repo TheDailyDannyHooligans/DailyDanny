@@ -1,18 +1,53 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
+    import { onMount } from 'svelte';
 
-    let switchOn = false;
+    let switchOn = false; 
+
+    const body = document.body;
+
+    onMount(() => {
+        // Code to run after the component is added to the DOM
+        
+        // Get the entire cookie string
+        const allCookies = document.cookie;
+
+        // Split the string into individual cookies
+        const cookiesArray = allCookies.split('; ');
+
+        // Initialize a variable to store the theme value
+        let themeValue = null;
+
+        // Search for the 'theme' cookie
+        for (const cookie of cookiesArray) {
+            const [key, value] = cookie.split('=');
+            if (key === 'theme') {
+                themeValue = value;
+                break; // Exit the loop once found
+            }
+        }
+
+        const slider = document.getElementById('theme-button');
+        // Apply the appropriate class based on the theme value
+        if (themeValue === 'dark') {
+            switchOn = true;
+            slider.classList.add('active');
+        }
+        console.log('Component is ready!');
+    });
 
     function toggleSwitch() {
         switchOn = !switchOn;
         console.log("Dark-mode: ", switchOn)
         if (typeof window !== "undefined") {
-            const body = document.body;
+            
             if (switchOn) {
                 body.classList.add('dark-mode');
+                document.cookie = `theme=dark; activeButton=true; path=/`;
             } else {
                 body.classList.remove('dark-mode');
+                document.cookie = `theme=light; activeButton=false; path=/`;
             }
         }
     }
@@ -28,7 +63,7 @@
             <h2>Settings</h2>
             <div class="setting-row">
                 <div class="switch-container">
-                    <span class="slider" class:active={switchOn} on:click={toggleSwitch}></span>
+                    <span class="slider" id="theme-button" class:active={switchOn} on:click={toggleSwitch}></span>
                     <h4>Dark Mode</h4>
                 </div>
             </div>

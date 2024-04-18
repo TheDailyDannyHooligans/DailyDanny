@@ -17,6 +17,39 @@
 
             console.log(articles);
 
+            if (typeof window !== "undefined") {
+                // Get the entire cookie string
+                const allCookies = document.cookie;
+
+                // Split the string into individual cookies
+                const cookiesArray = allCookies.split('; ');
+
+                // Initialize a variable to store the theme value
+                let themeValue = null;
+
+                // Search for the 'theme' cookie
+                for (const cookie of cookiesArray) {
+                    const [key, value] = cookie.split('=');
+                    if (key === 'theme') {
+                        themeValue = value;
+                        break; // Exit the loop once found
+                    }
+                }
+
+                const body = document.body;
+
+                // Check the theme value
+                if (themeValue === 'dark') {
+                    console.log('The theme is dark.');
+                    body.classList.add('dark-mode');
+                } else if (themeValue === 'light') {
+                    body.classList.remove('dark-mode');
+                    console.log('The theme is light.');
+                } else {
+                    console.log('The theme is not set or has an unknown value.');
+                }
+            }
+
             if (response.statusText === "OK") {
                 const frame = document.querySelector('.article-frame');
                 frame.innerHTML = '';  // Clear existing content
@@ -58,14 +91,14 @@
                     if(article.super){
                         let superStory = document.createElement('span');
                         superStory.className = 'super-story-label';
-                        superStory.innerHTML = '&#11088; Super';
+                        superStory.innerHTML = '&#11088;&#11088;&#11088;';
                         articleBox.appendChild(superStory);
                     }
 
 
                     let viewCount = document.createElement('span');
                     viewCount.className = 'article-views';
-                    viewCount.innerHTML =  '&#128293; views: ' + article.views;
+                    viewCount.innerHTML =  '&#128064;: ' + article.views;
 
                     let title = document.createElement('h2');
                     title.className = 'article-title';

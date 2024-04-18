@@ -24,6 +24,40 @@
       console.log(response);
       console.log(article);
 
+
+      if (typeof window !== "undefined") {
+        // Get the entire cookie string
+        const allCookies = document.cookie;
+
+        // Split the string into individual cookies
+        const cookiesArray = allCookies.split('; ');
+
+        // Initialize a variable to store the theme value
+        let themeValue = null;
+
+        // Search for the 'theme' cookie
+        for (const cookie of cookiesArray) {
+            const [key, value] = cookie.split('=');
+            if (key === 'theme') {
+                themeValue = value;
+                break; // Exit the loop once found
+            }
+        }
+
+        const body = document.body;
+        
+        // Check the theme value
+        if (themeValue === 'dark') {
+            console.log('The theme is dark.');
+            body.classList.add('dark-mode');
+        } else if (themeValue === 'light') {
+            body.classList.remove('dark-mode');
+            console.log('The theme is light.');
+        } else {
+            console.log('The theme is not set or has an unknown value.');
+        }    
+    } 
+
     // Create object for article if found
       if (response.statusText === "OK") {
                 let container = document.createElement('div');
