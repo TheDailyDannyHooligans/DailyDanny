@@ -162,13 +162,21 @@ exports.getImages = (req, res) => {
 
 // Get image from db by image id
 exports.getImage = (req, res) => {
-    
+    const id = req.params.id;
+
+    Imagedb.findById(id)
+        .then((data, err)=>{
+            if(err){
+                console.log('ERROR');
+                console.log(err);
+            }
+            res.send(data);
+        });
 }
 
 exports.addArticle = (req, res) => {
     console.log('UPLOAD ARTICLE');
-
-    const reqBody = JSON.parse(Object.keys(req.body)[0]);
+    const reqBody = JSON.parse(req.body['article']);
 
 	Articledb.create(reqBody)
 	.then ((item) => {
@@ -293,9 +301,7 @@ exports.getArticles = (req, res) => {
 }
 
 exports.updateArticle = async (req, res) => {
-    const reqBody = JSON.parse(Object.keys(req.body)[0]);
-    console.log(reqBody);
-    console.log(req);
+    const reqBody = JSON.parse(req.body['article']);
 
     const id = req.params.id;
     const updateViews = req.query.views;
@@ -317,6 +323,7 @@ exports.updateArticle = async (req, res) => {
     console.log(article);
 
     if (updateViews) article.views++;
+    article.thumbnailid = reqBody.thumbnailid;
     article.title = reqBody.title;
     article.author = reqBody.author;
     article.content = reqBody.content;
@@ -339,9 +346,5 @@ exports.updateArticle = async (req, res) => {
         .catch(err => {
             res.status(500).send({ message: "Error update article information"});
     });
-
-}
-
-exports.sendArticle = async (req, res) => {
 
 }
