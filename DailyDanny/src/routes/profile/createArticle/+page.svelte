@@ -63,13 +63,15 @@
 
   function setSave() {
     submitType = 'save';
+    handleSubmit();
   }
 
   function setSend() {
     submitType = 'send';
+    handleSubmit();
   }
 
-  async function handleSubmit () {
+  async function handleSubmit() {
     console.log('Handling form submit...');
     
     const article = {
@@ -112,29 +114,94 @@
     imagesPopupVisible = false;
   }
 
+  function addTextBlock() {
+    const textContainer = document.createElement('div');
+    const textTag = new Editor({
+      target: textContainer,
+      props: {
+        config: {
+          apiKey:'s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56',
+          type:'text'
+        }
+      }
+    });
+
+    document.getElementById('content').appendChild(textContainer);
+  }
+
+  function addImageBlock() {
+    const tag = document.createElement('div');
+    const local = document.createElement('div');
+    const dbimg = document.createElement('div');
+
+    const local_label = document.createElement('label');
+    const local_input = document.createElement('input');
+
+    local_label.for = 'attachments';
+    local_label.innerHTML = 'Attachments (Images or Videos):';
+
+    local_input.type = 'file';
+    local_input.id = 'attachments';
+    local_input.multipleaccept = 'image/*,video/*';
+    local_input.onchange = handleFileInput();
+
+    local.appendChild(local_label);
+    local.appendChild(local_input);
+
+    const db_label = document.createElement('label');
+    const db_input = document.createElement('button');
+
+    db_label.for = 'addAttachments';
+    db_label.innerHTML = 'Add Attachments (Images or Videos):';
+
+    db_input.innerHTML = 'Choose images';
+    db_input.onclick = () => {
+      imagesPopupVisible = !imagesPopupVisible;
+    };
+
+    dbimg.appendChild(db_label);
+    dbimg.appendChild(db_input);
+
+    tag.appendChild(local);
+    tag.appendChild(dbimg);
+
+    document.getElementById('content').appendChild(tag);
+  }
+
 </script>
 
 <div class="form-container">
   <h1>Write an Article</h1>
 
-  <form on:submit={handleSubmit}>
-    <div>
-      <label for="title">Title:</label>
-      <input type="text" id="title" bind:value={title} required />
-    </div>
-  
-    <div>
-      <label for="author">Author:</label>
-      <input type="text" id="author" bind:value={author} required />
-    </div>
-  
+  <div>
+    <label for="title">Title:</label>
+    <input type="text" id="title" bind:value={title} required />
+  </div>
+
+  <div>
+    <label for="author">Author:</label>
+    <input type="text" id="author" bind:value={author} required />
+  </div>
+  <div id='content'>
     <div>
       <label for="articleText">Article Content:</label>
       <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" type="text" id="mytextarea" bind:value={articleText} required />
     </div>
+  </div>
 
-    <div id='chosen-images'></div>
+  <div>
+    <div>
+      <button on:click={addTextBlock}>Add Text</button>
+    </div>
+    <div>
+      <button on:click={addImageBlock}>Add Image</button>
+    </div>
+  </div>
+
+  <div id='chosen-images'></div>
   
+  <div>
+    <label for="attachments">Add Thumbnail:</label>
     <div>
       <label for="attachments">Attachments (Images or Videos):</label>
       <input
@@ -147,25 +214,27 @@
     </div>
     <div>
       <label for="addAttachments">Add Attachments (Images or Videos):</label>
-      <button on:click={toggleImagesPopup}>Choose images</button>
+      <button id="addAttachments" on:click={toggleImagesPopup}>Choose images</button>
     </div>
-    <div>
-      <label for="topic">Article Topic:</label>
-      <select name="topic" id="topics">
-        <option value="medicine">Medicine</option>
-        <option value="music">Music</option>
-        <option value="nature">Nature</option>
-        <option value="politics">Politics</option>
-        <option value="sports">Sports</option>
-        <option value="travel">Travel</option>
-      </select>
-    </div>
+  </div>
   
-    <div>
-      <button type="submit" id="save" on:click={setSave}>Save</button>
-      <button type="submit" id="send" on:click={setSend}>Submit for approval</button>
-    </div>
-  </form>
+  <div>
+    <label for="topic">Article Topic:</label>
+    <select name="topic" id="topics">
+      <option value="medicine">Medicine</option>
+      <option value="music">Music</option>
+      <option value="nature">Nature</option>
+      <option value="politics">Politics</option>
+      <option value="sports">Sports</option>
+      <option value="travel">Travel</option>
+    </select>
+  </div>
+
+  <div>
+    <button type="submit" id="save" on:click={setSave}>Save</button>
+    <button type="submit" id="send" on:click={setSend}>Submit for approval</button>
+  </div>
+  
 </div>
 
 {#if imagesPopupVisible}
