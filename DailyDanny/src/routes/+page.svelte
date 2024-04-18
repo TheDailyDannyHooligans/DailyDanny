@@ -22,7 +22,7 @@
                 frame.innerHTML = '';  // Clear existing content
 
                 // Loop through all approved articles, saving the id as you go with i
-                articles.forEach(article => {
+                articles.forEach(async (article) => {
                     if(article.super){
                         let mainStoryBox = document.createElement('div');
                         mainStoryBox.className = 'main-story-box';
@@ -75,6 +75,30 @@
                     author.className = 'author';
                     author.innerHTML = article.author;
 
+                    let thumbnail = document.createElement('img');
+                    author.className = 'thumbnail';
+
+                    if (article.thumbnailid) {
+                        const response = await axios.get(API_URL+"api/images/"+article.thumbnailid);
+                        let image = response['data']
+
+                        if (response.statusText === "OK") {
+                            // Convert the binary data into an array
+                            const uint8Array = new Uint8Array(image.img.data.data);
+
+                            // Convert the Uint8Array to a base64-encoded string
+                            let base64Image = '';
+                            for (let i = 0; i < uint8Array.length; i++) {
+                                base64Image += String.fromCharCode(uint8Array[i]);
+                            }
+                            base64Image = btoa(base64Image);
+                            
+                            thumbnail.src = "data:"+image.img.contentType+";base64,"+base64Image;
+                        } else {
+                            console.error(response.statusText);
+                        }
+                    }
+
                     let content = document.createElement('div');
                     content.className = 'article-summary';
                     content.innerHTML = truncateText(article.content);
@@ -85,6 +109,7 @@
                     //articleBox.appendChild(superStory);
                     articleBox.appendChild(title);
                     articleBox.appendChild(author);
+                    articleBox.appendChild(thumbnail);
                     articleBox.appendChild(content);
                     
 
