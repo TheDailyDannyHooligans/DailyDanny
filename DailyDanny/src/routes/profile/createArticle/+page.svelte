@@ -71,6 +71,7 @@
       } else if (content[i].classList.contains('image')) {
         let tag = document.createElement('div');
         tag.id = imgTags[imgIndex];
+        tag.classList.add('get-image');
         articleText += (tag.outerHTML);
         imgIndex++;
       }
@@ -79,13 +80,14 @@
     console.log(articleText);
 
     const article = {
+      thumbnailid: imgTags[0],
       title: title,
       author: author,
       content: articleText,
       super: false,
       topic: document.getElementById('topics').value,
       views: 0,
-      status: 'Pending review',
+      status: 'Approved',
       reason: 'Recently submitted',
       authorid: accountId
     }
