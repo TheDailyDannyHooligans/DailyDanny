@@ -28,10 +28,12 @@
       if (response.statusText === "OK") {
                 let container = document.createElement('div');
                 container.className = 'container';
+                
 
                 let title = document.createElement('h2');                
                 title.className = 'title';
                 title.innerHTML = article.title;
+                
 
                 let author = document.createElement('h3');
                 author.className = 'author';
@@ -70,7 +72,12 @@
                       base64Image = btoa(base64Image);
                       
                       content.src = "data:"+image.img.contentType+";base64,"+base64Image;
+                      content.style.width = "50%";
+                      content.style.height = "auto";  
 
+                      content.style.borderRadius = "10px"; 
+                      content.style.marginLeft = "25%"
+                      content.style.marginRight = "25%"
                       images[i].appendChild(content);
                   } else {
                     console.error(response.statusText);
@@ -100,13 +107,16 @@
     }
 
     .container {
-        display: flex-column;
-        justify-content: center;
-        align-items: center;
-        width: 100vw;
-        margin-top: 175px;
-        padding: 20px;              
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      margin-top: 175px;
+      padding: 10%;         
     }
+
+
 
     
 @media screen and (max-width: 768px){

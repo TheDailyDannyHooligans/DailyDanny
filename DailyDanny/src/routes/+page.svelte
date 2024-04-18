@@ -93,6 +93,12 @@
                             }
                             base64Image = btoa(base64Image);
                             
+                            //styling
+                            thumbnail.style.width = "95%";
+                            thumbnail.style.height = "auto";  
+                            thumbnail.style.marginLeft = "2.5%";
+                            thumbnail.style.borderRadius = "10px"; 
+
                             thumbnail.src = "data:"+image.img.contentType+";base64,"+base64Image;
                         } else {
                             console.error(response.statusText);
