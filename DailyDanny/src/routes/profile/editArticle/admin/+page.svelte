@@ -1,244 +1,486 @@
+
 <script>
-    import articles from '/src/article_json/articles.json';
-    import Editor from '@tinymce/tinymce-svelte';
-    import { onMount } from 'svelte';
-    import axios from 'axios';
-    import ImagesPopup from '/src/routes/profile/createArticle/images/images.svelte'; 
-    import { currentArticle } from '/src/routes/account.js';
+  import articles from '/src/article_json/articles.json';
+  import Editor from '@tinymce/tinymce-svelte';
+  import { onMount } from 'svelte';
+  import axios from 'axios';
+  import { currentArticle } from '/src/routes/account.js';
 
-    const API_URL = 'http://localhost:3000/';
+  const API_URL = 'http://localhost:3000/';
 
-    let articleId;
-    let article;
+  let articleId;
+  let article;
+  let submitType;
+  let status = '';
+  let reason = '';
+  let currImgDiv = 1;
+  let currTextDiv = 1;
+  let isSuper = false;
 
-    currentArticle.subscribe((id) => {
-      articleId = id;
-    })
+  currentArticle.subscribe((id) => {
+    articleId = id;
+  });
 
-    let title = '';
-    let author = '';
-    let articleText = '';
-    let isSuper = false;
-    let status = '';
-    let reason = '';
-    let selectedFiles = [];
+  let title = '';
+  let author = '';
+  let selectedFiles = [];
+  let imageTags = [];
+  let imgTags = new Array(1);
+  let textTags = new Array(1);
 
-    async function handleLoad() {
-      console.log('loaded');
+  async function handleLoad() {
+    console.log('loaded');
 
-      try {
-        const response = await axios.get(API_URL+"api/articles", { params: { id: articleId } });
-        article = response['data'][0];
+    try {
+      const response = await axios.get(API_URL+"api/articles", { params: { id: articleId } });
+      article = response['data'][0];
 
-        console.log(article);
+      console.log(article);
+      
+      if (response.statusText === "OK") {
+        let content = article.content;
+
+        const parser = new DOMParser();
+        const tags = parser.parseFromString(content, "text/html").body.childNodes;
+
+        title = article.title;
+        author = article.author;
+
+        console.log(tags);
+
+        textTags[0] = tags[1].innerHTML;
+
+        const response = await axios.get(API_URL+"api/images/"+tags[0].id);
+        let image = response['data']
+        console.log(image);
         
         if (response.statusText === "OK") {
-          title = article.title;
-          author = article.author;
-          articleText = article.content;
+            let content = document.createElement('img');
+
+            // Convert the binary data into an array
+            const uint8Array = new Uint8Array(image.img.data.data);
+
+            // Convert the Uint8Array to a base64-encoded string
+            let base64Image = '';
+            for (let i = 0; i < uint8Array.length; i++) {
+                base64Image += String.fromCharCode(uint8Array[i]);
+            }
+            base64Image = btoa(base64Image);
+            
+            content.src = "data:"+image.img.contentType+";base64,"+base64Image;
+            content.style.width = "50%";
+            content.style.height = "auto";  
+
+            content.style.borderRadius = "10px"; 
+            content.style.marginLeft = "25%"
+            content.style.marginRight = "25%"
+            imageTags[0] = content;
+            imgTags[0] = tags[0].id;
         } else {
           console.error(response.statusText);
         }
-      } catch(error) {
-        console.log(error);
+
+        let contentDiv = document.getElementsByClassName('item');
+        contentDiv[0].appendChild(imageTags[0]);
+
+        for (let i = 2; i < tags.length; i++)
+        {
+          if (tags[i].classList.contains('get-image')) {
+            const response = await axios.get(API_URL+"api/images/"+tags[i].id);
+            let image = response['data']
+            console.log(image);
+            
+            if (response.statusText === "OK") {
+                let content = document.createElement('img');
+
+                // Convert the binary data into an array
+                const uint8Array = new Uint8Array(image.img.data.data);
+
+                // Convert the Uint8Array to a base64-encoded string
+                let base64Image = '';
+                for (let i = 0; i < uint8Array.length; i++) {
+                    base64Image += String.fromCharCode(uint8Array[i]);
+                }
+                base64Image = btoa(base64Image);
+                
+                content.src = "data:"+image.img.contentType+";base64,"+base64Image;
+                content.style.width = "50%";
+                content.style.height = "auto";  
+
+                content.style.borderRadius = "10px"; 
+                content.style.marginLeft = "25%"
+                content.style.marginRight = "25%"
+                imageTags[currImgDiv] = content;
+            } else {
+              console.error(response.statusText);
+            }
+
+            let contentDiv = document.getElementById('content');
+            contentDiv.appendChild(imageTags[currImgDiv]);
+            currImgDiv++;
+          } else {
+            const textContainer = document.createElement('div');
+            textContainer.id = currTextDiv;
+            textContainer.classList.add('item');
+            textContainer.classList.add('text');
+            textTags.push('');
+            const textTag = new Editor({
+              target: textContainer,
+              props: {
+                apiKey: 's6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56',
+                type: 'text',
+                bindvalue: textTags[currTextDiv],
+                required: true
+              }
+            });
+            //textContainer.appendChild(textTag);
+
+            currTextDiv++;
+
+            document.getElementById('content').appendChild(textContainer);
+          }
+        }
+      } else {
+        console.error(response.statusText);
       }
+    } catch(error) {
+      console.log(error);
     }
+  }
 
-    const handleFileInput = (event) => {
-      selectedFiles = Array.from(event.target.files);
-    };
+  async function handleFileInput(event) {
+    selectedFiles = Array.from(event.target.files);
 
-    async function handleSubmit () {
-      console.log('Handling form submit...');
+    let images = [];
+    let promises = selectedFiles.map(async (file) => {
+      let formData = new FormData();
+      formData.append('image', file);
+      formData.append('advertisement', false);
       
-      let formData;
-      let key = 0;
-      let adIds = {};
+      const response = await axios.post(API_URL+"api/images", formData);
+      return response.data._id;
+    });
 
-      selectedFiles.forEach(async (file) => {
-        formData = new FormData();
-        formData.append('image', selectedFiles[0]);
-        formData.append('advertisement', true);
-        
-        const response = await axios.post(API_URL+"api/images", formData);
-        adIds[key++] = response.data._id;
-      })
+    images = await Promise.all(promises);
 
-      if (document.getElementById('yes') && document.getElementById('yes').checked) {
-          isSuper = true;
-      } else if (document.getElementById('no') && document.getElementById('no').checked) {
-          isSuper = false;
+    imgTags[0] = images[0];
+  }
+
+  async function handleSubmit () {
+    console.log('Handling form submit...');
+    
+    let content = document.getElementsByClassName('item');
+
+    let articleText = '';
+    let textIndex = 0;
+    let imgIndex = 0;
+
+    console.log(textTags);
+    console.log(imgTags);
+
+    for(let i = 0; i < content.length; i++) {
+      if (content[i].classList.contains('text')) {
+        articleText += (textTags[textIndex]);
+        textIndex++;
+      } else if (content[i].classList.contains('image')) {
+        let tag = document.createElement('div');
+        tag.id = imgTags[imgIndex];
+        tag.classList.add('get-image');
+        articleText += (tag.outerHTML);
+        imgIndex++;
       }
+    }
 
-      if (document.getElementById('approved') && document.getElementById('approved').checked) {
-          status = 'Approved';
-      } else if (document.getElementById('rejected') && document.getElementById('rejected').checked) {
-          status = 'Rejected';
-      }
+    if (document.getElementById('yes') && document.getElementById('yes').checked) {
+        isSuper = true;
+    } else if (document.getElementById('no') && document.getElementById('no').checked) {
+        isSuper = false;
+    }
 
-      console.log(adIds)
+    if (document.getElementById('approved') && document.getElementById('approved').checked) {
+        status = 'Approved';
+    } else if (document.getElementById('rejected') && document.getElementById('rejected').checked) {
+        status = 'Rejected';
+    }
 
-      const articleObj = {
-        title: title,
-        author: author,
-        content: articleText,
-        super: isSuper,
-        topic: document.getElementById('topics').value,
-        status: status,
-        reason: reason
-      }
+    const articleObj = {
+      thumbnail: imgTags[0],
+      title: title,
+      author: author,
+      content: articleText,
+      super: isSuper,
+      topic: document.getElementById('topics').value,
+      views: article.views,
+      status: status,
+      reason: 'none',
+      authorid: article.authorid
+    }
 
-      console.log(articleObj);
+    if (submitType == 'save') articleObj['status'] = 'Draft';
+    else if (submitType == 'send') articleObj['status'] = 'Pending review';
 
-      const data = 'article=' + JSON.stringify(articleObj);
-      const ads = JSON.stringify(adIds);
+    console.log(articleObj);
 
-      console.log(data);
-      console.log(ads);
+    const data = 'article=' + JSON.stringify(articleObj);
 
-      const response = await axios.put(API_URL+"api/articles/"+articleId+"?views="+false, data);
-      console.log(response);
+    console.log(data);
+
+    let response = await axios.put(API_URL+"api/articles/"+articleId+"?views="+false, data);
+    console.log(response);
+
+    // Reset form fields
+    title = '';
+    author = '';
+    articleText = '';
+    
+    console.log('Article submitted!');
+  }
+
+function addTextBlock() {
+  const textContainer = document.createElement('div');
+  textContainer.id = currTextDiv;
+  textContainer.classList.add('item');
+  textContainer.classList.add('text');
+  textTags.push('');
+  const textTag = new Editor({
+    target: textContainer,
+    props: {
+      apiKey: 's6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56',
+      type: 'text',
+      bindvalue: textTags[currTextDiv],
+      required: true
+    }
+  });
+  //textContainer.appendChild(textTag);
+
+  currTextDiv++;
+
+  document.getElementById('content').appendChild(textContainer);
+}
+
+function addImageBlock() {
+  const tag = document.createElement('div');
+  const local = document.createElement('div');
+
+  const local_label = document.createElement('label');
+  const local_input = document.createElement('input');
+
+  tag.id = currImgDiv;
+  tag.classList.add('item');
+  tag.classList.add('image');
+
+  local_label.for = 'attachments';
+  local_label.innerHTML = 'Attachments (Images or Videos):';
+
+  local_input.type = 'file';
+  local_input.id = 'attachments';
+  local_input.multipleaccept = 'image/*,video/*';
+
+  local.appendChild(local_label);
+  local.appendChild(local_input);
+
+  local_input.onchange = async (event) => {
+    local_label.remove();
+    selectedFiles = Array.from(event.target.files);
+
+    let images = [];
+    let promises = selectedFiles.map(async (file) => {
+      let formData = new FormData();
+      formData.append('image', file);
+      formData.append('advertisement', false);
       
-      console.log('Article updated!');
-    };
+      const response = await axios.post(API_URL+"api/images", formData);
+      return response.data._id;
+    });
 
-    let adsPopupVisible = false;  
+    images = await Promise.all(promises);
+    console.log(images);
 
-    function toggleAdsPopup() {
-      adsPopupVisible = !adsPopupVisible;
-    }
+    imgTags.push(images[0]);
+    currImgDiv++;
+  }
 
-    function closeAdsPopup() {
-      adsPopupVisible = false;
-    }
+  tag.appendChild(local);
+
+
+  document.getElementById('content').appendChild(tag);
+
+  currImgDiv++;
+}
+
+function addAdBlock() {
+  const tag = document.createElement('div');
+  const local = document.createElement('div');
+
+  const local_label = document.createElement('label');
+  const local_input = document.createElement('input');
+
+  tag.id = currImgDiv;
+  tag.classList.add('item');
+  tag.classList.add('image');
+
+  local_label.for = 'attachments';
+  local_label.innerHTML = 'Attachments (Images or Videos):';
+
+  local_input.type = 'file';
+  local_input.id = 'attachments';
+  local_input.multipleaccept = 'image/*,video/*';
+
+  local.appendChild(local_label);
+  local.appendChild(local_input);
+
+  local_input.onchange = async (event) => {
+    local_label.remove();
+    selectedFiles = Array.from(event.target.files);
+
+    let images = [];
+    let promises = selectedFiles.map(async (file) => {
+      let formData = new FormData();
+      formData.append('image', file);
+      formData.append('advertisement', true);
+      
+      const response = await axios.post(API_URL+"api/images", formData);
+      return response.data._id;
+    });
+
+    images = await Promise.all(promises);
+    console.log(images);
+
+    imgTags.push(images[0]);
+    currImgDiv++;
+  }
+
+  tag.appendChild(local);
+
+
+  document.getElementById('content').appendChild(tag);
+
+  currImgDiv++;
+}
 </script>
 
 <div class="form-container" use:handleLoad>
-    <h1>Write an Article</h1>
+  <h1>Edit an Article</h1>
 
-    <form on:submit={handleSubmit}>
-      <div>
-        <label for="title">Title:</label>
-        <input type="text" id="title" bind:value={title} required />
-      </div>
-    
-      <div>
-        <label for="author">Author:</label>
-        <input type="text" id="author" bind:value={author} required />
-      </div>
-    
-      <div>
-        <label for="articleText">Article Content:</label>
-        <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" type="text" id="articleText" bind:value={articleText} required />
-      </div>
-    
-      <div>
-        <label for="attachments">Advertisements (Images or Videos):</label>
-        <input
-          type="file"
-          id="attachments"
-          multiple
-          accept="image/*,video/*"
-          on:change={handleFileInput}
-        />
-      </div>
-      <div>
-        <label for="addAttachments">Add Advertisements (Images or Videos):</label>
-        <button on:click={toggleAdsPopup}>Choose advertisements</button>
-      </div>
+  <div>
+    <label for="title">Title:</label>
+    <input type="text" id="title" bind:value={title} required />
+  </div>
 
-      <div>
-        <label for="topic">Article Topic:</label>
-        <select name="topic" id="topics">
-          <option value="medicine">Medicine</option>
-          <option value="music">Music</option>
-          <option value="nature">Nature</option>
-          <option value="politics">Politics</option>
-          <option value="sports">Sports</option>
-          <option value="travel">Travel</option>
-        </select>
-      </div>
+  <div>
+    <label for="author">Author:</label>
+    <input type="text" id="author" bind:value={author} required />
+  </div>
 
-      <div>
-        <label for="super">Will this article be given the super title:</label>
-        <input type="radio" name="super" id="yes" value="yes" />
-        <label for="yes">Yes</label>
-        <input type="radio" name="super" id="no" value="no" />
-        <label for="no">No</label>
-      </div>
-      <div>
-        <label for="status">Is this article approved or rejected:</label>
-        <input type="radio" name="status" id="approved" value="approved" />
-        <label for="approved">Approved</label>
-        <input type="radio" name="status" id="rejected" value="rejected" />
-        <label for="rejected">Rejected</label>
-      </div>
-      <div>
-        <label for="reason">If rejected, give your reasoning as to why:</label>
-        <br/>
-        <input type="text" id="reason" bind:value={reason} />
-      </div>
-    
-      <div>
-        <button type="submit">Submit</button>
-      </div>
-    </form>
+  <div id='content'>
+    <div class="item image">
+      
+    </div>
+    <div class="item text">
+      <label for="articleText">Article Content:</label>
+      <Editor apiKey="s6fbao0y00rlqyh56hzalaphukeu65pwwospfmj68e692t56" type="text" id="mytextarea" bind:value={textTags[0]} required />
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <button on:click={addTextBlock}>Add Text</button>
+    </div>
+    <div>
+      <button on:click={addImageBlock}>Add Image</button>
+    </div>
+    <div>
+      <button on:click={addAdBlock}>Add Advertisement</button>
+    </div>
+  </div>
+
+  <div>
+    <label for="topic">Article Topic:</label>
+    <select name="topic" id="topics">
+      <option value="medicine">Medicine</option>
+      <option value="music">Music</option>
+      <option value="nature">Nature</option>
+      <option value="politics">Politics</option>
+      <option value="sports">Sports</option>
+      <option value="travel">Travel</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="super">Will this article be given the super title:</label>
+    <input type="radio" name="super" id="yes" value="yes" />
+    <label for="yes">Yes</label>
+    <input type="radio" name="super" id="no" value="no" />
+    <label for="no">No</label>
+  </div>
+  <div>
+    <label for="status">Is this article approved or rejected:</label>
+    <input type="radio" name="status" id="approved" value="approved" />
+    <label for="approved">Approved</label>
+    <input type="radio" name="status" id="rejected" value="rejected" />
+    <label for="rejected">Rejected</label>
+  </div>
+  <div>
+    <label for="reason">If rejected, give your reasoning as to why:</label>
+    <br/>
+    <input type="text" id="reason" bind:value={reason} />
+  </div>
+
+  <div>
+    <button type="submit" on:click={handleSubmit}>Submit</button>
+  </div>
 </div>
 
-{#if adsPopupVisible}
-    <ImagesPopup on:close={closeAdsPopup}/>
-{/if}
-
 <style>
-  .form-container {
-    margin-top: 200px;
-  }
+.form-container {
+  margin-top: 200px;
+}
 
-  form {
-    position: absolute;
-    top: 15%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+form {
+  position: absolute;
+  top: 15%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  div {
-    margin-bottom: 15px;
-  }
+div {
+  margin-bottom: 15px;
+}
 
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
-  input[type="text"],
-  textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
 
-  textarea {
-    height: 150px;
-  }
+textarea {
+  height: 150px;
+}
 
-  button[type="submit"] {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-  }
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
 </style>
