@@ -1,10 +1,17 @@
 <script>
     import axios from 'axios';
     import '/src/lib/sharedStyle.css'
+    import { currentArticle } from '/src/routes/account.js';
     import { onMount } from 'svelte';
 
     const API_URL = 'http://localhost:3000/';
     const topic = 'medicine';
+
+    let articleId;
+
+    currentArticle.subscribe((id) => {
+        articleId = id;
+    });
 
     async function handleLoad() {
         console.log('loaded');
@@ -19,6 +26,7 @@
     try {
     // Find article with stored id
     // { params: { id: lastClickedArticleID } }
+      const update = await axios.put(API_URL+"api/articles/"+articleId+"?views="+true);
       const response = await axios.get(API_URL+"api/articles", { params: { id: lastClickedArticleID } });
       article = response.data[0];
       console.log(response);
