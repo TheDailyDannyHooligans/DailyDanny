@@ -1,7 +1,10 @@
+*{
+    font-family: "consolas", sans-serif;
+}   
 
 .body {
     background-color: #bacadd;
-    font-family: 'Times New Roman', sans-serif;
+    font-family: "consolas", sans-serif;
 }
 
 /* This sets the "grid" where the articles fall into*/
