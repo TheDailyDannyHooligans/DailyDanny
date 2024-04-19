@@ -192,6 +192,7 @@ exports.addArticle = (req, res) => {
 }
 
 exports.getArticles = (req, res) => {
+    console.log(req);
     if (req.query.status) {
         const status = req.query.status;
 
@@ -303,7 +304,10 @@ exports.getArticles = (req, res) => {
 }
 
 exports.updateArticle = async (req, res) => {
-    const reqBody = JSON.parse(req.body['article']);
+    console.log(req);
+    let reqBody;
+    
+    if (req.body['article'] !== undefined) reqBody= JSON.parse(req.body['article']);
 
     const id = req.params.id;
     const updateViews = req.query.views;
@@ -324,15 +328,18 @@ exports.updateArticle = async (req, res) => {
     console.log('BEFORE:');
     console.log(article);
 
-    if (updateViews) article.views++;
-    article.thumbnailid = reqBody.thumbnailid;
-    article.title = reqBody.title;
-    article.author = reqBody.author;
-    article.content = reqBody.content;
-    article.super = reqBody.super;
-    article.topic = reqBody.topic;
-    article.status = reqBody.status;
-    article.reason = reqBody.reason;
+    if (updateViews) {
+        article.views++;
+    } else {
+        article.thumbnailid = reqBody.thumbnailid;
+        article.title = reqBody.title;
+        article.author = reqBody.author;
+        article.content = reqBody.content;
+        article.super = reqBody.super;
+        article.topic = reqBody.topic;
+        article.status = reqBody.status;
+        article.reason = reqBody.reason;
+    }
 
     if (article.super == true)
     {
