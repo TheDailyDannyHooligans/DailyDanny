@@ -3,7 +3,6 @@
   import Editor from '@tinymce/tinymce-svelte';
   import { onMount } from 'svelte';
   import axios from 'axios';
-  import ImagesPopup from '/src/routes/profile/createArticle/images/images.svelte'; 
   import { account } from '/src/routes/account.js';
 
   const API_URL = 'http://localhost:3000/';
@@ -87,7 +86,7 @@
       super: false,
       topic: document.getElementById('topics').value,
       views: 0,
-      status: 'Approved',
+      status: 'Pending review',
       reason: 'Recently submitted',
       authorid: accountId
     }
@@ -109,16 +108,6 @@
     
     console.log('Article submitted!');
   };
-
-  let imagesPopupVisible = false;  
-
-  function toggleImagesPopup() {
-    imagesPopupVisible = !imagesPopupVisible;
-  }
-
-  function closeImagesPopup() {
-    imagesPopupVisible = false;
-  }
 
   function addTextBlock() {
     const textContainer = document.createElement('div');
@@ -234,8 +223,6 @@
       <button on:click={addImageBlock}>Add Image</button>
     </div>
   </div>
-
-  <div id='chosen-images'></div>
   
   <div>
     <label for="topic">Article Topic:</label>
@@ -255,10 +242,6 @@
   </div>
   
 </div>
-
-{#if imagesPopupVisible}
-  <ImagesPopup on:close={closeImagesPopup}/>
-{/if}
 
 <style>
 .form-container {
