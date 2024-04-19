@@ -31,6 +31,6 @@ route.put('/api/articles/:id', controller.updateArticle);
 
 //route.put('/api/send/:id', controller.sendArticle)
 
-route.post('/articles/increment-view/:id', controller.incrementArticleViews);
+// route.post('/articles/increment-view/:id', controller.incrementArticleViews);
 
 module.exports = route;

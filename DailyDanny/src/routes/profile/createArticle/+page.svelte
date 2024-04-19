@@ -216,9 +216,9 @@
   </div>
 
   <div>
-    <div>
+    <!-- <div>
       <button on:click={addTextBlock}>Add Text</button>
-    </div>
+    </div> -->
     <div>
       <button on:click={addImageBlock}>Add Image</button>
     </div>

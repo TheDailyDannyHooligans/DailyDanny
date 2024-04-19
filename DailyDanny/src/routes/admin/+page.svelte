@@ -36,6 +36,7 @@
 <div class="profile">
   <a class ="page-buttons" on:click={toggleCreateUserPopup}>Create admin/editor account</a><br/>
   <a class ="page-buttons"href="/profile/viewArticles/pending">View pending articles</a><br/>
+  <a class ="page-buttons"href="/profile/createAd">Create Advertisement</a><br/>
   <a class="change-password" on:click={toggleChangePasswordPopup}>Change your password</a><br/>
   <a class="logout" on:click={toggleLogoutPopup}>Logout</a>
 </div>

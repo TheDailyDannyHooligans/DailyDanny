@@ -27,12 +27,13 @@
   let imageTags = [];
   let imgTags = new Array(1);
   let textTags = new Array(1);
-
   async function handleLoad() {
     console.log('loaded');
-
+    
     try {
-      const response = await axios.get(API_URL+"api/articles", { params: { id: articleId } });
+      let lastClickedArticleID = localStorage.getItem('lastClickedArticle');
+
+      const response = await axios.get(API_URL+"api/articles", { params: { id: lastClickedArticleID } });
       article = response['data'][0];
 
       console.log(article);
@@ -168,7 +169,8 @@
 
   async function handleSubmit () {
     console.log('Handling form submit...');
-    
+    let lastClickedArticleID = localStorage.getItem('lastClickedArticle');
+
     let content = document.getElementsByClassName('item');
 
     let articleText = '';
@@ -225,7 +227,7 @@
 
     console.log(data);
 
-    let response = await axios.put(API_URL+"api/articles/"+articleId+"?views="+false, data);
+    let response = await axios.put(API_URL+"api/articles/"+lastClickedArticleID, data);
     console.log(response);
 
     // Reset form fields

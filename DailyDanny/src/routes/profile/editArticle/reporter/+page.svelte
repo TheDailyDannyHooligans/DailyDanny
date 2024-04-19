@@ -26,9 +26,10 @@
 
     async function handleLoad() {
       console.log('loaded');
+      lastClickedArticleID = localStorage.getItem('lastClickedArticle');
 
       try {
-        const response = await axios.get(API_URL+"api/articles", { params: { id: articleId } });
+        const response = await axios.get(API_URL+"api/articles", { params: { id: lastClickedArticleID } });
         article = response['data'][0];
 
         console.log(article);
