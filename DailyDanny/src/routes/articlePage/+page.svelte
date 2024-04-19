@@ -26,7 +26,7 @@
     try {
     // Find article with stored id
     // { params: { id: lastClickedArticleID } }
-      // const update = await axios.put(API_URL+"api/articles/"+lastClickedArticleID+"?views="+true);
+      const update = await axios.put(API_URL+"api/articles/"+lastClickedArticleID+"?views="+true);
       const response = await axios.get(API_URL+"api/articles", { params: { id: lastClickedArticleID } });
       article = response.data[0];
       console.log(response);
