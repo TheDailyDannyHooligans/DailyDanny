@@ -182,7 +182,7 @@
     console.log("Article clicked", articleID);
     localStorage.setItem('lastClickedArticle', articleID);
     window.location.href = 'articlePage';
-    localStorage.setItem('lastClickedArticle', null);
+    
   }
   
 </script>

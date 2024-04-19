@@ -17,16 +17,29 @@
     let admin = false;
     let reporter = false;
 
-    if (document.getElementById('admin').checked == true) {
-        admin = true;
-        reporter = false;
-    } else if (document.getElementById('reporter').checked == true) {
-        admin = false;
-        reporter = true;
+    // if (document.getElementById('admin').checked == true) {
+    //     admin = true;
+    //     reporter = false;
+    // } else if (document.getElementById('reporter').checked == true) {
+    //     admin = false;
+    //     reporter = true;
+    // }
+
+
+    function updateRole(role) {
+        if (role === 'admin') {
+            admin = true;
+            reporter = false;
+        } else if (role === 'reporter') {
+            admin = false;
+            reporter = true;
+        }
     }
 
     async function handleSignup(event) {
         event.preventDefault();
+
+        console.log
 
         if (firstname === '') {
             console.error('First name is required');
@@ -44,7 +57,7 @@
             console.error('Password is required');
             document.getElementById('error').innerText = 'Password is required';
             return;
-        } else if (type === '') {
+        } else if (admin === false && reporter === false) {
             console.error('Account type is required');
             document.getElementById('error').innerText = 'Account type is required';
             return;
@@ -112,11 +125,10 @@
                 <br/>
                 <label for="type">Account Type:</label>
                 <br/>
-                <input type="radio" name="type" id="admin" value="admin" />
+                <input type="radio" name="type" id="admin" value="admin" onchange={updateRole('admin')}/>
                 <label for="admin">Admin</label>
-                <input type="radio" name="type" id="reporter" value="reporter" />
+                <input type="radio" name="type" id="reporter" value="reporter" onchange={updateRole('reporter')}/>
                 <label for="reporter">Reporter</label>
-                <input />
 
                 <button type="submit" class = "signup-button">Create User</button>
             </form>
