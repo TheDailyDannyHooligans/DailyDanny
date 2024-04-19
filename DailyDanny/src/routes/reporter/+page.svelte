@@ -24,9 +24,7 @@
 </script>
 
 <div class="profile">
-  <!-- <a class = "page-buttons" href="/profile/testArticle">Test article</a><br/> -->
   <a class = "page-buttons" href="/profile/createArticle">Create article</a><br/>
-  <!-- <a class = "page-buttons" href="/profile/viewArticles/all">View articles</a><br/> -->
   <a class = "page-buttons" href="/profile/viewArticles/drafts">View drafts</a><br/>
   <a class = "page-buttons" href="/profile/viewArticles/rejected">View rejected articles</a><br/>
   <a class = "change-password" on:click={toggleChangePasswordPopup}>Change your password</a><br/>
