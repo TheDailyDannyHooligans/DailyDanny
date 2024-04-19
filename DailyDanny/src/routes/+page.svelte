@@ -54,18 +54,10 @@
                 const frame = document.querySelector('.article-frame');
                 frame.innerHTML = '';  // Clear existing content
 
+                let counting = 0;
+
                 // Loop through all approved articles, saving the id as you go with i
                 articles.forEach(async (article) => {
-                    if(article.super){
-                        let mainStoryBox = document.createElement('div');
-                        mainStoryBox.className = 'main-story-box';
-                        mainStoryBox.onclick = () => handleArticleClick(article._id);
-                    }else{
-                        let articleBox = document.createElement('div');
-                        articleBox.className = 'article-box';
-                        articleBox.onclick = () => handleArticleClick(article._id);
-                    }
-
                     let articleBox = document.createElement('div');
                     articleBox.className = 'article-box';
                     articleBox.onclick = () => handleArticleClick(article._id);
@@ -87,14 +79,27 @@
                         topic.innerHTML = '&#9992;';
                     }
                     
+                    // if(article.super){
+                    //     let superStory = document.createElement('span');
+                    //     superStory.className = 'super-story-label';
+                    //     superStory.innerHTML = '&#11088;&#11088;&#11088;';
+                    //     articleBox.appendChild(superStory);
+                    // }
 
-                    if(article.super){
-                        let superStory = document.createElement('span');
-                        superStory.className = 'super-story-label';
-                        superStory.innerHTML = '&#11088;&#11088;&#11088;';
-                        articleBox.appendChild(superStory);
+                    if(article.views > 3 && counting < 5){
+                        if(counting == 0){
+                            let superStory = document.createElement('span');
+                            superStory.className = 'super-story-label';
+                            superStory.innerHTML = '&#11088;&#11088;&#11088;';
+                            articleBox.appendChild(superStory);
+                            articleBox.className = 'article-box-main-story';
+                        }
+                        counting++;
+                        let topStory = document.createElement('span');
+                        topStory.className = 'top-story-label';
+                        topStory.innerHTML = '&#128293;';
+                        articleBox.appendChild(topStory);
                     }
-
 
                     let viewCount = document.createElement('span');
                     viewCount.className = 'article-views';
@@ -177,6 +182,7 @@
     console.log("Article clicked", articleID);
     localStorage.setItem('lastClickedArticle', articleID);
     window.location.href = 'articlePage';
+    localStorage.setItem('lastClickedArticle', null);
   }
   
 </script>

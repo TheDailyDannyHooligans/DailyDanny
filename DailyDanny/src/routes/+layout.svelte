@@ -156,7 +156,7 @@
         text-align: center;
         align-self: center;
         font-family: 'Lateef';
-        font-size: 5em;
+        font-size: 3em;
     }
     
     #home-title a {
