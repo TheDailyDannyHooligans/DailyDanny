@@ -66,7 +66,7 @@
 
                     let viewCount = document.createElement('span');
                     viewCount.className = 'article-views';
-                    viewCount.innerHTML =  '&#128293; views: ' + article.views;
+                    viewCount.innerHTML =  '&#128064;: ' + article.views;
 
                     let title = document.createElement('h2');
                     title.className = 'article-title';
