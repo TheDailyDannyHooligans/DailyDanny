@@ -172,11 +172,21 @@
       }
     }
 
-  function handleArticleClick(articleID) {
-    // store article id as a global variable
+  async function handleArticleClick(articleID) {
     console.log("Article clicked", articleID);
     localStorage.setItem('lastClickedArticle', articleID);
+    // incrementViewCount(articleID);
+
     window.location.href = 'articlePage';
+  }
+
+  function incrementViewCount(articleId) {
+    fetch(`/api/articles/increment-view/${articleId}`, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => console.log("Views incremented:", data))
+    .catch(error => console.error("Error incrementing views:", error));
   }
   
 </script>
