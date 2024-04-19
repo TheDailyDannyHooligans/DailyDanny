@@ -164,6 +164,8 @@ exports.getImages = (req, res) => {
 exports.getImage = (req, res) => {
     const id = req.params.id;
 
+    console.log('GETTING IMAGE WITH ID ' + id);
+    
     Imagedb.findById(id)
         .then((data, err)=>{
             if(err){
@@ -332,6 +334,33 @@ exports.updateArticle = async (req, res) => {
     article.status = reqBody.status;
     article.reason = reqBody.reason;
 
+    if (article.super == true)
+    {
+        Articledb.find({ 'super': true })
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({ message: "Article not found" });
+                } else {
+                    data.forEach(async (obj) => {
+                        obj.super = false;
+
+                        await Articledb.findByIdAndUpdate(obj._id, obj, { useFindAndModify: false })
+                            .then(data => {
+                                if (!data) {
+                                    res.status(404).send({ message: `Cannot update article ${id}. Maybe article not found!`});
+                                }
+                            })
+                            .catch(err => {
+                                res.status(500).send({ message: "Error update article information"});
+                        });
+                        });
+                } 
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message || "Error retrieving article with id " + req.query.id});
+            });
+    }
+
     console.log('AFTER:');
     console.log(article);
 
@@ -348,21 +377,3 @@ exports.updateArticle = async (req, res) => {
     });
 
 }
-
-exports.incrementArticleViews = async (req, res) => {
-    try {
-        const articleId = req.params.id; // Get the article ID from the route parameter
-        // Increment the view count using the $inc operator in MongoDB
-        const updatedArticle = await Articledb.findByIdAndUpdate(
-            articleId,
-            { $inc: { views: 1 } },
-            { new: true }  // Return the updated document
-        );
-        if (!updatedArticle) {
-            return res.status(404).send({ message: "Article not found" });
-        }
-        res.send(updatedArticle);
-    } catch (error) {
-        res.status(500).send({ message: error.message });
-    }
-};
