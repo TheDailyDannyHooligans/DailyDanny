@@ -348,3 +348,21 @@ exports.updateArticle = async (req, res) => {
     });
 
 }
+
+exports.incrementArticleViews = async (req, res) => {
+    try {
+        const articleId = req.params.id; // Get the article ID from the route parameter
+        // Increment the view count using the $inc operator in MongoDB
+        const updatedArticle = await Articledb.findByIdAndUpdate(
+            articleId,
+            { $inc: { views: 1 } },
+            { new: true }  // Return the updated document
+        );
+        if (!updatedArticle) {
+            return res.status(404).send({ message: "Article not found" });
+        }
+        res.send(updatedArticle);
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+};

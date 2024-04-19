@@ -55,11 +55,17 @@
                 frame.innerHTML = '';  // Clear existing content
 
                 // Loop through all approved articles, saving the id as you go with i
+                let x, y = false;
                 articles.forEach(async (article) => {
+                  console.log(x);
                     if(article.super){
+                      if(!x)
+                      {
                         let mainStoryBox = document.createElement('div');
                         mainStoryBox.className = 'main-story-box';
                         mainStoryBox.onclick = () => handleArticleClick(article._id);
+                        x = true;
+                      }
                     }else{
                         let articleBox = document.createElement('div');
                         articleBox.className = 'article-box';
@@ -88,11 +94,12 @@
                     }
                     
 
-                    if(article.super){
+                    if(article.super & !y){
                         let superStory = document.createElement('span');
                         superStory.className = 'super-story-label';
                         superStory.innerHTML = '&#11088;&#11088;&#11088;';
                         articleBox.appendChild(superStory);
+                        y = true;
                     }
 
 
@@ -172,11 +179,21 @@
       }
     }
 
-  function handleArticleClick(articleID) {
-    // store article id as a global variable
+  async function handleArticleClick(articleID) {
     console.log("Article clicked", articleID);
     localStorage.setItem('lastClickedArticle', articleID);
-    window.location.href = 'articlePage';
+    // incrementViewCount(articleID);
+
+    window.location.href = '/articlePage';
+  }
+
+  function incrementViewCount(articleId) {
+    fetch(`/api/articles/increment-view/${articleId}`, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => console.log("Views incremented:", data))
+    .catch(error => console.error("Error incrementing views:", error));
   }
   
 </script>
