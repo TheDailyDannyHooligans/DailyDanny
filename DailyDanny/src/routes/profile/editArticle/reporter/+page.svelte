@@ -26,7 +26,7 @@
 
     async function handleLoad() {
       console.log('loaded');
-      lastClickedArticleID = localStorage.getItem('lastClickedArticle');
+      let lastClickedArticleID = localStorage.getItem('lastClickedArticle');
 
       try {
         const response = await axios.get(API_URL+"api/articles", { params: { id: lastClickedArticleID } });
@@ -175,6 +175,8 @@
 
     async function handleSubmit () {
       console.log('Handling form submit...');
+      let lastClickedArticleID = localStorage.getItem('lastClickedArticle');
+
       
       let content = document.getElementsByClassName('item');
 
@@ -220,7 +222,7 @@
 
       console.log(data);
 
-      let response = await axios.put(API_URL+"api/articles/"+articleId+"?views="+false, data);
+      let response = await axios.put(API_URL+"api/articles/"+lastClickedArticleID+"?views="+false, data);
       console.log(response);
 
       // Reset form fields
