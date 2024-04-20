@@ -11,18 +11,6 @@ mpn run install-client
 
 npm run install-server
 
-cd api
-
-npm install 
-
-cd ..
-
-cd DailyDanny
-
-npm install
-
-cd ..
-
 npm run start
 
 
