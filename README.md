@@ -26,9 +26,7 @@ Source Code Link: https://github.com/TheDailyDannyHooligans/DailyDanny
 
 •	The contents of config.env for our cluster will be:
 ```
-PORT=3000
-
-MONGO_URI=mongodb+srv://admin:admin123@cluster0.n1zncam.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+Refer to Build Instructions document turned in
 ```
 •	In the root folder run the following commands:
 ```
