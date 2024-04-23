@@ -1,27 +1,56 @@
-# DailyDanny
-POOSD Project
+# Build Instructions
 
-**Build Instructions:**
 
-In the root folder run the following commands:
+## Daniel Andrade, Andrew Browning, Kaine LaPerle, Michael Parker, Andrew Valentin
 
-npm install 
 
-mpn run install-client
+## Project 1, Online Newspaper
 
+
+## COP 4331C, Spring, 2024
+
+
+________________________________________
+
+
+### Materials Required
+
+To run this project, you will need a terminal and a browser. You will need to download the zip file from GitHub with all our source code. You will also need to include your own “config.env” that contains the port number defined as PORT and the link to the MongoDB cluster being used defined as MONGO_URI.
+
+Source Code Link: https://github.com/TheDailyDannyHooligans/DailyDanny
+
+ 
+### Build Instructions
+
+•	Include your config.env file into the ‘api’ folder as explained in the Materials Required section.
+
+•	The contents of config.env for our cluster will be:
+```
+PORT=3000
+
+MONGO_URI=mongodb+srv://admin:admin123@cluster0.n1zncam.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+```
+•	In the root folder run the following commands:
+```
+npm install
+npm run install-client
 npm run install-server
-
 npm run start
+```
+•	Then, copy and paste the URL printed in the terminal into browser.
 
-
-Then, copy and paste the url printed in the terminal into google chrome or safari
-
-
-To use editor account, login as 
-
-email: editor@test.com    password: test
-
-
-To use Admin account, login as
-
-email: admin@test.com    password: 789
+•	To use a User account, login as:
+```
+Email: user@test.com 
+Password: 123
+```
+•	To use an Editor account, login as:
+```
+Email: editor@test.com 
+Password: test
+```
+•	To use an Admin account, login as:
+```
+Email: admin@test.com 
+Password: 789
+```
