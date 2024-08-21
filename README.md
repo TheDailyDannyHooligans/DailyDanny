@@ -52,3 +52,6 @@ Password: test
 Email: admin@test.com 
 Password: 789
 ```
+### Demo Video Link
+
+https://www.youtube.com/watch?v=o6ZymdKGLsc
